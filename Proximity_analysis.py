@@ -4,6 +4,7 @@ import time
 import math
 import logging
 from geopy.exc import GeocoderTimedOut
+import googlemaps  # Ensure you import the googlemaps library
 
 # Set up logging to write logs to a file
 logging.basicConfig(filename="geocoding_logs.txt", level=logging.INFO)
@@ -19,7 +20,6 @@ def haversineDistance(coords1, coords2):
     a = math.sin(deltaLat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(deltaLng / 2) ** 2
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
     return R * c  # Distance in km
-
 
 # Function to get latitude and longitude with retries (Handles timeouts and retries)
 def get_lat_long_with_retry(address, gmaps, retries=3, delay=2):
@@ -37,7 +37,6 @@ def get_lat_long_with_retry(address, gmaps, retries=3, delay=2):
             logging.error(f"Error geocoding address: {address} - {e}")
             time.sleep(delay * (attempt + 1))  # Exponential backoff
     return None  # Return None if all retries fail
-
 
 # Function to find the closest addresses
 def find_closest_addresses(addresses, gmaps, progress_bar):
@@ -71,7 +70,6 @@ def find_closest_addresses(addresses, gmaps, progress_bar):
 
     return results
 
-
 # Streamlit interface
 st.title("Address Distance Finder")
 
@@ -92,9 +90,9 @@ if uploaded_file is not None:
     # Button to run the calculation
     if st.button('Find Closest Addresses'):
         if len(addresses) > 0:
-            # Initialize Google Maps client and handle errors
+            # Initialize Google Maps client with secret key
             try:
-                gmaps = googlemaps.Client(key="AIzaSyBeV9rKy1Nddmxt1XCqwD-wcm4gsJKP0iY")
+                gmaps = googlemaps.Client(key=st.secrets["google_maps_key"])
                 logging.info("Google Maps API client initialized successfully.")
             except Exception as e:
                 st.error(f"Error initializing Google Maps client: {e}")

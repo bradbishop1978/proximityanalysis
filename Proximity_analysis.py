@@ -44,6 +44,7 @@ def get_lat_long_with_retry(address, gmaps, retries=3, delay=2):
 # Function to find the closest addresses
 def find_closest_addresses(addresses, gmaps, progress_bar):
     results = []
+    num_addresses = len(addresses)  # Track the number of addresses to be processed
     for i, origin in enumerate(addresses):
         origin_coords = get_lat_long_with_retry(origin, gmaps)
         closest_address = ''
@@ -68,8 +69,8 @@ def find_closest_addresses(addresses, gmaps, progress_bar):
             results.append(f"Geocoding error for origin: {origin}")
 
         # Update the progress bar with "1 of 10" format
-        progress_bar.progress((i + 1) / len(addresses))
-        progress_bar.text(f"{i + 1} of {len(addresses)}")
+        progress_bar.progress((i + 1) / num_addresses)
+        progress_bar.text(f"Processing {i + 1} of {num_addresses}")
 
     return results
 

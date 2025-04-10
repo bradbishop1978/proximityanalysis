@@ -5,7 +5,6 @@ import time
 import math
 import logging
 from geopy.exc import GeocoderTimedOut
-import googlemaps  # Ensure you import the googlemaps library
 
 # Set up logging to write logs to a file
 logging.basicConfig(filename="geocoding_logs.txt", level=logging.INFO)
@@ -34,6 +33,9 @@ def get_lat_long_with_retry(address, gmaps, retries=3, delay=2):
             else:
                 logging.warning(f"Geocoding failed for address: {address}")
                 return None
+        except GeocoderTimedOut:
+            logging.warning(f"Geocoding timed out for address: {address}")
+            time.sleep(delay * (attempt + 1))
         except Exception as e:
             logging.error(f"Error geocoding address: {address} - {e}")
             time.sleep(delay * (attempt + 1))  # Exponential backoff
@@ -93,7 +95,7 @@ if uploaded_file is not None:
         if len(addresses) > 0:
             # Initialize Google Maps client with secret key
             try:
-                gmaps = googlemaps.Client(key=st.secrets["google_maps_key"])
+                gmaps = googlemaps.Client(key=st.secrets["google_maps"]["google_maps_key"])  # Ensure correct access syntax
                 logging.info("Google Maps API client initialized successfully.")
             except Exception as e:
                 st.error(f"Error initializing Google Maps client: {e}")
@@ -103,8 +105,8 @@ if uploaded_file is not None:
             # Find the closest addresses
             results = find_closest_addresses(addresses, gmaps, progress_bar)
 
-            # Add results to the dataframe (in Column C and E)
-            df['Closest Address'] = results
+            # Add results to the dataframe (in columns for closest address and distance)
+            df['Closest Address'] = [result.split(' (')[0] for result in results]
             df['Distance (km)'] = [result.split('(')[-1].replace(')', '').strip() if '(' in result else 'N/A' for result in results]
 
             # Display results

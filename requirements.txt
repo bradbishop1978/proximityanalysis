@@ -1,4 +1,5 @@
 streamlit
 googlemaps
-pandas
 geopy
+pandas
+numpy

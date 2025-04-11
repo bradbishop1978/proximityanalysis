@@ -42,7 +42,7 @@ def get_lat_long_with_retry(address, gmaps, retries=3, delay=2):
     return None  # Return None if all retries fail
 
 # Function to find the closest addresses
-def find_closest_addresses(addresses, gmaps, progress_bar):
+def find_closest_addresses(addresses, gmaps, progress_bar, progress_text):
     results = []
     num_addresses = len(addresses)  # Track the number of addresses to be processed
     for i, origin in enumerate(addresses):
@@ -70,7 +70,7 @@ def find_closest_addresses(addresses, gmaps, progress_bar):
 
         # Update the progress bar with "1 of 10" format
         progress_bar.progress((i + 1) / num_addresses)
-        progress_bar.text(f"Processing {i + 1} of {num_addresses}")
+        progress_text.text(f"Processing {i + 1} of {num_addresses}")
 
     return results
 
@@ -88,7 +88,11 @@ if uploaded_file is not None:
     # Get the list of addresses (assuming addresses are in the first column)
     addresses = df.iloc[:, 0].dropna().tolist()
 
-    # Show the progress bar
+    # Show the progress text at the top
+    progress_text = st.empty()  # This will dynamically update the text
+    progress_text.text("Processing 0 of 0")  # Initial placeholder text
+
+    # Show the progress bar at the top
     progress_bar = st.progress(0)
 
     # Button to run the calculation
@@ -104,7 +108,7 @@ if uploaded_file is not None:
                 st.stop()
 
             # Find the closest addresses
-            results = find_closest_addresses(addresses, gmaps, progress_bar)
+            results = find_closest_addresses(addresses, gmaps, progress_bar, progress_text)
 
             # Add results to the dataframe (in columns for closest address and distance)
             df['Closest Address'] = [result.split(' (')[0] for result in results]

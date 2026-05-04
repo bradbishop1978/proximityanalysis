@@ -294,7 +294,7 @@
         <div class="metric-sub">records with callback time set</div>
       </div>
       <div class="metric-card">
-        <div class="metric-label">Top End Results</div>
+        <div class="metric-label">Top Call Statuses</div>
         <div id="k-results" class="result-pills" style="margin-top:8px"></div>
       </div>
     </div>
@@ -314,7 +314,7 @@
     <!-- Charts row -->
     <div class="grid2">
       <div class="card gap">
-        <div class="section-title">End Result Distribution</div>
+        <div class="section-title">Call Status Distribution</div>
         <div id="chart-results"><div class="chart-empty">No data</div></div>
       </div>
       <div class="card gap">
@@ -329,7 +329,7 @@
         <div id="chart-brands"><div class="chart-empty">No data</div></div>
       </div>
       <div class="card gap">
-        <div class="section-title">Avg Call Duration by Outcome</div>
+        <div class="section-title">Avg Duration by Call Status</div>
         <div id="chart-duration"><div class="chart-empty">No data</div></div>
       </div>
     </div>
@@ -658,7 +658,7 @@ function renderKPIs(){
 
   // Top results
   var resCounts={};
-  recs.forEach(function(r){var v=fldStr(r,'End Result');if(v)resCounts[v]=(resCounts[v]||0)+1;});
+  recs.forEach(function(r){var v=fldStr(r,'Call Status');if(v)resCounts[v]=(resCounts[v]||0)+1;});
   var topRes=Object.keys(resCounts).sort(function(a,b){return resCounts[b]-resCounts[a];}).slice(0,5);
   el('k-results').innerHTML=topRes.length
     ? topRes.map(function(k){return '<div class="result-pill">'+k+'<span class="result-pill-count">'+resCounts[k]+'</span></div>';}).join('')
@@ -671,9 +671,9 @@ function renderFunnel(){
   if(!total){el('funnel').innerHTML='<div class="chart-empty">No data</div>';return;}
   var stages=[
     {label:'Total Calls Dialed', count:total},
-    {label:'Answered', count:recs.filter(function(r){var s=fldStr(r,'Call Status');return s==='Completed'||s==='Answered';}).length},
-    {label:'Ended (no pickup)', count:recs.filter(function(r){return fldStr(r,'Call Status')==='No Answer';}).length},
-    {label:'No Answer (voicemail)', count:recs.filter(function(r){return fldStr(r,'Call Status')==='Voicemail';}).length}
+    {label:'Answered', count:recs.filter(function(r){return fldStr(r,'Call Status')==='answered';}).length},
+    {label:'Ended (no pickup)', count:recs.filter(function(r){return fldStr(r,'Call Status')==='ended';}).length},
+    {label:'No Answer (voicemail)', count:recs.filter(function(r){return fldStr(r,'Call Status')==='no_answer';}).length}
   ];
   var html='';
   stages.forEach(function(s,i){
@@ -745,7 +745,7 @@ function renderDailyChart(){
 function renderResultsDonut(){
   var c=el('chart-results');
   var counts={};
-  filteredRecs.forEach(function(r){var v=fldStr(r,'End Result');if(v)counts[v]=(counts[v]||0)+1;});
+  filteredRecs.forEach(function(r){var v=fldStr(r,'Call Status');if(v)counts[v]=(counts[v]||0)+1;});
   var data=Object.keys(counts).sort(function(a,b){return counts[b]-counts[a];}).map(function(k){return {name:k,v:counts[k]};});
   if(!data.length){c.innerHTML='<div class="chart-empty">No data</div>';return;}
   var total=data.reduce(function(s,d){return s+d.v;},0);
@@ -830,7 +830,7 @@ function renderDurationChart(){
   var c=el('chart-duration');
   var sums={},cnts={};
   filteredRecs.forEach(function(r){
-    var res=fldStr(r,'End Result')||'Unknown';
+    var res=fldStr(r,'Call Status')||'Unknown';
     var dur=parseDuration(fld(r,'Call Duration'));
     if(dur>0){sums[res]=(sums[res]||0)+dur;cnts[res]=(cnts[res]||0)+1;}
   });

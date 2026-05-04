@@ -671,23 +671,21 @@ function renderFunnel(){
   if(!total){el('funnel').innerHTML='<div class="chart-empty">No data</div>';return;}
   var stages=[
     {label:'Total Calls Dialed', count:total},
-    {label:'Calls Connected', count:recs.filter(function(r){var s=fldStr(r,'Call Status');return s==='Completed'||s==='Answered';}).length},
-    {label:'Reached Decision Maker', count:recs.filter(function(r){return isYes(fld(r,'Spoke to Manager'));}).length},
-    {label:'Expressed Interest', count:recs.filter(function(r){return fldStr(r,'Follow-Up Scheduled')||fldStr(r,'Email Interest Level').toLowerCase()==='high';}).length},
-    {label:'Callback Scheduled', count:recs.filter(function(r){return fldStr(r,'Callback Time');}).length},
-    {label:'Store Signed', count:recs.filter(function(r){return fldStr(r,'End Result').toLowerCase().includes('signed');}).length}
+    {label:'Answered', count:recs.filter(function(r){var s=fldStr(r,'Call Status');return s==='Completed'||s==='Answered';}).length},
+    {label:'Ended (no pickup)', count:recs.filter(function(r){return fldStr(r,'Call Status')==='No Answer';}).length},
+    {label:'No Answer (voicemail)', count:recs.filter(function(r){return fldStr(r,'Call Status')==='Voicemail';}).length}
   ];
   var html='';
   stages.forEach(function(s,i){
     var widthPct=Math.max(8,Math.round(s.count/total*100));
-    var convTxt=i===0?'':(stages[i-1].count>0?Math.round(s.count/stages[i-1].count*100)+'%':'0%');
-    var opacity=1-i*0.08;
+    var convTxt=i===0?'100%':pct(s.count,total)+'% of dialed';
+    var opacity=1-i*0.12;
     html+='<div class="funnel-stage">'
       +'<div class="funnel-bar-wrap"><div class="funnel-bar" style="width:'+widthPct+'%;background:linear-gradient(90deg,#DE4990,#2C023B);opacity:'+opacity.toFixed(2)+'">'
         +'<span class="funnel-bar-label">'+s.label+'</span>'
         +'<span class="funnel-bar-count">'+s.count+'</span>'
       +'</div></div>'
-      +'<div class="funnel-conv">'+(i===0?'100%':convTxt)+'</div>'
+      +'<div class="funnel-conv">'+convTxt+'</div>'
       +'</div>';
     if(i<stages.length-1) html+='<div class="funnel-arrow" style="padding-left:8px;font-size:12px;color:var(--border)">&#x25BC;</div>';
   });

@@ -776,22 +776,22 @@ function renderResultsDonut(){
   var data=Object.keys(counts).sort(function(a,b){return counts[b]-counts[a];}).map(function(k){return {name:k,v:counts[k]};});
   if(!data.length){c.innerHTML='<div class="chart-empty">No data</div>';return;}
   var total=data.reduce(function(s,d){return s+d.v;},0);
-  var R=44,cx=60,cy=60,circ=2*Math.PI*R;
+  var R=70,cx=90,cy=90,circ=2*Math.PI*R;
   var segs='',offset=-0.25;
   data.forEach(function(d,i){
     var frac=d.v/total,dash=(frac*circ).toFixed(2),gap=((1-frac)*circ).toFixed(2);
     var rot=(offset*360).toFixed(1);
-    segs+='<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="none" stroke="'+COLORS[i%COLORS.length]+'" stroke-width="14" stroke-dasharray="'+dash+' '+gap+'" transform="rotate('+rot+' '+cx+' '+cy+')"/>';
+    segs+='<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="none" stroke="'+COLORS[i%COLORS.length]+'" stroke-width="16" stroke-dasharray="'+dash+' '+gap+'" transform="rotate('+rot+' '+cx+' '+cy+')"/>';
     offset+=frac;
   });
   var legend=data.slice(0,6).map(function(d,i){
     return '<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:'+COLORS[i%COLORS.length]+'"></div><span>'+d.name+' ('+d.v+')</span></div>';
   }).join('');
-  c.innerHTML='<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">'
-    +'<svg viewBox="0 0 120 120" style="width:120px;height:120px;flex-shrink:0">'+segs
-    +'<text x="'+cx+'" y="'+(cy+5)+'" text-anchor="middle" font-family="Gabarito,sans-serif" font-size="16" font-weight="800" fill="var(--dark)">'+total+'</text>'
-    +'<text x="'+cx+'" y="'+(cy+17)+'" text-anchor="middle" font-size="9" fill="var(--muted)">calls</text>'
-    +'</svg><div class="chart-legend" style="flex-direction:column;gap:8px">'+legend+'</div></div>';
+  c.innerHTML='<div style="display:flex;flex-direction:column;align-items:center;gap:14px">'
+    +'<svg viewBox="0 0 180 180" style="width:100%;max-width:220px">'+segs
+    +'<text x="'+cx+'" y="'+(cy+8)+'" text-anchor="middle" font-family="Gabarito,sans-serif" font-size="24" font-weight="800" fill="var(--dark)">'+total+'</text>'
+    +'<text x="'+cx+'" y="'+(cy+22)+'" text-anchor="middle" font-size="11" fill="var(--muted)">calls</text>'
+    +'</svg><div class="chart-legend" style="flex-direction:column;gap:6px">'+legend+'</div></div>';
 }
 
 // ── Objections horizontal bar ─────────────────────────────────────────────────
@@ -828,26 +828,25 @@ function renderBrandChart(){
   var brands=Object.keys(brandCalls).sort(function(a,b){return brandCalls[b]-brandCalls[a];}).slice(0,6);
   if(!brands.length){c.innerHTML='<div class="chart-empty">No brand data</div>';return;}
   var maxV=Math.max.apply(null,brands.map(function(b){return brandCalls[b];}));
-  var pL=120,pR=8,W=420,bH=10,gY=6,gRow=8;
-  var rowH=bH*3+gY*2+gRow;
-  var pT=4;
-  var H=brands.length*rowH+pT;
+  var pL=120,pR=8,W=420,bH=16,gap=10;
+  var rowH=bH+gap;
+  var H=brands.length*rowH+4;
   var out='';
   brands.forEach(function(b,i){
-    var y=pT+i*rowH;
+    var y=4+i*rowH;
     var wC=Math.max(4,Math.round((brandCalls[b]/maxV)*(W-pL-pR)));
     var wD=Math.max(0,Math.round(((brandDM[b]||0)/maxV)*(W-pL-pR)));
     var wF=Math.max(0,Math.round(((brandFU[b]||0)/maxV)*(W-pL-pR)));
-    out+=svgText(pL-6,y+bH+3,b,{anchor:'end',size:10,fill:'var(--text)'});
-    out+=svgRect(pL,y,wC,bH,'#DE4990',3);
-    out+=svgRect(pL,y+bH+gY,wD,bH,'#2C023B',3);
-    out+=svgRect(pL,y+bH*2+gY*2,wF,bH,'#10B981',3);
-    out+=svgText(pL+wC+4,y+bH-1,brandCalls[b],{size:9,fill:'var(--dark)'});
+    out+=svgText(pL-6,y+bH/2+3,b,{anchor:'end',size:10,fill:'var(--text)'});
+    out+=svgRect(pL,y,wC,bH,'#F5CDE0',3);
+    if(wD>0) out+=svgRect(pL,y,wD,bH,'#EB92BD',3);
+    if(wF>0) out+=svgRect(pL,y,wF,bH,'#DE4990',3);
+    out+=svgText(pL+wC+4,y+bH/2+3,brandCalls[b],{size:9,fill:'var(--dark)'});
   });
   var legend='<div class="chart-legend">'
-    +'<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#DE4990"></div>Total Calls</div>'
-    +'<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#2C023B"></div>DM Reached</div>'
-    +'<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#10B981"></div>Follow-Up</div>'
+    +'<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#F5CDE0"></div>Total Calls</div>'
+    +'<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#EB92BD"></div>DM Reached</div>'
+    +'<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#DE4990"></div>Follow-Up</div>'
     +'</div>';
   c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>'+legend;
 }
@@ -900,9 +899,9 @@ function renderVariantChart(){
     c.innerHTML='<div class="chart-empty">No variant data — set VAPI_OBJECTIVE in Fabi Cell 2</div>';return;
   }
   var maxV=Math.max.apply(null,variants.map(function(v){return vCalls[v];}));
-  var pL=110,pR=8,W=420,bH=10,gY=5,gRow=8;
-  var rowH=bH*3+gY*2+gRow;
-  var H=variants.length*rowH+24;
+  var pL=110,pR=8,W=420,bH=16,gap=10;
+  var rowH=bH+gap;
+  var H=variants.length*rowH+4;
   var out='';
   variants.forEach(function(v,i){
     var y=4+i*rowH;
@@ -910,14 +909,14 @@ function renderVariantChart(){
     var wD=Math.max(0,Math.round(((vDM[v]||0)/maxV)*(W-pL-pR)));
     var wG=Math.max(0,Math.round(((vGuide[v]||0)/maxV)*(W-pL-pR)));
     var name=v.length>14?v.substring(0,14)+'…':v;
-    out+=svgText(pL-6,y+bH+3,name,{anchor:'end',size:10,fill:'var(--text)'});
-    out+=svgRect(pL,y,wC,bH,'#DE4990',3);
-    out+=svgRect(pL,y+bH+gY,wD,bH,'#2C023B',3);
-    out+=svgRect(pL,y+bH*2+gY*2,wG,bH,'#10B981',3);
+    out+=svgText(pL-6,y+bH/2+3,name,{anchor:'end',size:10,fill:'var(--text)'});
+    out+=svgRect(pL,y,wC,bH,'#F5CDE0',3);
+    if(wD>0) out+=svgRect(pL,y,wD,bH,'#EB92BD',3);
+    if(wG>0) out+=svgRect(pL,y,wG,bH,'#DE4990',3);
     var stats=' DM:'+pct(vDM[v]||0,vCalls[v])+'% Guide:'+pct(vGuide[v]||0,vCalls[v])+'%';
-    out+=svgText(pL+wC+5,y+bH-1,vCalls[v]+stats,{size:8,fill:'var(--dark)'});
+    out+=svgText(pL+wC+5,y+bH/2+3,vCalls[v]+stats,{size:8,fill:'var(--dark)'});
   });
-  var legend='<div class="chart-legend"><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#DE4990"></div>Total</div><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#2C023B"></div>DM Reached</div><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#10B981"></div>Guide Accepted</div></div>';
+  var legend='<div class="chart-legend"><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#F5CDE0"></div>Total</div><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#EB92BD"></div>DM Reached</div><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#DE4990"></div>Guide Accepted</div></div>';
   c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>'+legend;
 }
 

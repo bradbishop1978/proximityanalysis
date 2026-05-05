@@ -135,8 +135,9 @@
   <p>
     <span class="tag">Brand</span> Filter by one or more brands (KKC, Circle K, etc.)<br>
     <span class="tag">Date Range</span> Default is the last 7 days. Set a wider range for trend analysis.<br>
-    <span class="tag">Call Status</span> Filter by Completed, No Answer, Voicemail, etc.<br>
-    <span class="tag">End Result</span> Filter to specific outcomes (e.g. only show "Callback Scheduled" calls).
+    <span class="tag">Call Status</span> Filter by answered, ended, or no_answer.<br>
+    <span class="tag">End Result</span> Filter to specific outcomes (e.g. only show "callback scheduled" calls).<br>
+    <span class="tag">Variant</span> Filter by VAPI Objective label — Mission Direct, NEPQ Revised, or NEPQ Classic. Use this to isolate a single A/B/C test batch for comparison. Only populated after VAPI_OBJECTIVE is set in Fabi Cell 2.
   </p>
   <p>Click <strong>Clear Filters</strong> to reset everything back to the default 7-day view.</p>
 
@@ -147,24 +148,40 @@
     <div class="metric-item"><div class="metric-item-name">Reach row</div><div class="metric-item-desc">How often SimOne gets through to the actual decision-maker and captures their info.</div></div>
     <div class="metric-item"><div class="metric-item-name">Outcomes row</div><div class="metric-item-desc">Follow-up rate, voicemail rate, and SMS/email permission rates (calculated against answered calls only).</div></div>
     <div class="metric-item"><div class="metric-item-name">Interest level bar</div><div class="metric-item-desc">Breakdown of email interest from Airtable: high/medium/low/none. More green = stronger pipeline.</div></div>
-    <div class="metric-item"><div class="metric-item-name">Top End Results</div><div class="metric-item-desc">The most common call outcomes, ranked by frequency. Quick snapshot of what's happening on calls.</div></div>
+    <div class="metric-item"><div class="metric-item-name">Top Call Statuses</div><div class="metric-item-desc">The three call status values (answered / ended / no_answer) ranked by count. Quick snapshot of how calls are resolving at the VAPI level.</div></div>
     <div class="metric-item"><div class="metric-item-name">Callback Scheduled</div><div class="metric-item-desc">Count of records with a specific callback time set — your warm pipeline for the next batch.</div></div>
   </div>
 
   <h3>Conversion funnel</h3>
-  <p>The funnel shows how calls move through the pipeline. Each stage narrows as fewer records qualify:</p>
+  <p>The funnel shows how calls distribute across VAPI's three call status values. Each tier shows its share of total dials — not step-down conversion.</p>
   <p>
-    <strong>Total Calls Dialed</strong> → <strong>Calls Connected</strong> (completed/answered) → <strong>Reached Decision Maker</strong> → <strong>Expressed Interest</strong> (follow-up or high interest) → <strong>Callback Scheduled</strong> → <strong>Store Signed</strong>
+    <strong>Total Calls Dialed</strong> → <strong>Answered</strong> (call connected, SimOne spoke) → <strong>Ended</strong> (VAPI ended without pickup) → <strong>No Answer / Voicemail</strong>
   </p>
-  <p>The percentage on the right of each stage shows the conversion rate from the previous step — not from total. A low DM-to-interest rate means the pitch is where to focus. A low connected-to-DM rate means gatekeeper handling.</p>
+  <p>The percentage on the right of each tier shows its share of total dials. A large Answered tier is healthy — it means SimOne is getting through. A large No Answer tier means reach is the problem, not the script.</p>
 
   <h3>Charts</h3>
   <div class="metric-grid">
     <div class="metric-item"><div class="metric-item-name">Daily Volume</div><div class="metric-item-desc">Call volume per day for the last 14 days. Good for spotting gaps in outreach cadence.</div></div>
-    <div class="metric-item"><div class="metric-item-name">End Result Distribution</div><div class="metric-item-desc">Donut chart of all outcome types. Shows the mix of voicemails, no-answers, callbacks, etc.</div></div>
+    <div class="metric-item"><div class="metric-item-name">Call Status Distribution</div><div class="metric-item-desc">Donut chart of the three call status values (answered / ended / no_answer). Shows the reach mix at a glance.</div></div>
     <div class="metric-item"><div class="metric-item-name">Primary Objections</div><div class="metric-item-desc">Most common objections SimOne logged. Informs which objection scripts need refinement.</div></div>
     <div class="metric-item"><div class="metric-item-name">Brand Performance</div><div class="metric-item-desc">Calls, DM reach, and follow-ups per brand. Useful for comparing brand-level results.</div></div>
-    <div class="metric-item"><div class="metric-item-name">Duration by Outcome</div><div class="metric-item-desc">Average call length per end result. Longer calls on signed/callback outcomes is a healthy sign.</div></div>
+    <div class="metric-item"><div class="metric-item-name">Duration by Call Status</div><div class="metric-item-desc">Average call length per call status. Answered calls should be longest — if no_answer is longer, something is off.</div></div>
+    <div class="metric-item"><div class="metric-item-name">Performance by Variant</div><div class="metric-item-desc">Total calls, DM reached, and guide accepted per A/B/C variant. Requires VAPI_OBJECTIVE set in Fabi Cell 2 before each batch. Populates after the first tagged batch run.</div></div>
+    <div class="metric-item"><div class="metric-item-name">Calls by Day of Week</div><div class="metric-item-desc">Mon–Fri call volume with DM reach overlay. Use to spot which days get better pickup rates — informs when to schedule the next batch.</div></div>
+    <div class="metric-item"><div class="metric-item-name">Calls by Hour of Day</div><div class="metric-item-desc">8 AM–5 PM call distribution. Target windows (9–11 AM and 2–5 PM) are shaded pink — calls in these windows show in darker pink. Use to verify the calling schedule is hitting the right hours.</div></div>
+  </div>
+
+  <h3>Variant &amp; Timing Analysis</h3>
+  <p>Three charts in the <strong>Variant &amp; Timing Analysis</strong> section help you understand <em>what</em> is working (which script variant) and <em>when</em> (which days and hours).</p>
+
+  <div class="tip">
+    <strong>Performance by Variant</strong> — only populates after you set <code>VAPI_OBJECTIVE</code> in Fabi Cell 2 before each batch run. Without it, all calls show as "(untagged)" and the chart is empty. Once tagged, you can filter to a single variant using the <strong>Variant</strong> chip in the filter bar and compare KPIs side by side across batches.
+  </div>
+  <div class="tip">
+    <strong>Calls by Hour of Day</strong> — target windows (9–11 AM and 2–5 PM) are shaded. If most of your calls are landing outside those bands, the Fabi calling schedule needs adjustment. If the target hours show low volume, SimOne may be burning through its queue before or after the window.
+  </div>
+  <div class="tip">
+    <strong>Calls by Day of Week</strong> — the dark pink bar inside each day's bar shows DM reach. If Tuesday has twice the DM rate of Monday at the same call volume, that is a signal worth acting on. Concentrate the next batch on the highest-DM days first.
   </div>
 
   <h3>Reading the charts — what they tell you and what to do about it</h3>
@@ -189,13 +206,13 @@
   </div>
 
   <h3>Conversion Funnel</h3>
-  <p>This is the <strong>most diagnostic view in the dashboard</strong>. It doesn't just show you how many calls succeeded — it shows you <em>exactly where calls are breaking down</em>. Each stage shows its conversion rate from the previous step (not from total).</p>
+  <p>The funnel shows the distribution of VAPI's three call status values as a share of total dials. It is your first-pass reach diagnostic — it tells you whether SimOne is even getting through before you look at what happens on connected calls.</p>
   <div class="tip">
-    <strong>How to read the drop-offs:</strong><br>
-    — <strong>Low Connected → DM rate:</strong> Gatekeeper problem. SimOne is connecting but not getting transferred. Focus on the gatekeeper script.<br>
-    — <strong>Low DM → Interest rate:</strong> Pitch problem. The decision maker is hearing SimOne but not engaging. Review the discovery questions and opening.<br>
-    — <strong>Low Interest → Callback rate:</strong> Follow-up process problem. Interest is there but not converting to a scheduled next step. Review how SimOne closes State 7.<br>
-    — <strong>Low Callback → Signed rate:</strong> Human follow-through gap. The warm pipeline exists but isn't being worked. This is a rep action item, not a SimOne fix.
+    <strong>How to read it:</strong><br>
+    — <strong>Large Answered tier (40%+):</strong> Reach is healthy. Focus on what happens after connection — check the KPI rows for DM rate and guide acceptance.<br>
+    — <strong>Large No Answer tier:</strong> Reach problem. SimOne is dialing but not connecting. Check call timing (Hour of Day chart) and number quality in the lead list.<br>
+    — <strong>Large Ended tier:</strong> VAPI is ending calls without pickup — could be bad numbers, disconnected lines, or immediate hangups. Review the Ended Reason field in a few call records to identify the pattern.<br>
+    — Use the <strong>Day of Week</strong> and <strong>Hour of Day</strong> charts alongside the funnel to understand whether reach problems are timing-related.
   </div>
 
   <h3>Call log table</h3>

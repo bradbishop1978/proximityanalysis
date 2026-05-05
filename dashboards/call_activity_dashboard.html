@@ -251,6 +251,10 @@
           <div class="filter-label">End Result</div>
           <div id="filter-results" class="filter-chips"></div>
         </div>
+        <div class="filter-group">
+          <div class="filter-label">Variant</div>
+          <div id="filter-variants" class="filter-chips"></div>
+        </div>
         <button class="btn-clear-filters" onclick="clearFilters()">Clear Filters</button>
       </div>
     </div>
@@ -334,6 +338,23 @@
       </div>
     </div>
 
+    <!-- Variant & Timing Analysis -->
+    <div class="kpi-section-label">Variant &amp; Timing Analysis</div>
+    <div class="grid3">
+      <div class="card gap">
+        <div class="section-title">Performance by Variant</div>
+        <div id="chart-variant"><div class="chart-empty">No variant data yet</div></div>
+      </div>
+      <div class="card gap">
+        <div class="section-title">Calls by Day of Week</div>
+        <div id="chart-dow"><div class="chart-empty">No data</div></div>
+      </div>
+      <div class="card gap">
+        <div class="section-title">Calls by Hour of Day</div>
+        <div id="chart-hour"><div class="chart-empty">No data</div></div>
+      </div>
+    </div>
+
     <!-- Call Log Table -->
     <div class="card">
       <div class="tbl-toolbar">
@@ -382,7 +403,7 @@ var PAGE_SIZE = 25;
 var allRecords = [];
 var filteredRecs = [];
 var fetchedAt = null;
-var activeFilters = {brands:new Set(), statuses:new Set(), results:new Set(), dateFrom:'', dateTo:''};
+var activeFilters = {brands:new Set(), statuses:new Set(), results:new Set(), variants:new Set(), dateFrom:'', dateTo:''};
 var page = 1;
 var sortCol = 'createdTime', sortAsc = false;
 
@@ -481,6 +502,8 @@ function buildFilters(){
   renderBrandDropdown(brands);
   renderChips('filter-statuses',statuses,'statuses');
   renderChips('filter-results',results,'results');
+  var variants=unique(allRecords.map(function(r){return fldStr(r,'VAPI Objective');})).filter(Boolean);
+  renderChips('filter-variants',variants,'variants');
 }
 
 // Brand dropdown ─────────────────────────────────────────────────────────────
@@ -572,7 +595,7 @@ function setDefaultDateFilter(){
 }
 
 function clearFilters(){
-  activeFilters={brands:new Set(),statuses:new Set(),results:new Set(),dateFrom:'',dateTo:''};
+  activeFilters={brands:new Set(),statuses:new Set(),results:new Set(),variants:new Set(),dateFrom:'',dateTo:''};
   el('f-from').value=''; el('f-to').value='';
   var allCb=el('brand-all-cb');
   if(allCb){allCb.checked=true;allCb.indeterminate=false;}
@@ -586,6 +609,7 @@ function applyFilters(){
     if(activeFilters.brands.size>0&&!activeFilters.brands.has(fldStr(r,'Brand'))) return false;
     if(activeFilters.statuses.size>0&&!activeFilters.statuses.has(fldStr(r,'Call Status'))) return false;
     if(activeFilters.results.size>0&&!activeFilters.results.has(fldStr(r,'End Result'))) return false;
+    if(activeFilters.variants.size>0&&!activeFilters.variants.has(fldStr(r,'VAPI Objective'))) return false;
     if(activeFilters.dateFrom||activeFilters.dateTo){
       var d=r.createdTime?r.createdTime.substring(0,10):'';
       if(activeFilters.dateFrom&&d<activeFilters.dateFrom) return false;
@@ -605,6 +629,9 @@ function renderAll(){
   renderObjectionsChart();
   renderBrandChart();
   renderDurationChart();
+  renderVariantChart();
+  renderDowChart();
+  renderHourChart();
   renderTable();
 }
 
@@ -633,7 +660,7 @@ function renderKPIs(){
 
   // Row 3
   var fu=recs.filter(function(r){return fldStr(r,'Follow-Up Scheduled');}).length;
-  var answered=recs.filter(function(r){var s=fldStr(r,'Call Status');return s==='Completed'||s==='Answered';}).length;
+  var answered=recs.filter(function(r){return fldStr(r,'Call Status')==='answered';}).length;
   var smsP=recs.filter(function(r){return isYes(fld(r,'SMS Permission'));}).length;
   var emlP=recs.filter(function(r){return isYes(fld(r,'Email Permission'));}).length;
   el('k-fu').textContent=pct(fu,n)+'%'; el('k-fu-sub').textContent=fu+' of '+n;
@@ -858,11 +885,142 @@ function renderDurationChart(){
   c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+ylbls+bars+xlbls+'</svg>';
 }
 
+// ── Variant performance ───────────────────────────────────────────────────────
+function renderVariantChart(){
+  var c=el('chart-variant');
+  var vCalls={},vDM={},vGuide={};
+  filteredRecs.forEach(function(r){
+    var v=fldStr(r,'VAPI Objective')||'(untagged)';
+    vCalls[v]=(vCalls[v]||0)+1;
+    if(isYes(fld(r,'Spoke to Manager'))) vDM[v]=(vDM[v]||0)+1;
+    if(isYes(fld(r,'SMS Permission'))||isYes(fld(r,'Email Permission'))) vGuide[v]=(vGuide[v]||0)+1;
+  });
+  var variants=Object.keys(vCalls).sort(function(a,b){return vCalls[b]-vCalls[a];});
+  if(!variants.length||variants.every(function(v){return v==='(untagged)';})){
+    c.innerHTML='<div class="chart-empty">No variant data — set VAPI_OBJECTIVE in Fabi Cell 2</div>';return;
+  }
+  var maxV=Math.max.apply(null,variants.map(function(v){return vCalls[v];}));
+  var pL=110,pR=8,W=420,bH=10,gY=5,gRow=8;
+  var rowH=bH*3+gY*2+gRow;
+  var H=variants.length*rowH+24;
+  var out='';
+  variants.forEach(function(v,i){
+    var y=4+i*rowH;
+    var wC=Math.max(4,Math.round((vCalls[v]/maxV)*(W-pL-pR)));
+    var wD=Math.max(0,Math.round(((vDM[v]||0)/maxV)*(W-pL-pR)));
+    var wG=Math.max(0,Math.round(((vGuide[v]||0)/maxV)*(W-pL-pR)));
+    var name=v.length>14?v.substring(0,14)+'…':v;
+    out+=svgText(pL-6,y+bH+3,name,{anchor:'end',size:10,fill:'var(--text)'});
+    out+=svgRect(pL,y,wC,bH,'#DE4990',3);
+    out+=svgRect(pL,y+bH+gY,wD,bH,'#2C023B',3);
+    out+=svgRect(pL,y+bH*2+gY*2,wG,bH,'#10B981',3);
+    var stats=' DM:'+pct(vDM[v]||0,vCalls[v])+'% Guide:'+pct(vGuide[v]||0,vCalls[v])+'%';
+    out+=svgText(pL+wC+5,y+bH-1,vCalls[v]+stats,{size:8,fill:'var(--dark)'});
+  });
+  var legend='<div class="chart-legend"><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#DE4990"></div>Total</div><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#2C023B"></div>DM Reached</div><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#10B981"></div>Guide Accepted</div></div>';
+  c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>'+legend;
+}
+
+// ── Day of week ───────────────────────────────────────────────────────────────
+function renderDowChart(){
+  var c=el('chart-dow');
+  var days=['Mon','Tue','Wed','Thu','Fri'];
+  var calls=[0,0,0,0,0],dms=[0,0,0,0,0];
+  filteredRecs.forEach(function(r){
+    if(!r.createdTime) return;
+    var d=new Date(r.createdTime).getDay();
+    if(d<1||d>5) return;
+    var idx=d-1;
+    calls[idx]++;
+    if(isYes(fld(r,'Spoke to Manager'))) dms[idx]++;
+  });
+  if(calls.every(function(v){return v===0;})){c.innerHTML='<div class="chart-empty">No weekday data</div>';return;}
+  var W=420,H=180,pT=10,pB=28,pL=28,pR=10;
+  var pW=W-pL-pR,pH=H-pT-pB;
+  var maxV=Math.max.apply(null,calls)||1;
+  var n=5,bW=Math.min(44,pW/n*0.55),gap=(pW-bW*n)/(n+1);
+  var sx=function(i){return pL+gap*(i+1)+bW*i;};
+  var sy=function(v){return pT+pH-(v/maxV)*pH;};
+  var out='';
+  [0,Math.round(maxV/2),maxV].forEach(function(v){
+    var y=sy(v).toFixed(1);
+    out+='<line x1="'+pL+'" y1="'+y+'" x2="'+(W-pR)+'" y2="'+y+'" stroke="#EDE8F5" stroke-width="0.5"/>';
+    out+=svgText(pL-3,parseFloat(y)+3,v,{anchor:'end'});
+  });
+  days.forEach(function(day,i){
+    var x=sx(i).toFixed(1),bw=bW.toFixed(1);
+    var h=((calls[i]/maxV)*pH).toFixed(1);
+    var y=sy(calls[i]).toFixed(1);
+    out+=svgRect(x,y,bw,h,'#EB92BD',4);
+    if(dms[i]>0){
+      var dh=((dms[i]/maxV)*pH).toFixed(1);
+      var dy=sy(dms[i]).toFixed(1);
+      out+=svgRect(x,dy,bw,dh,'#DE4990',4);
+    }
+    if(calls[i]>0) out+=svgText((sx(i)+bW/2).toFixed(1),(sy(calls[i])-4).toFixed(1),calls[i],{anchor:'middle',size:9,fill:'var(--dark)'});
+    out+=svgText((sx(i)+bW/2).toFixed(1),(H-5).toFixed(1),day,{anchor:'middle',size:10,fill:'var(--muted)'});
+  });
+  var legend='<div class="chart-legend"><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#EB92BD"></div>Total Calls</div><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#DE4990"></div>DM Reached</div></div>';
+  c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>'+legend;
+}
+
+// ── Hour of day ───────────────────────────────────────────────────────────────
+function renderHourChart(){
+  var c=el('chart-hour');
+  var startH=8,endH=17,n=endH-startH+1; // 8 AM to 5 PM inclusive = 10 buckets
+  var hCalls=new Array(n).fill(0),hDMs=new Array(n).fill(0);
+  filteredRecs.forEach(function(r){
+    if(!r.createdTime) return;
+    var h=new Date(r.createdTime).getHours();
+    var idx=h-startH;
+    if(idx<0||idx>=n) return;
+    hCalls[idx]++;
+    if(isYes(fld(r,'Spoke to Manager'))) hDMs[idx]++;
+  });
+  if(hCalls.every(function(v){return v===0;})){c.innerHTML='<div class="chart-empty">No timed data</div>';return;}
+  var labels=['8AM','9AM','10AM','11AM','12PM','1PM','2PM','3PM','4PM','5PM'];
+  var W=420,H=180,pT=10,pB=28,pL=28,pR=10;
+  var pW=W-pL-pR,pH=H-pT-pB;
+  var maxV=Math.max.apply(null,hCalls)||1;
+  var bW=Math.min(30,pW/n*0.62),gap=(pW-bW*n)/(n+1);
+  var sx=function(i){return pL+gap*(i+1)+bW*i;};
+  var sy=function(v){return pT+pH-(v/maxV)*pH;};
+  // Target windows: 9-11AM (idx 1-3), 2-5PM (idx 6-9)
+  var inTarget=function(i){return (i>=1&&i<=3)||(i>=6&&i<=9);};
+  // Shaded bands
+  var bands='';
+  [[1,3],[6,9]].forEach(function(rng){
+    var x1=sx(rng[0]),x2=sx(rng[1])+bW;
+    bands+='<rect x="'+parseFloat(x1-gap/2).toFixed(1)+'" y="'+pT+'" width="'+(parseFloat(x2)-parseFloat(x1)+gap).toFixed(1)+'" height="'+pH+'" fill="#FFF1EE" rx="3"/>';
+  });
+  var out=bands;
+  [0,Math.round(maxV/2),maxV].forEach(function(v){
+    var y=sy(v).toFixed(1);
+    out+='<line x1="'+pL+'" y1="'+y+'" x2="'+(W-pR)+'" y2="'+y+'" stroke="#EDE8F5" stroke-width="0.5"/>';
+    out+=svgText(pL-3,parseFloat(y)+3,v,{anchor:'end'});
+  });
+  hCalls.forEach(function(cnt,i){
+    var x=sx(i).toFixed(1),bw=bW.toFixed(1);
+    var fill=inTarget(i)?'#DE4990':'#EB92BD';
+    var lbl=inTarget(i)?'var(--dark)':'var(--muted)';
+    if(cnt>0){
+      var h=((cnt/maxV)*pH).toFixed(1);
+      var y=sy(cnt).toFixed(1);
+      out+=svgRect(x,y,bw,h,fill,3);
+      out+=svgText((sx(i)+bW/2).toFixed(1),(sy(cnt)-4).toFixed(1),cnt,{anchor:'middle',size:8,fill:'var(--dark)'});
+    }
+    out+=svgText((sx(i)+bW/2).toFixed(1),(H-5).toFixed(1),labels[i],{anchor:'middle',size:8,fill:lbl});
+  });
+  var legend='<div class="chart-legend"><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#DE4990"></div>9–11 AM &amp; 2–5 PM target</div><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#EB92BD"></div>Outside window</div><div class="chart-legend-item"><div style="width:12px;height:12px;background:#FFF1EE;border:1px solid #EDBED4;border-radius:3px;flex-shrink:0"></div>Target band</div></div>';
+  c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>'+legend;
+}
+
 // ── Table ─────────────────────────────────────────────────────────────────────
 var COLS=[
   {key:'createdTime',label:'Date/Time'},
   {key:'Store Name',label:'Store Name'},
   {key:'Brand',label:'Brand'},
+  {key:'VAPI Objective',label:'Variant'},
   {key:'Call Status',label:'Status'},
   {key:'Contact Role',label:'Contact Role'},
   {key:'Contact Name',label:'Contact'},
@@ -909,6 +1067,7 @@ function renderTable(){
           +'<td style="color:var(--muted)">'+(r.createdTime?fmtDateTime(r.createdTime):'—')+'</td>'
           +'<td style="font-weight:600;max-width:160px;overflow:hidden;text-overflow:ellipsis">'+(fldStr(r,'Store Name')||'—')+'</td>'
           +'<td><span class="pill">'+(fldStr(r,'Brand')||'—')+'</span></td>'
+          +'<td style="font-size:11px;color:var(--muted)">'+(fldStr(r,'VAPI Objective')||'—')+'</td>'
           +'<td><span class="status-pill" style="background:'+statusColor+';color:var(--dark)">'+(fldStr(r,'Call Status')||'—')+'</span></td>'
           +'<td>'+(fldStr(r,'Contact Role')||'—')+'</td>'
           +'<td>'+(fldStr(r,'Contact Name')||'—')+'</td>'
@@ -946,6 +1105,7 @@ function openDrawerWith(rec){
     +df('Date/Time',rec.createdTime?new Date(rec.createdTime).toLocaleString():'—')
     +df('Store Name',str('Store Name'))
     +df('Brand',str('Brand'))
+    +df('Variant (VAPI Objective)',str('VAPI Objective'))
     +df('Call Status',str('Call Status'))
     +df('Ended Reason',str('Ended Reason'))
     +df('Call Duration',dur?fmtDuration(dur):'—')
@@ -990,7 +1150,7 @@ function closeDrawer(){
 // ── Export ────────────────────────────────────────────────────────────────────
 function exportCSV(){
   var all=sortedRecs();
-  var headers=['Date/Time','Store Name','Brand','Call Status','Spoke to Manager','Contact Name','Contact Role',
+  var headers=['Date/Time','Store Name','Brand','VAPI Objective','Call Status','Spoke to Manager','Contact Name','Contact Role',
                'End Result','Call Duration','Follow-Up Scheduled','Primary Objection','Callback Time',
                'SMS Permission','Email Permission','Mobile Captured (Yes/No)','Email Interest Level',
                'Voicemail SMS Sent','Ended Reason','Dialed Phone Number','Vapi Call ID'];
@@ -999,7 +1159,7 @@ function exportCSV(){
     var dur=parseDuration(fld(r,'Call Duration'));
     rows.push([
       r.createdTime?new Date(r.createdTime).toLocaleString():'',
-      fldStr(r,'Store Name'),fldStr(r,'Brand'),fldStr(r,'Call Status'),
+      fldStr(r,'Store Name'),fldStr(r,'Brand'),fldStr(r,'VAPI Objective'),fldStr(r,'Call Status'),
       fldStr(r,'Spoke to Manager'),fldStr(r,'Contact Name'),fldStr(r,'Contact Role'),
       fldStr(r,'End Result'),dur?fmtDuration(dur):'',fldStr(r,'Follow-Up Scheduled'),
       fldStr(r,'Primary Objection'),fldStr(r,'Callback Time'),

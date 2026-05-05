@@ -650,20 +650,21 @@ function renderKPIs(){
   el('k-week').textContent=week0;
   el('k-avgdur').textContent=fmtDuration(avgDur);
 
+  var answered=recs.filter(function(r){return fldStr(r,'Call Status')==='answered';}).length;
+
   // Row 2 — Reach: Spoke to Manager checkmark, Mobile/Email captured checkmarks
   var dtm=recs.filter(function(r){return isYes(fld(r,'Spoke to Manager'));}).length;
   var mob=recs.filter(function(r){return isYes(fld(r,'Mobile Captured (Yes/No)'));}).length;
   var eml=recs.filter(function(r){return isYes(fld(r,'Email Captured (Yes/No)'));}).length;
-  el('k-dtm').textContent=pct(dtm,n)+'%'; el('k-dtm-sub').textContent=dtm+' of '+n+' calls';
-  el('k-mob').textContent=pct(mob,n)+'%'; el('k-mob-sub').textContent=mob+' of '+n;
-  el('k-email').textContent=pct(eml,n)+'%'; el('k-email-sub').textContent=eml+' of '+n;
+  el('k-dtm').textContent=pct(dtm,answered||1)+'%'; el('k-dtm-sub').textContent=dtm+' of '+answered+' answered';
+  el('k-mob').textContent=pct(mob,answered||1)+'%'; el('k-mob-sub').textContent=mob+' of '+answered+' answered';
+  el('k-email').textContent=pct(eml,answered||1)+'%'; el('k-email-sub').textContent=eml+' of '+answered+' answered';
 
   // Row 3
   var fu=recs.filter(function(r){return fldStr(r,'Follow-Up Scheduled');}).length;
-  var answered=recs.filter(function(r){return fldStr(r,'Call Status')==='answered';}).length;
   var smsP=recs.filter(function(r){return isYes(fld(r,'SMS Permission'));}).length;
   var emlP=recs.filter(function(r){return isYes(fld(r,'Email Permission'));}).length;
-  el('k-fu').textContent=pct(fu,n)+'%'; el('k-fu-sub').textContent=fu+' of '+n;
+  el('k-fu').textContent=pct(fu,answered||1)+'%'; el('k-fu-sub').textContent=fu+' of '+answered+' answered';
   el('k-sms').textContent=pct(smsP,answered||1)+'%'; el('k-sms-sub').textContent=smsP+' of '+answered+' answered';
   el('k-eperm').textContent=pct(emlP,answered||1)+'%'; el('k-eperm-sub').textContent=emlP+' of '+answered+' answered';
 

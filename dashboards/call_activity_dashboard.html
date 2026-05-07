@@ -303,6 +303,15 @@
       </div>
     </div>
 
+    <!-- KPI Row 5: Execution Health -->
+    <div class="kpi-section-label">Execution Health</div>
+    <div class="grid4 gap">
+      <div class="metric-card"><div class="metric-label">VAPI Failure Rate</div><div id="k-vapi-fail" class="metric-val">0%</div><div id="k-vapi-fail-sub" class="metric-sub">pre-dial errors</div></div>
+      <div class="metric-card"><div class="metric-label">IVR Wall Rate</div><div id="k-ivr-wall" class="metric-val">0%</div><div id="k-ivr-wall-sub" class="metric-sub">of answered calls</div></div>
+      <div class="metric-card"><div class="metric-label">True Human Rate</div><div id="k-true-human" class="metric-val">0%</div><div id="k-true-human-sub" class="metric-sub">humans reached</div></div>
+      <div class="metric-card"><div class="metric-label">Voicemail Block Rate</div><div id="k-vm-blocked" class="metric-val">0%</div><div id="k-vm-blocked-sub" class="metric-sub">of no-answer calls</div></div>
+    </div>
+
     <!-- Conversion Funnel + Daily Volume -->
     <div class="grid2">
       <div class="card gap">
@@ -335,6 +344,19 @@
       <div class="card gap">
         <div class="section-title">Avg Duration by Call Status</div>
         <div id="chart-duration"><div class="chart-empty">No data</div></div>
+      </div>
+    </div>
+
+    <!-- Call Intelligence -->
+    <div class="kpi-section-label">Call Intelligence</div>
+    <div class="grid2">
+      <div class="card gap">
+        <div class="section-title">Call Duration Distribution</div>
+        <div id="chart-dur-buckets"><div class="chart-empty">No data</div></div>
+      </div>
+      <div class="card gap">
+        <div class="section-title">IVR / List Quality by Brand</div>
+        <div id="chart-ivr-brand"><div class="chart-empty">No data</div></div>
       </div>
     </div>
 
@@ -435,6 +457,26 @@ function pct(n,d){return d===0?0:Math.round(n/d*100);}
 function fld(rec,name){return rec.fields[name]||null;}
 function fldStr(rec,name){return rec.fields[name]||'';}
 function isYes(val){return val===true||val==='Yes'||val==='yes';}
+function getRecordDate(r){
+  var s=r.fields&&r.fields['Call Started At'];
+  if(s) return s.substring(0,10);
+  return r.createdTime?r.createdTime.substring(0,10):'';
+}
+function getRecordDateTimeStr(r){
+  return (r.fields&&r.fields['Call Started At'])||r.createdTime||'';
+}
+function isIVR(r){
+  var er=(fldStr(r,'Ended Reason')||'').toLowerCase();
+  var nt=(fldStr(r,'Dialed Number Type')||'').toLowerCase();
+  return nt==='shared'||er.indexOf('automated')>-1||er.indexOf('phone tree')>-1||
+    er.indexOf('ivr')>-1||er.indexOf('no human')>-1||er.indexOf('screening system')>-1||
+    er.indexOf('automated phone')>-1;
+}
+function isVmBlocked(r){
+  var er=(fldStr(r,'Ended Reason')||'').toLowerCase();
+  return er.indexOf('not accepting')>-1||er.indexOf('box full')>-1||er.indexOf('mailbox full')>-1||
+    er.indexOf('not set up')>-1||er.indexOf('unable to leave')>-1||er.indexOf('voicemail full')>-1;
+}
 function getMondayOf(d){var dt=new Date(d),day=dt.getDay();dt.setDate(dt.getDate()-(day===0?6:day-1));dt.setHours(0,0,0,0);return dt;}
 function escAttr(s){return String(s).replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
 
@@ -611,7 +653,7 @@ function applyFilters(){
     if(activeFilters.results.size>0&&!activeFilters.results.has(fldStr(r,'End Result'))) return false;
     if(activeFilters.variants.size>0&&!activeFilters.variants.has(fldStr(r,'VAPI Objective'))) return false;
     if(activeFilters.dateFrom||activeFilters.dateTo){
-      var d=r.createdTime?r.createdTime.substring(0,10):'';
+      var d=getRecordDate(r);
       if(activeFilters.dateFrom&&d<activeFilters.dateFrom) return false;
       if(activeFilters.dateTo&&d>activeFilters.dateTo) return false;
     }
@@ -629,6 +671,8 @@ function renderAll(){
   renderObjectionsChart();
   renderBrandChart();
   renderDurationChart();
+  renderDurationBuckets();
+  renderIVRBrandChart();
   renderVariantChart();
   renderDowChart();
   renderHourChart();
@@ -640,9 +684,17 @@ function renderKPIs(){
   var recs=filteredRecs, n=recs.length;
   var todStr=today(), mon=getMondayOf(new Date());
 
+  // Pre-compute execution metrics used across rows
+  var answered=recs.filter(function(r){return fldStr(r,'Call Status')==='answered';}).length;
+  var noAnswer=recs.filter(function(r){return fldStr(r,'Call Status')==='no_answer';}).length;
+  var vapiFailCount=recs.filter(function(r){return fldStr(r,'Call Status')==='ended';}).length;
+  var ivrHits=recs.filter(function(r){return fldStr(r,'Call Status')==='answered'&&isIVR(r);}).length;
+  var vmBlocked=recs.filter(function(r){return fldStr(r,'Call Status')==='no_answer'&&isVmBlocked(r);}).length;
+  var trueAnswered=answered-ivrHits;
+
   // Row 1
-  var today0=recs.filter(function(r){return r.createdTime&&r.createdTime.substring(0,10)===todStr;}).length;
-  var week0=recs.filter(function(r){return r.createdTime&&new Date(r.createdTime)>=mon;}).length;
+  var today0=recs.filter(function(r){return getRecordDate(r)===todStr;}).length;
+  var week0=recs.filter(function(r){var dt=getRecordDateTimeStr(r);return dt&&new Date(dt)>=mon;}).length;
   var durs=recs.map(function(r){return parseDuration(fld(r,'Call Duration'));}).filter(function(v){return v>0;});
   var avgDur=durs.length?Math.round(durs.reduce(function(a,b){return a+b;},0)/durs.length):0;
   el('k-total').textContent=n;
@@ -650,23 +702,21 @@ function renderKPIs(){
   el('k-week').textContent=week0;
   el('k-avgdur').textContent=fmtDuration(avgDur);
 
-  var answered=recs.filter(function(r){return fldStr(r,'Call Status')==='answered';}).length;
-
-  // Row 2 — Reach: Spoke to Manager checkmark, Mobile/Email captured checkmarks
+  // Row 2 — Reach: DM% over true humans; mobile/email over total
   var dtm=recs.filter(function(r){return isYes(fld(r,'Spoke to Manager'));}).length;
   var mob=recs.filter(function(r){return isYes(fld(r,'Mobile Captured (Yes/No)'));}).length;
   var eml=recs.filter(function(r){return isYes(fld(r,'Email Captured (Yes/No)'));}).length;
-  el('k-dtm').textContent=pct(dtm,answered||1)+'%'; el('k-dtm-sub').textContent=dtm+' of '+answered+' answered';
-  el('k-mob').textContent=pct(mob,answered||1)+'%'; el('k-mob-sub').textContent=mob+' of '+answered+' answered';
-  el('k-email').textContent=pct(eml,answered||1)+'%'; el('k-email-sub').textContent=eml+' of '+answered+' answered';
+  el('k-dtm').textContent=pct(dtm,trueAnswered||1)+'%'; el('k-dtm-sub').textContent=dtm+' of '+trueAnswered+' humans';
+  el('k-mob').textContent=pct(mob,n)+'%'; el('k-mob-sub').textContent=mob+' of '+n;
+  el('k-email').textContent=pct(eml,n)+'%'; el('k-email-sub').textContent=eml+' of '+n;
 
-  // Row 3
+  // Row 3 — Outcomes: Follow-Up over trueAnswered; permissions over DM reached
   var fu=recs.filter(function(r){return fldStr(r,'Follow-Up Scheduled');}).length;
   var smsP=recs.filter(function(r){return isYes(fld(r,'SMS Permission'));}).length;
   var emlP=recs.filter(function(r){return isYes(fld(r,'Email Permission'));}).length;
-  el('k-fu').textContent=pct(fu,answered||1)+'%'; el('k-fu-sub').textContent=fu+' of '+answered+' answered';
-  el('k-sms').textContent=pct(smsP,answered||1)+'%'; el('k-sms-sub').textContent=smsP+' of '+answered+' answered';
-  el('k-eperm').textContent=pct(emlP,answered||1)+'%'; el('k-eperm-sub').textContent=emlP+' of '+answered+' answered';
+  el('k-fu').textContent=pct(fu,trueAnswered||1)+'%'; el('k-fu-sub').textContent=fu+' of '+trueAnswered+' humans';
+  el('k-sms').textContent=pct(smsP,dtm||1)+'%'; el('k-sms-sub').textContent=smsP+' of '+dtm+' DMs';
+  el('k-eperm').textContent=pct(emlP,dtm||1)+'%'; el('k-eperm-sub').textContent=emlP+' of '+dtm+' DMs';
 
   // Row 4 — Interest
   var intLevels=['high','medium','low','none'];
@@ -691,17 +741,32 @@ function renderKPIs(){
   el('k-results').innerHTML=topRes.length
     ? topRes.map(function(k){return '<div class="result-pill">'+k+'<span class="result-pill-count">'+resCounts[k]+'</span></div>';}).join('')
     : '<span style="color:var(--gray);font-size:13px">No data</span>';
+
+  // Row 5 — Execution Health
+  var connected=n-vapiFailCount;
+  el('k-vapi-fail').textContent=pct(vapiFailCount,n||1)+'%';
+  el('k-vapi-fail-sub').textContent=vapiFailCount+' of '+n+' calls failed pre-dial';
+  el('k-ivr-wall').textContent=pct(ivrHits,answered||1)+'%';
+  el('k-ivr-wall-sub').textContent=ivrHits+' of '+answered+' answered';
+  el('k-true-human').textContent=pct(trueAnswered,connected||1)+'%';
+  el('k-true-human-sub').textContent=trueAnswered+' humans of '+connected+' connected';
+  el('k-vm-blocked').textContent=pct(vmBlocked,noAnswer||1)+'%';
+  el('k-vm-blocked-sub').textContent=vmBlocked+' of '+noAnswer+' voicemails';
 }
 
 // ── Conversion Funnel ─────────────────────────────────────────────────────────
 function renderFunnel(){
   var recs=filteredRecs, total=recs.length;
   if(!total){el('funnel').innerHTML='<div class="chart-empty">No data</div>';return;}
+  var answeredCount=recs.filter(function(r){return fldStr(r,'Call Status')==='answered';}).length;
+  var ivrCount=recs.filter(function(r){return fldStr(r,'Call Status')==='answered'&&isIVR(r);}).length;
+  var noAnswerCount=recs.filter(function(r){return fldStr(r,'Call Status')==='no_answer';}).length;
+  var vmBlockedCount=recs.filter(function(r){return fldStr(r,'Call Status')==='no_answer'&&isVmBlocked(r);}).length;
   var stages=[
-    {label:'Total Calls Dialed', count:total},
-    {label:'Answered', count:recs.filter(function(r){return fldStr(r,'Call Status')==='answered';}).length},
-    {label:'Ended (no pickup)', count:recs.filter(function(r){return fldStr(r,'Call Status')==='ended';}).length},
-    {label:'No Answer (voicemail)', count:recs.filter(function(r){return fldStr(r,'Call Status')==='no_answer';}).length}
+    {label:'Total Calls Dialed', count:total, sub:''},
+    {label:'Answered (human + IVR)', count:answeredCount, sub:ivrCount>0?'incl. '+ivrCount+' IVR wall'+(ivrCount>1?'s':''):''},
+    {label:'VAPI Failed', count:recs.filter(function(r){return fldStr(r,'Call Status')==='ended';}).length, sub:'pre-dial error'},
+    {label:'No Answer (voicemail)', count:noAnswerCount, sub:vmBlockedCount>0?vmBlockedCount+' blocked / full':''}
   ];
   var html='';
   stages.forEach(function(s,i){
@@ -710,7 +775,7 @@ function renderFunnel(){
     var opacity=1-i*0.12;
     html+='<div class="funnel-stage">'
       +'<div class="funnel-bar-wrap"><div class="funnel-bar" style="width:'+widthPct+'%;background:linear-gradient(90deg,#DE4990,#2C023B);opacity:'+opacity.toFixed(2)+'">'
-        +'<span class="funnel-bar-label">'+s.label+'</span>'
+        +'<span class="funnel-bar-label">'+s.label+(s.sub?' <span style="font-size:10px;opacity:0.75">('+s.sub+')</span>':'')+'</span>'
         +'<span class="funnel-bar-count">'+s.count+'</span>'
       +'</div></div>'
       +'<div class="funnel-conv">'+convTxt+'</div>'
@@ -738,7 +803,7 @@ function renderDailyChart(){
   var days=[];
   for(var i=13;i>=0;i--){var d=new Date();d.setDate(d.getDate()-i);days.push(fmtYMD(d));}
   var counts=days.map(function(d){
-    return filteredRecs.filter(function(r){return r.createdTime&&r.createdTime.substring(0,10)===d;}).length;
+    return filteredRecs.filter(function(r){return getRecordDate(r)===d;}).length;
   });
   if(counts.every(function(v){return v===0;})){c.innerHTML='<div class="chart-empty">No calls in last 14 days</div>';return;}
   var W=460,H=140,pT=10,pB=28,pL=28,pR=16;
@@ -777,22 +842,22 @@ function renderResultsDonut(){
   var data=Object.keys(counts).sort(function(a,b){return counts[b]-counts[a];}).map(function(k){return {name:k,v:counts[k]};});
   if(!data.length){c.innerHTML='<div class="chart-empty">No data</div>';return;}
   var total=data.reduce(function(s,d){return s+d.v;},0);
-  var R=70,cx=90,cy=90,circ=2*Math.PI*R;
+  var R=44,cx=60,cy=60,circ=2*Math.PI*R;
   var segs='',offset=-0.25;
   data.forEach(function(d,i){
     var frac=d.v/total,dash=(frac*circ).toFixed(2),gap=((1-frac)*circ).toFixed(2);
     var rot=(offset*360).toFixed(1);
-    segs+='<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="none" stroke="'+COLORS[i%COLORS.length]+'" stroke-width="16" stroke-dasharray="'+dash+' '+gap+'" transform="rotate('+rot+' '+cx+' '+cy+')"/>';
+    segs+='<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="none" stroke="'+COLORS[i%COLORS.length]+'" stroke-width="14" stroke-dasharray="'+dash+' '+gap+'" transform="rotate('+rot+' '+cx+' '+cy+')"/>';
     offset+=frac;
   });
   var legend=data.slice(0,6).map(function(d,i){
     return '<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:'+COLORS[i%COLORS.length]+'"></div><span>'+d.name+' ('+d.v+')</span></div>';
   }).join('');
-  c.innerHTML='<div style="display:flex;flex-direction:column;align-items:center;gap:14px">'
-    +'<svg viewBox="0 0 180 180" style="width:100%;max-width:220px">'+segs
-    +'<text x="'+cx+'" y="'+(cy+8)+'" text-anchor="middle" font-family="Gabarito,sans-serif" font-size="24" font-weight="800" fill="var(--dark)">'+total+'</text>'
-    +'<text x="'+cx+'" y="'+(cy+22)+'" text-anchor="middle" font-size="11" fill="var(--muted)">calls</text>'
-    +'</svg><div class="chart-legend" style="flex-direction:column;gap:6px">'+legend+'</div></div>';
+  c.innerHTML='<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">'
+    +'<svg viewBox="0 0 120 120" style="width:120px;height:120px;flex-shrink:0">'+segs
+    +'<text x="'+cx+'" y="'+(cy+5)+'" text-anchor="middle" font-family="Gabarito,sans-serif" font-size="16" font-weight="800" fill="var(--dark)">'+total+'</text>'
+    +'<text x="'+cx+'" y="'+(cy+17)+'" text-anchor="middle" font-size="9" fill="var(--muted)">calls</text>'
+    +'</svg><div class="chart-legend" style="flex-direction:column;gap:8px">'+legend+'</div></div>';
 }
 
 // ── Objections horizontal bar ─────────────────────────────────────────────────
@@ -819,35 +884,40 @@ function renderObjectionsChart(){
 // ── Brand performance (horizontal bars: calls) ───────────────────────────────
 function renderBrandChart(){
   var c=el('chart-brands');
-  var brandCalls={},brandDM={},brandFU={};
+  var brandCalls={},brandDM={},brandFU={},brandIVR={};
   filteredRecs.forEach(function(r){
     var b=fldStr(r,'Brand')||'Unknown';
     brandCalls[b]=(brandCalls[b]||0)+1;
     if(isYes(fld(r,'Spoke to Manager'))) brandDM[b]=(brandDM[b]||0)+1;
     if(fldStr(r,'Follow-Up Scheduled')) brandFU[b]=(brandFU[b]||0)+1;
+    if(fldStr(r,'Call Status')==='answered'&&isIVR(r)) brandIVR[b]=(brandIVR[b]||0)+1;
   });
   var brands=Object.keys(brandCalls).sort(function(a,b){return brandCalls[b]-brandCalls[a];}).slice(0,6);
   if(!brands.length){c.innerHTML='<div class="chart-empty">No brand data</div>';return;}
   var maxV=Math.max.apply(null,brands.map(function(b){return brandCalls[b];}));
-  var pL=120,pR=8,W=420,bH=16,gap=10;
-  var rowH=bH+gap;
-  var H=brands.length*rowH+4;
+  var pL=120,pR=8,W=420,bH=10,gY=6,gRow=8;
+  var rowH=bH*4+gY*3+gRow;
+  var pT=4;
+  var H=brands.length*rowH+pT;
   var out='';
   brands.forEach(function(b,i){
-    var y=4+i*rowH;
+    var y=pT+i*rowH;
     var wC=Math.max(4,Math.round((brandCalls[b]/maxV)*(W-pL-pR)));
     var wD=Math.max(0,Math.round(((brandDM[b]||0)/maxV)*(W-pL-pR)));
     var wF=Math.max(0,Math.round(((brandFU[b]||0)/maxV)*(W-pL-pR)));
-    out+=svgText(pL-6,y+bH/2+3,b,{anchor:'end',size:10,fill:'var(--text)'});
-    out+=svgRect(pL,y,wC,bH,'#F5CDE0',3);
-    if(wD>0) out+=svgRect(pL,y,wD,bH,'#EB92BD',3);
-    if(wF>0) out+=svgRect(pL,y,wF,bH,'#DE4990',3);
-    out+=svgText(pL+wC+4,y+bH/2+3,brandCalls[b],{size:9,fill:'var(--dark)'});
+    var wI=Math.max(0,Math.round(((brandIVR[b]||0)/maxV)*(W-pL-pR)));
+    out+=svgText(pL-6,y+bH+3,b,{anchor:'end',size:10,fill:'var(--text)'});
+    out+=svgRect(pL,y,wC,bH,'#DE4990',3);
+    out+=svgRect(pL,y+bH+gY,wD,bH,'#2C023B',3);
+    out+=svgRect(pL,y+bH*2+gY*2,wF,bH,'#10B981',3);
+    out+=svgRect(pL,y+bH*3+gY*3,wI,bH,'#C0B0CC',3);
+    out+=svgText(pL+wC+4,y+bH-1,brandCalls[b],{size:9,fill:'var(--dark)'});
   });
   var legend='<div class="chart-legend">'
-    +'<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#F5CDE0"></div>Total Calls</div>'
-    +'<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#EB92BD"></div>DM Reached</div>'
-    +'<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#DE4990"></div>Follow-Up</div>'
+    +'<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#DE4990"></div>Total Calls</div>'
+    +'<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#2C023B"></div>DM Reached</div>'
+    +'<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#10B981"></div>Follow-Up</div>'
+    +'<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#C0B0CC"></div>IVR Walls</div>'
     +'</div>';
   c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>'+legend;
 }
@@ -896,13 +966,15 @@ function renderVariantChart(){
     if(isYes(fld(r,'SMS Permission'))||isYes(fld(r,'Email Permission'))) vGuide[v]=(vGuide[v]||0)+1;
   });
   var variants=Object.keys(vCalls).sort(function(a,b){return vCalls[b]-vCalls[a];});
-  if(!variants.length||variants.every(function(v){return v==='(untagged)';})){
-    c.innerHTML='<div class="chart-empty">No variant data — set VAPI_OBJECTIVE in Fabi Cell 2</div>';return;
+  var totalTagged=variants.filter(function(v){return v!=='(untagged)';}).reduce(function(s,v){return s+vCalls[v];},0);
+  var totalAll=variants.reduce(function(s,v){return s+vCalls[v];},0)||1;
+  if(!variants.length||totalTagged/totalAll<0.1){
+    c.innerHTML='<div class="chart-empty" style="text-align:left;padding:12px;font-size:12px">⚠ Variant data missing — VAPI Objective field is empty for '+(totalAll-totalTagged)+' of '+totalAll+' records.<br><span style="color:var(--muted)">Fix: set VAPI_OBJECTIVE in the VAPI analysisPlan config before the next batch run.</span></div>';return;
   }
   var maxV=Math.max.apply(null,variants.map(function(v){return vCalls[v];}));
-  var pL=110,pR=8,W=420,bH=16,gap=10;
-  var rowH=bH+gap;
-  var H=variants.length*rowH+4;
+  var pL=110,pR=8,W=420,bH=10,gY=5,gRow=8;
+  var rowH=bH*3+gY*2+gRow;
+  var H=variants.length*rowH+24;
   var out='';
   variants.forEach(function(v,i){
     var y=4+i*rowH;
@@ -910,14 +982,14 @@ function renderVariantChart(){
     var wD=Math.max(0,Math.round(((vDM[v]||0)/maxV)*(W-pL-pR)));
     var wG=Math.max(0,Math.round(((vGuide[v]||0)/maxV)*(W-pL-pR)));
     var name=v.length>14?v.substring(0,14)+'…':v;
-    out+=svgText(pL-6,y+bH/2+3,name,{anchor:'end',size:10,fill:'var(--text)'});
-    out+=svgRect(pL,y,wC,bH,'#F5CDE0',3);
-    if(wD>0) out+=svgRect(pL,y,wD,bH,'#EB92BD',3);
-    if(wG>0) out+=svgRect(pL,y,wG,bH,'#DE4990',3);
+    out+=svgText(pL-6,y+bH+3,name,{anchor:'end',size:10,fill:'var(--text)'});
+    out+=svgRect(pL,y,wC,bH,'#DE4990',3);
+    out+=svgRect(pL,y+bH+gY,wD,bH,'#2C023B',3);
+    out+=svgRect(pL,y+bH*2+gY*2,wG,bH,'#10B981',3);
     var stats=' DM:'+pct(vDM[v]||0,vCalls[v])+'% Guide:'+pct(vGuide[v]||0,vCalls[v])+'%';
-    out+=svgText(pL+wC+5,y+bH/2+3,vCalls[v]+stats,{size:8,fill:'var(--dark)'});
+    out+=svgText(pL+wC+5,y+bH-1,vCalls[v]+stats,{size:8,fill:'var(--dark)'});
   });
-  var legend='<div class="chart-legend"><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#F5CDE0"></div>Total</div><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#EB92BD"></div>DM Reached</div><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#DE4990"></div>Guide Accepted</div></div>';
+  var legend='<div class="chart-legend"><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#DE4990"></div>Total</div><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#2C023B"></div>DM Reached</div><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#10B981"></div>Guide Accepted</div></div>';
   c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>'+legend;
 }
 
@@ -927,8 +999,8 @@ function renderDowChart(){
   var days=['Mon','Tue','Wed','Thu','Fri'];
   var calls=[0,0,0,0,0],dms=[0,0,0,0,0];
   filteredRecs.forEach(function(r){
-    if(!r.createdTime) return;
-    var d=new Date(r.createdTime).getDay();
+    var dt=getRecordDateTimeStr(r); if(!dt) return;
+    var d=new Date(dt).getDay();
     if(d<1||d>5) return;
     var idx=d-1;
     calls[idx]++;
@@ -970,8 +1042,8 @@ function renderHourChart(){
   var startH=8,endH=17,n=endH-startH+1; // 8 AM to 5 PM inclusive = 10 buckets
   var hCalls=new Array(n).fill(0),hDMs=new Array(n).fill(0);
   filteredRecs.forEach(function(r){
-    if(!r.createdTime) return;
-    var h=new Date(r.createdTime).getHours();
+    var dt=getRecordDateTimeStr(r); if(!dt) return;
+    var h=new Date(dt).getHours();
     var idx=h-startH;
     if(idx<0||idx>=n) return;
     hCalls[idx]++;
@@ -1015,6 +1087,96 @@ function renderHourChart(){
   c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>'+legend;
 }
 
+// ── Call Duration Distribution (True Answered only) ──────────────────────────
+function renderDurationBuckets(){
+  var c=el('chart-dur-buckets');
+  if(!c){return;}
+  var recs=filteredRecs;
+  var trueHuman=recs.filter(function(r){return fldStr(r,'Call Status')==='answered'&&!isIVR(r);});
+  var ivrCalls=recs.filter(function(r){return fldStr(r,'Call Status')==='answered'&&isIVR(r);});
+  var buckets=[
+    {label:'Ghost (0–5s)',min:0,max:5,color:'#AEAEAE'},
+    {label:'Hang-up (6–15s)',min:6,max:15,color:'#ED8585'},
+    {label:'Partial (16–60s)',min:16,max:60,color:'#F59E0B'},
+    {label:'Conversation (61–180s)',min:61,max:180,color:'#60A5FA'},
+    {label:'Win Zone (180s+)',min:181,max:Infinity,color:'#10B981'}
+  ];
+  var counts=buckets.map(function(b){
+    return trueHuman.filter(function(r){
+      var d=parseDuration(fld(r,'Call Duration'));
+      return d>=b.min&&d<=b.max;
+    }).length;
+  });
+  var humanTotal=trueHuman.length||1;
+  var ivrTotal=ivrCalls.length;
+  var W=420,barH=22,gap=8,pL=200,pR=60,pT=4;
+  var H=(buckets.length+1)*(barH+gap)+pT+20;
+  var maxCount=Math.max.apply(null,counts)||1;
+  var out='';
+  buckets.forEach(function(b,i){
+    var y=pT+i*(barH+gap);
+    var bW=Math.max(4,Math.round((counts[i]/maxCount)*(W-pL-pR)));
+    out+=svgText(pL-8,y+barH/2+3,b.label,{anchor:'end',size:10,fill:'var(--text)'});
+    out+=svgRect(pL,y,bW,barH,b.color,4);
+    out+=svgText(pL+bW+6,y+barH/2+3,counts[i]+' ('+pct(counts[i],humanTotal)+'%)',{size:10,fill:'var(--dark)',weight:600});
+  });
+  // IVR excluded row
+  var ivrY=pT+buckets.length*(barH+gap)+gap;
+  var ivrW=Math.max(4,Math.round((ivrTotal/Math.max(ivrTotal,maxCount))*(W-pL-pR)));
+  out+=svgText(pL-8,ivrY+barH/2+3,'IVR / Automated',{anchor:'end',size:10,fill:'var(--muted)'});
+  out+=svgRect(pL,ivrY,Math.max(4,ivrW),barH,'#EDE8F5',4);
+  out+=svgText(pL+Math.max(4,ivrW)+6,ivrY+barH/2+3,ivrTotal+' excluded from above',{size:9,fill:'var(--muted)'});
+  c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>'
+    +'<div style="font-size:11px;color:var(--muted);margin-top:4px">Scoped to '+trueHuman.length+' true-human answered calls. IVR machine time excluded.</div>';
+}
+
+// ── IVR / List Quality by Brand ───────────────────────────────────────────────
+function renderIVRBrandChart(){
+  var c=el('chart-ivr-brand');
+  if(!c){return;}
+  var brandAnswered={},brandIVR={},brandVmBlocked={},brandNoAnswer={};
+  filteredRecs.forEach(function(r){
+    var b=fldStr(r,'Brand')||'Unknown';
+    var st=fldStr(r,'Call Status');
+    if(st==='answered'){
+      brandAnswered[b]=(brandAnswered[b]||0)+1;
+      if(isIVR(r)) brandIVR[b]=(brandIVR[b]||0)+1;
+    }
+    if(st==='no_answer'){
+      brandNoAnswer[b]=(brandNoAnswer[b]||0)+1;
+      if(isVmBlocked(r)) brandVmBlocked[b]=(brandVmBlocked[b]||0)+1;
+    }
+  });
+  var brands=Object.keys(brandAnswered).sort(function(a,b){return brandAnswered[b]-brandAnswered[a];}).slice(0,6);
+  if(!brands.length){c.innerHTML='<div class="chart-empty">No brand data</div>';return;}
+  var W=420,barH=18,gY=4,gRow=10,pL=120,pR=70,pT=4;
+  var rowH=barH*2+gY+gRow;
+  var H=brands.length*rowH+pT+20;
+  var out='';
+  brands.forEach(function(b,i){
+    var y=pT+i*rowH;
+    var ans=brandAnswered[b]||1;
+    var ivr=brandIVR[b]||0;
+    var na=brandNoAnswer[b]||0;
+    var vmb=brandVmBlocked[b]||0;
+    var ivrPct=pct(ivr,ans);
+    var vmPct=pct(vmb,na||1);
+    var ivrW=Math.max(ivrPct>0?4:0,Math.round((ivrPct/100)*(W-pL-pR)));
+    var vmW=Math.max(vmPct>0?4:0,Math.round((vmPct/100)*(W-pL-pR)));
+    out+=svgText(pL-6,y+barH+3,b,{anchor:'end',size:10,fill:'var(--text)'});
+    out+=svgRect(0,y,W,barH*2+gY,'#FAF8FC',0);
+    out+=svgRect(pL,y,Math.max(4,ivrW),barH,'#C0B0CC',3);
+    out+=svgText(pL+Math.max(4,ivrW)+5,y+barH-3,ivrPct+'% IVR ('+ivr+'/'+ans+' answered)',{size:9,fill:'var(--dark)'});
+    out+=svgRect(pL,y+barH+gY,Math.max(4,vmW),barH,'#F59E0B',3);
+    out+=svgText(pL+Math.max(4,vmW)+5,y+barH+gY+barH-3,vmPct+'% VM blocked ('+vmb+'/'+na+' no-ans)',{size:9,fill:'var(--dark)'});
+  });
+  var legend='<div class="chart-legend">'
+    +'<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#C0B0CC"></div>IVR Wall Rate (of answered)</div>'
+    +'<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#F59E0B"></div>Voicemail Block Rate (of no-answer)</div>'
+    +'</div>';
+  c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>'+legend;
+}
+
 // ── Table ─────────────────────────────────────────────────────────────────────
 var COLS=[
   {key:'createdTime',label:'Date/Time'},
@@ -1033,7 +1195,7 @@ function sortedRecs(){
   var recs=filteredRecs.slice();
   recs.sort(function(a,b){
     var av,bv;
-    if(sortCol==='createdTime'){av=a.createdTime||'';bv=b.createdTime||'';}
+    if(sortCol==='createdTime'){av=getRecordDateTimeStr(a);bv=getRecordDateTimeStr(b);}
     else{av=fldStr(a,sortCol);bv=fldStr(b,sortCol);}
     if(av<bv) return sortAsc?-1:1;
     if(av>bv) return sortAsc?1:-1;
@@ -1064,7 +1226,7 @@ function renderTable(){
         var dur=parseDuration(fld(r,'Call Duration'));
         var statusColor={'Completed':'#D1FAE5','Answered':'#D1FAE5','No Answer':'#FEE2E2','Voicemail':'#FEF3C7'}[fldStr(r,'Call Status')]||'var(--pink-pale)';
         return '<tr class="data-row" onclick="openDrawer(this)" data-id="'+r.id+'">'
-          +'<td style="color:var(--muted)">'+(r.createdTime?fmtDateTime(r.createdTime):'—')+'</td>'
+          +'<td style="color:var(--muted)">'+(getRecordDateTimeStr(r)?fmtDateTime(getRecordDateTimeStr(r)):'—')+'</td>'
           +'<td style="font-weight:600;max-width:160px;overflow:hidden;text-overflow:ellipsis">'+(fldStr(r,'Store Name')||'—')+'</td>'
           +'<td><span class="pill">'+(fldStr(r,'Brand')||'—')+'</span></td>'
           +'<td style="font-size:11px;color:var(--muted)">'+(fldStr(r,'VAPI Objective')||'—')+'</td>'

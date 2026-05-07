@@ -262,7 +262,7 @@
     <!-- KPI Row 1: Volume -->
     <div class="kpi-section-label">Volume</div>
     <div class="grid4 gap">
-      <div class="metric-card"><div class="metric-label">Total Calls</div><div id="k-total" class="metric-val">0</div></div>
+      <div class="metric-card"><div class="metric-label">Total Calls</div><div id="k-total" class="metric-val">0</div><div id="k-total-breakdown" class="metric-sub" style="margin-top:6px;font-size:12px;line-height:1.8"></div></div>
       <div class="metric-card"><div class="metric-label">Today</div><div id="k-today" class="metric-val">0</div></div>
       <div class="metric-card"><div class="metric-label">This Week</div><div id="k-week" class="metric-val">0</div></div>
       <div class="metric-card"><div class="metric-label">Avg Duration</div><div id="k-avgdur" class="metric-val">0:00</div><div class="metric-sub">per call</div></div>
@@ -696,6 +696,8 @@ function renderKPIs(){
   var durs=recs.map(function(r){return parseDuration(fld(r,'Call Duration'));}).filter(function(v){return v>0;});
   var avgDur=durs.length?Math.round(durs.reduce(function(a,b){return a+b;},0)/durs.length):0;
   el('k-total').textContent=n;
+  var vmDelivered=noAnswer-vmBlocked;
+  el('k-total-breakdown').innerHTML='👤 '+trueAnswered+'&nbsp;&nbsp;🤖 '+ivrHits+'&nbsp;&nbsp;📵 '+vmDelivered+'<br>'+'🚫 '+vmBlocked+'&nbsp;&nbsp;☎ '+vapiFailCount;
   el('k-today').textContent=today0;
   el('k-week').textContent=week0;
   el('k-avgdur').textContent=fmtDuration(avgDur);

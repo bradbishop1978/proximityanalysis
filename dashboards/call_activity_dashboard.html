@@ -319,7 +319,7 @@
         <div id="funnel"></div>
       </div>
       <div class="card gap">
-        <div class="section-title">Daily Call Volume (14 days)</div>
+        <div class="section-title">Daily Call Volume</div>
         <div id="chart-daily"><div class="chart-empty">No data</div></div>
       </div>
     </div>
@@ -458,12 +458,10 @@ function fld(rec,name){return rec.fields[name]||null;}
 function fldStr(rec,name){return rec.fields[name]||'';}
 function isYes(val){return val===true||val==='Yes'||val==='yes';}
 function getRecordDate(r){
-  var s=r.fields&&r.fields['Call Started At'];
-  if(s) return s.substring(0,10);
   return r.createdTime?r.createdTime.substring(0,10):'';
 }
 function getRecordDateTimeStr(r){
-  return (r.fields&&r.fields['Call Started At'])||r.createdTime||'';
+  return r.createdTime||'';
 }
 function isIVR(r){
   var er=(fldStr(r,'Ended Reason')||'').toLowerCase();
@@ -796,24 +794,25 @@ function svgText(x,y,txt,opts){
 }
 function svgRect(x,y,w,h,fill,rx){return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+fill+'" rx="'+(rx||0)+'"/>';}
 
-// ── Daily call volume (line chart) ───────────────────────────────────────────
+// ── Daily call volume (auto-range line chart) ────────────────────────────────
 function renderDailyChart(){
   var c=el('chart-daily');
-  // last 14 days
-  var days=[];
-  for(var i=13;i>=0;i--){var d=new Date();d.setDate(d.getDate()-i);days.push(fmtYMD(d));}
-  var counts=days.map(function(d){
-    return filteredRecs.filter(function(r){return getRecordDate(r)===d;}).length;
+  var dateCounts={};
+  filteredRecs.forEach(function(r){
+    var d=getRecordDate(r);
+    if(d) dateCounts[d]=(dateCounts[d]||0)+1;
   });
-  if(counts.every(function(v){return v===0;})){c.innerHTML='<div class="chart-empty">No calls in last 14 days</div>';return;}
+  var days=Object.keys(dateCounts).sort();
+  if(!days.length){c.innerHTML='<div class="chart-empty">No data</div>';return;}
+  var counts=days.map(function(d){return dateCounts[d];});
   var W=460,H=140,pT=10,pB=28,pL=28,pR=16;
   var pW=W-pL-pR, pH=H-pT-pB;
   var maxV=Math.max.apply(null,counts)||1;
-  var sx=function(i){return pL+(i/(days.length-1))*pW;};
+  var n=days.length;
+  var sx=function(i){return n===1?pL+pW/2:pL+(i/(n-1))*pW;};
   var sy=function(v){return pT+pH-(v/maxV)*pH;};
   var pts=counts.map(function(v,i){return sx(i).toFixed(1)+','+sy(v).toFixed(1);}).join(' ');
-  var fill=counts.map(function(v,i){return sx(i).toFixed(1)+','+sy(v).toFixed(1);}).join(' ');
-  var fillPath='M'+sx(0).toFixed(1)+','+sy(0).toFixed(1)+' '+fill+' L'+sx(days.length-1).toFixed(1)+','+(pT+pH)+' L'+sx(0).toFixed(1)+','+(pT+pH)+' Z';
+  var fillPath='M'+sx(0).toFixed(1)+','+sy(counts[0]).toFixed(1)+' '+pts+' L'+sx(n-1).toFixed(1)+','+(pT+pH)+' L'+sx(0).toFixed(1)+','+(pT+pH)+' Z';
   var grid='';
   [0,Math.round(maxV/2),maxV].forEach(function(v){
     var y=sy(v).toFixed(1);
@@ -821,7 +820,8 @@ function renderDailyChart(){
     grid+=svgText(pL-3,parseFloat(y)+3,v,{anchor:'end'});
   });
   var xlbls='';
-  [0,6,13].forEach(function(i){
+  var lblIdxs=n<=5?days.map(function(_,i){return i;}):[0,Math.round(n/4),Math.round(n/2),Math.round(3*n/4),n-1];
+  lblIdxs.forEach(function(i){
     xlbls+=svgText(sx(i).toFixed(1),H-4,fmtShort(days[i]),{anchor:'middle'});
   });
   var dots=counts.map(function(v,i){

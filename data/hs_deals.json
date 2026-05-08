@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-05-08T14:05:00.538568Z",
+  "fetchedAt": "2026-05-08T17:25:42.155195Z",
   "deals": [
     {
       "id": "4014966213",
@@ -26364,7 +26364,7 @@
     {
       "id": "60078459416",
       "date": "2026-05-07",
-      "brand": "Unknown",
+      "brand": "CK Franchisee",
       "stores": 1,
       "dealname": "Longgate service inc SSR",
       "owner": "Bernard Penoliar",
@@ -26374,10 +26374,10 @@
     {
       "id": "60126132575",
       "date": "2026-05-08",
-      "brand": "Unknown",
+      "brand": "CK Franchisee",
       "stores": 1,
       "dealname": "MIAMI FOOD MART INC SSR",
-      "owner": "Unassigned",
+      "owner": "Bernard Penoliar",
       "stage": "4. Signed Agreement",
       "pipeline": "SS Pipeline"
     }

@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-05-08T09:45:48.148013Z",
+  "fetchedAt": "2026-05-08T14:05:00.538568Z",
   "deals": [
     {
       "id": "4014966213",
@@ -26367,7 +26367,17 @@
       "brand": "Unknown",
       "stores": 1,
       "dealname": "Longgate service inc SSR",
-      "owner": "Safiya O'Brian",
+      "owner": "Bernard Penoliar",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SS Pipeline"
+    },
+    {
+      "id": "60126132575",
+      "date": "2026-05-08",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "MIAMI FOOD MART INC SSR",
+      "owner": "Unassigned",
       "stage": "4. Signed Agreement",
       "pipeline": "SS Pipeline"
     }

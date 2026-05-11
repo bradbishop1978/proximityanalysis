@@ -360,13 +360,9 @@
       </div>
     </div>
 
-    <!-- Variant & Timing Analysis -->
-    <div class="kpi-section-label">Variant &amp; Timing Analysis</div>
-    <div class="grid3">
-      <div class="card gap">
-        <div class="section-title">Performance by Variant</div>
-        <div id="chart-variant"><div class="chart-empty">No variant data yet</div></div>
-      </div>
+    <!-- Timing Analysis -->
+    <div class="kpi-section-label">Timing Analysis</div>
+    <div class="grid2">
       <div class="card gap">
         <div class="section-title">Calls by Day of Week</div>
         <div id="chart-dow"><div class="chart-empty">No data</div></div>
@@ -697,7 +693,7 @@ function renderKPIs(){
   var avgDur=durs.length?Math.round(durs.reduce(function(a,b){return a+b;},0)/durs.length):0;
   el('k-total').textContent=n;
   var vmDelivered=noAnswer-vmBlocked;
-  el('k-total-breakdown').innerHTML='👤 '+trueAnswered+'&nbsp;&nbsp;🤖 '+ivrHits+'&nbsp;&nbsp;📵 '+vmDelivered+'<br>'+'🚫 '+vmBlocked+'&nbsp;&nbsp;☎ '+vapiFailCount;
+  el('k-total-breakdown').innerHTML='👤 '+trueAnswered+'&nbsp;&nbsp;🤖 '+ivrHits+'&nbsp;&nbsp;🗣️ '+vmDelivered+'<br>'+'🚫 '+vmBlocked+'&nbsp;&nbsp;⚠️ '+vapiFailCount;
   el('k-today').textContent=today0;
   el('k-week').textContent=week0;
   el('k-avgdur').textContent=fmtDuration(avgDur);
@@ -844,22 +840,23 @@ function renderResultsDonut(){
   var data=Object.keys(counts).sort(function(a,b){return counts[b]-counts[a];}).map(function(k){return {name:k,v:counts[k]};});
   if(!data.length){c.innerHTML='<div class="chart-empty">No data</div>';return;}
   var total=data.reduce(function(s,d){return s+d.v;},0);
-  var R=44,cx=60,cy=60,circ=2*Math.PI*R;
+  var R=76,cx=100,cy=100,sw=26,circ=2*Math.PI*R;
   var segs='',offset=-0.25;
   data.forEach(function(d,i){
     var frac=d.v/total,dash=(frac*circ).toFixed(2),gap=((1-frac)*circ).toFixed(2);
     var rot=(offset*360).toFixed(1);
-    segs+='<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="none" stroke="'+COLORS[i%COLORS.length]+'" stroke-width="14" stroke-dasharray="'+dash+' '+gap+'" transform="rotate('+rot+' '+cx+' '+cy+')"/>';
+    segs+='<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="none" stroke="'+COLORS[i%COLORS.length]+'" stroke-width="'+sw+'" stroke-dasharray="'+dash+' '+gap+'" transform="rotate('+rot+' '+cx+' '+cy+')"/>';
     offset+=frac;
   });
   var legend=data.slice(0,6).map(function(d,i){
     return '<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:'+COLORS[i%COLORS.length]+'"></div><span>'+d.name+' ('+d.v+')</span></div>';
   }).join('');
-  c.innerHTML='<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">'
-    +'<svg viewBox="0 0 120 120" style="width:120px;height:120px;flex-shrink:0">'+segs
-    +'<text x="'+cx+'" y="'+(cy+5)+'" text-anchor="middle" font-family="Gabarito,sans-serif" font-size="16" font-weight="800" fill="var(--dark)">'+total+'</text>'
-    +'<text x="'+cx+'" y="'+(cy+17)+'" text-anchor="middle" font-size="9" fill="var(--muted)">calls</text>'
-    +'</svg><div class="chart-legend" style="flex-direction:column;gap:8px">'+legend+'</div></div>';
+  c.innerHTML='<svg viewBox="0 0 200 200" style="width:100%;display:block">'
+    +segs
+    +'<text x="'+cx+'" y="'+(cy+8)+'" text-anchor="middle" font-family="Gabarito,sans-serif" font-size="22" font-weight="800" fill="var(--dark)">'+total+'</text>'
+    +'<text x="'+cx+'" y="'+(cy+22)+'" text-anchor="middle" font-size="11" fill="var(--muted)">calls</text>'
+    +'</svg>'
+    +'<div class="chart-legend" style="justify-content:center;flex-wrap:wrap;gap:8px 16px;margin-top:6px">'+legend+'</div>';
 }
 
 // ── Objections horizontal bar ─────────────────────────────────────────────────
@@ -883,45 +880,33 @@ function renderObjectionsChart(){
   c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+bars+labels+vals+'</svg>';
 }
 
-// ── Brand performance (horizontal bars: calls) ───────────────────────────────
+// ── Brand performance (one row per brand, distinct colors) ───────────────────
 function renderBrandChart(){
   var c=el('chart-brands');
-  var brandCalls={},brandDM={},brandFU={},brandIVR={};
+  var brandCalls={},brandDM={},brandFU={};
   filteredRecs.forEach(function(r){
     var b=fldStr(r,'Brand')||'Unknown';
     brandCalls[b]=(brandCalls[b]||0)+1;
     if(isYes(fld(r,'Spoke to Manager'))) brandDM[b]=(brandDM[b]||0)+1;
     if(fldStr(r,'Follow-Up Scheduled')) brandFU[b]=(brandFU[b]||0)+1;
-    if(fldStr(r,'Call Status')==='answered'&&isIVR(r)) brandIVR[b]=(brandIVR[b]||0)+1;
   });
-  var brands=Object.keys(brandCalls).sort(function(a,b){return brandCalls[b]-brandCalls[a];}).slice(0,6);
+  var brands=Object.keys(brandCalls).sort(function(a,b){return brandCalls[b]-brandCalls[a];}).slice(0,8);
   if(!brands.length){c.innerHTML='<div class="chart-empty">No brand data</div>';return;}
   var maxV=Math.max.apply(null,brands.map(function(b){return brandCalls[b];}));
-  var pL=120,pR=8,W=420,bH=10,gY=6,gRow=8;
-  var rowH=bH*4+gY*3+gRow;
-  var pT=4;
-  var H=brands.length*rowH+pT;
+  var pL=110,W=420,bH=22,gap=10,pT=4,statW=100;
+  var H=brands.length*(bH+gap)+pT;
   var out='';
   brands.forEach(function(b,i){
-    var y=pT+i*rowH;
-    var wC=Math.max(4,Math.round((brandCalls[b]/maxV)*(W-pL-pR)));
-    var wD=Math.max(0,Math.round(((brandDM[b]||0)/maxV)*(W-pL-pR)));
-    var wF=Math.max(0,Math.round(((brandFU[b]||0)/maxV)*(W-pL-pR)));
-    var wI=Math.max(0,Math.round(((brandIVR[b]||0)/maxV)*(W-pL-pR)));
-    out+=svgText(pL-6,y+bH+3,b,{anchor:'end',size:10,fill:'var(--text)'});
-    out+=svgRect(pL,y,wC,bH,'#DE4990',3);
-    out+=svgRect(pL,y+bH+gY,wD,bH,'#2C023B',3);
-    out+=svgRect(pL,y+bH*2+gY*2,wF,bH,'#10B981',3);
-    out+=svgRect(pL,y+bH*3+gY*3,wI,bH,'#C0B0CC',3);
-    out+=svgText(pL+wC+4,y+bH-1,brandCalls[b],{size:9,fill:'var(--dark)'});
+    var y=pT+i*(bH+gap);
+    var color=COLORS[i%COLORS.length];
+    var bW=Math.max(4,Math.round((brandCalls[b]/maxV)*(W-pL-statW)));
+    var name=b.length>14?b.substring(0,13)+'…':b;
+    out+=svgText(pL-6,y+bH/2+4,name,{anchor:'end',size:10,fill:'var(--text)'});
+    out+=svgRect(pL,y,bW,bH,color,4);
+    var stats=brandCalls[b]+(brandDM[b]?' · DM '+brandDM[b]:'')+(brandFU[b]?' · FU '+brandFU[b]:'');
+    out+=svgText(pL+bW+6,y+bH/2+4,stats,{size:10,fill:'var(--dark)',weight:600});
   });
-  var legend='<div class="chart-legend">'
-    +'<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#DE4990"></div>Total Calls</div>'
-    +'<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#2C023B"></div>DM Reached</div>'
-    +'<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#10B981"></div>Follow-Up</div>'
-    +'<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#C0B0CC"></div>IVR Walls</div>'
-    +'</div>';
-  c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>'+legend;
+  c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>';
 }
 
 // ── Duration by outcome ───────────────────────────────────────────────────────
@@ -1151,7 +1136,8 @@ function renderIVRBrandChart(){
   });
   var brands=Object.keys(brandAnswered).sort(function(a,b){return brandAnswered[b]-brandAnswered[a];}).slice(0,6);
   if(!brands.length){c.innerHTML='<div class="chart-empty">No brand data</div>';return;}
-  var W=420,barH=18,gY=4,gRow=10,pL=120,pR=70,pT=4;
+  var W=420,barH=16,gY=4,gRow=14,pL=120,pT=4;
+  var maxBarW=W-pL-85;
   var rowH=barH*2+gY+gRow;
   var H=brands.length*rowH+pT+20;
   var out='';
@@ -1163,14 +1149,15 @@ function renderIVRBrandChart(){
     var vmb=brandVmBlocked[b]||0;
     var ivrPct=pct(ivr,ans);
     var vmPct=pct(vmb,na||1);
-    var ivrW=Math.max(ivrPct>0?4:0,Math.round((ivrPct/100)*(W-pL-pR)));
-    var vmW=Math.max(vmPct>0?4:0,Math.round((vmPct/100)*(W-pL-pR)));
-    out+=svgText(pL-6,y+barH+3,b,{anchor:'end',size:10,fill:'var(--text)'});
+    var ivrW=Math.max(ivrPct>0?4:0,Math.round((ivrPct/100)*maxBarW));
+    var vmW=Math.max(vmPct>0?4:0,Math.round((vmPct/100)*maxBarW));
+    var name=b.length>15?b.substring(0,14)+'…':b;
     out+=svgRect(0,y,W,barH*2+gY,'#FAF8FC',0);
+    out+=svgText(pL-6,y+barH+gY/2+3,name,{anchor:'end',size:10,fill:'var(--text)',weight:600});
     out+=svgRect(pL,y,Math.max(4,ivrW),barH,'#C0B0CC',3);
-    out+=svgText(pL+Math.max(4,ivrW)+5,y+barH-3,ivrPct+'% IVR ('+ivr+'/'+ans+' answered)',{size:9,fill:'var(--dark)'});
+    out+=svgText(pL+Math.max(4,ivrW)+5,y+barH-3,ivrPct+'% IVR '+ivr+'/'+ans,{size:9,fill:'var(--dark)'});
     out+=svgRect(pL,y+barH+gY,Math.max(4,vmW),barH,'#F59E0B',3);
-    out+=svgText(pL+Math.max(4,vmW)+5,y+barH+gY+barH-3,vmPct+'% VM blocked ('+vmb+'/'+na+' no-ans)',{size:9,fill:'var(--dark)'});
+    out+=svgText(pL+Math.max(4,vmW)+5,y+barH+gY+barH-3,vmPct+'% VM '+vmb+'/'+na,{size:9,fill:'var(--dark)'});
   });
   var legend='<div class="chart-legend">'
     +'<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#C0B0CC"></div>IVR Wall Rate (of answered)</div>'

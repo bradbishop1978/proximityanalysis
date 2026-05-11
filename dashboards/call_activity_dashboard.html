@@ -945,6 +945,7 @@ function renderDurationChart(){
 // ── Variant performance ───────────────────────────────────────────────────────
 function renderVariantChart(){
   var c=el('chart-variant');
+  if(!c){return;}
   var vCalls={},vDM={},vGuide={};
   filteredRecs.forEach(function(r){
     var v=fldStr(r,'VAPI Objective')||'(untagged)';

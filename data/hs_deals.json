@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-05-11T11:31:07.284254Z",
+  "fetchedAt": "2026-05-11T15:27:00.578483Z",
   "deals": [
     {
       "id": "4014966213",
@@ -26369,6 +26369,16 @@
       "dealname": "MIAMI FOOD MART INC SSR",
       "owner": "Bernard Penoliar",
       "stage": "7. Closed Won",
+      "pipeline": "SS Pipeline"
+    },
+    {
+      "id": "60174036904",
+      "date": "2026-05-11",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "APEC, Automated Petroleum Energy Company SSR",
+      "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
       "pipeline": "SS Pipeline"
     }
   ]

@@ -262,9 +262,9 @@
     <!-- KPI Row 1: Volume -->
     <div class="kpi-section-label">Volume</div>
     <div class="grid4 gap">
-      <div class="metric-card"><div class="metric-label">Total Calls</div><div id="k-total" class="metric-val">0</div><div id="k-total-breakdown" class="metric-sub" style="margin-top:6px;font-size:12px;line-height:1.8"></div></div>
+      <div class="metric-card"><div class="metric-label">Total Calls</div><div id="k-total" class="metric-val">0</div><div id="k-total-breakdown" class="metric-sub" style="margin-top:6px;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div></div>
       <div class="metric-card"><div class="metric-label">Today</div><div id="k-today" class="metric-val">0</div></div>
-      <div class="metric-card"><div class="metric-label">This Week</div><div id="k-week" class="metric-val">0</div></div>
+      <div class="metric-card"><div class="metric-label">This Week</div><div id="k-week" class="metric-val">0</div><div id="k-week-wow" class="metric-sub"></div></div>
       <div class="metric-card"><div class="metric-label">Avg Duration</div><div id="k-avgdur" class="metric-val">0:00</div><div class="metric-sub">per call</div></div>
     </div>
 
@@ -288,9 +288,10 @@
     <div class="kpi-section-label">Interest &amp; Conversion</div>
     <div class="grid3 gap">
       <div class="metric-card">
-        <div class="metric-label">Email Interest Level</div>
-        <div id="k-interest-bar" class="interest-bar" style="margin-top:12px"></div>
-        <div id="k-interest-legend" class="interest-legend"></div>
+        <div class="metric-label">Top Objection</div>
+        <div id="k-top-obj" class="metric-val" style="font-size:15px;margin-top:6px;line-height:1.3;word-break:break-word">—</div>
+        <div id="k-top-obj-sub" class="metric-sub" style="margin-top:4px"></div>
+        <div id="k-top-obj2" class="metric-sub" style="margin-top:3px"></div>
       </div>
       <div class="metric-card">
         <div class="metric-label">Callback Scheduled</div>
@@ -298,8 +299,10 @@
         <div class="metric-sub">records with callback time set</div>
       </div>
       <div class="metric-card">
-        <div class="metric-label">Top Call Statuses</div>
-        <div id="k-results" class="result-pills" style="margin-top:8px"></div>
+        <div class="metric-label">Win Rate</div>
+        <div id="k-winrate" class="metric-val" style="margin-top:4px">0%</div>
+        <div id="k-winrate-sub" class="metric-sub"></div>
+        <div id="k-winrate-detail" class="metric-sub" style="margin-top:3px"></div>
       </div>
     </div>
 
@@ -693,9 +696,23 @@ function renderKPIs(){
   var avgDur=durs.length?Math.round(durs.reduce(function(a,b){return a+b;},0)/durs.length):0;
   el('k-total').textContent=n;
   var vmDelivered=noAnswer-vmBlocked;
-  el('k-total-breakdown').innerHTML='👤 '+trueAnswered+'&nbsp;&nbsp;🤖 '+ivrHits+'&nbsp;&nbsp;🗣️ '+vmDelivered+'<br>'+'🚫 '+vmBlocked+'&nbsp;&nbsp;⚠️ '+vapiFailCount;
+  el('k-total-breakdown').innerHTML='👤 '+trueAnswered+'&nbsp;&nbsp;🤖 '+ivrHits+'&nbsp;&nbsp;🗣️ '+vmDelivered+'&nbsp;&nbsp;🚫 '+vmBlocked+'&nbsp;&nbsp;⚠️ '+vapiFailCount;
   el('k-today').textContent=today0;
   el('k-week').textContent=week0;
+  // Week-over-week
+  var lastWeekMon=getMondayOf(new Date(mon.getTime()-7*864e5));
+  var wowRecs=allRecords;
+  if(activeFilters.brands&&activeFilters.brands.size>0) wowRecs=allRecords.filter(function(r){return activeFilters.brands.has(fldStr(r,'Brand'));});
+  var week1=wowRecs.filter(function(r){var dt=getRecordDateTimeStr(r);if(!dt)return false;var d=new Date(dt);return d>=lastWeekMon&&d<mon;}).length;
+  var wowEl=el('k-week-wow');
+  if(wowEl){
+    if(week1===0){wowEl.textContent='no prev week data';wowEl.style.color='var(--gray)';}
+    else{var diff=week0-week1,wPct=Math.abs(Math.round(diff/week1*100));
+      if(diff>0){wowEl.innerHTML='↑ '+wPct+'% from last week';wowEl.style.color='var(--green)';}
+      else if(diff<0){wowEl.innerHTML='↓ '+wPct+'% from last week';wowEl.style.color='var(--coral)';}
+      else{wowEl.textContent='— same as last week';wowEl.style.color='var(--gray)';}
+    }
+  }
   el('k-avgdur').textContent=fmtDuration(avgDur);
 
   // Row 2 — Reach: DM% over true humans; mobile/email over total
@@ -714,29 +731,33 @@ function renderKPIs(){
   el('k-sms').textContent=pct(smsP,dtm||1)+'%'; el('k-sms-sub').textContent=smsP+' of '+dtm+' DMs';
   el('k-eperm').textContent=pct(emlP,dtm||1)+'%'; el('k-eperm-sub').textContent=emlP+' of '+dtm+' DMs';
 
-  // Row 4 — Interest
-  var intLevels=['high','medium','low','none'];
-  var intColors=['#10B981','#F59E0B','#ED8585','#AEAEAE'];
-  var intCounts=intLevels.map(function(l){return recs.filter(function(r){return (fldStr(r,'Email Interest Level')||'').toLowerCase()===l;}).length;});
-  var intTotal=intCounts.reduce(function(a,b){return a+b;},0)||1;
-  el('k-interest-bar').innerHTML=intCounts.map(function(c,i){
-    return '<div class="interest-seg" style="width:'+Math.round(c/intTotal*100)+'%;background:'+intColors[i]+'"></div>';
-  }).join('');
-  el('k-interest-legend').innerHTML=intLevels.map(function(l,i){
-    return '<div class="interest-legend-item"><div class="interest-dot" style="background:'+intColors[i]+'"></div><span>'+l+' ('+intCounts[i]+')</span></div>';
-  }).join('');
+  // Row 4 — Top Objection
+  var objCounts={};
+  recs.forEach(function(r){var v=fldStr(r,'Primary Objection');if(v)objCounts[v]=(objCounts[v]||0)+1;});
+  var topObjKeys=Object.keys(objCounts).sort(function(a,b){return objCounts[b]-objCounts[a];});
+  var topObjEl=el('k-top-obj'),topObjSubEl=el('k-top-obj-sub'),topObj2El=el('k-top-obj2');
+  if(topObjEl){
+    if(!topObjKeys.length){topObjEl.textContent='—';topObjSubEl.textContent='no objection data';topObj2El.textContent='';}
+    else{
+      var t1=topObjKeys[0],t1s=t1.length>22?t1.substring(0,21)+'…':t1;
+      topObjEl.textContent=t1s;
+      topObjSubEl.textContent=objCounts[t1]+' calls · '+pct(objCounts[t1],trueAnswered||1)+'% of answered';
+      topObj2El.textContent=topObjKeys[1]?'2nd: '+(topObjKeys[1].length>18?topObjKeys[1].substring(0,17)+'…':topObjKeys[1])+' · '+objCounts[topObjKeys[1]]:'';
+    }
+  }
 
   // Callbacks
   var cbs=recs.filter(function(r){return fldStr(r,'Callback Time');}).length;
   el('k-callback').textContent=cbs;
 
-  // Top results
-  var resCounts={};
-  recs.forEach(function(r){var v=fldStr(r,'Call Status');if(v)resCounts[v]=(resCounts[v]||0)+1;});
-  var topRes=Object.keys(resCounts).sort(function(a,b){return resCounts[b]-resCounts[a];}).slice(0,5);
-  el('k-results').innerHTML=topRes.length
-    ? topRes.map(function(k){return '<div class="result-pill">'+k+'<span class="result-pill-count">'+resCounts[k]+'</span></div>';}).join('')
-    : '<span style="color:var(--gray);font-size:13px">No data</span>';
+  // Win Rate (SMS or Email permission out of DMs reached)
+  var wins=recs.filter(function(r){return isYes(fld(r,'SMS Permission'))||isYes(fld(r,'Email Permission'));}).length;
+  var winRateEl=el('k-winrate'),winRateSubEl=el('k-winrate-sub'),winRateDetailEl=el('k-winrate-detail');
+  if(winRateEl){
+    winRateEl.textContent=pct(wins,dtm||1)+'%';
+    winRateSubEl.textContent=wins+' of '+dtm+' DMs';
+    winRateDetailEl.textContent='SMS '+smsP+' · Email '+emlP;
+  }
 
   // Row 5 — Execution Health
   var connected=n-vapiFailCount;
@@ -880,33 +901,41 @@ function renderObjectionsChart(){
   c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+bars+labels+vals+'</svg>';
 }
 
-// ── Brand performance (one row per brand, distinct colors) ───────────────────
+// ── Brand performance (layered: total / answered / DM) ───────────────────────
 function renderBrandChart(){
   var c=el('chart-brands');
-  var brandCalls={},brandDM={},brandFU={};
+  var brandCalls={},brandAnswered={},brandDM={};
   filteredRecs.forEach(function(r){
     var b=fldStr(r,'Brand')||'Unknown';
     brandCalls[b]=(brandCalls[b]||0)+1;
+    if(fldStr(r,'Call Status')==='answered'&&!isIVR(r)) brandAnswered[b]=(brandAnswered[b]||0)+1;
     if(isYes(fld(r,'Spoke to Manager'))) brandDM[b]=(brandDM[b]||0)+1;
-    if(fldStr(r,'Follow-Up Scheduled')) brandFU[b]=(brandFU[b]||0)+1;
   });
   var brands=Object.keys(brandCalls).sort(function(a,b){return brandCalls[b]-brandCalls[a];}).slice(0,8);
   if(!brands.length){c.innerHTML='<div class="chart-empty">No brand data</div>';return;}
   var maxV=Math.max.apply(null,brands.map(function(b){return brandCalls[b];}));
-  var pL=110,W=420,bH=22,gap=10,pT=4,statW=100;
-  var H=brands.length*(bH+gap)+pT;
+  var pL=110,W=420,bH=24,gap=10,pT=4,cntW=32;
+  var maxBarW=W-pL-cntW;
+  var H=brands.length*(bH+gap)+pT+28;
   var out='';
   brands.forEach(function(b,i){
     var y=pT+i*(bH+gap);
-    var color=COLORS[i%COLORS.length];
-    var bW=Math.max(4,Math.round((brandCalls[b]/maxV)*(W-pL-statW)));
+    var wTotal=Math.max(4,Math.round((brandCalls[b]/maxV)*maxBarW));
+    var wAns=Math.max(0,Math.round(((brandAnswered[b]||0)/maxV)*maxBarW));
+    var wDM=Math.max(0,Math.round(((brandDM[b]||0)/maxV)*maxBarW));
     var name=b.length>14?b.substring(0,13)+'…':b;
     out+=svgText(pL-6,y+bH/2+4,name,{anchor:'end',size:10,fill:'var(--text)'});
-    out+=svgRect(pL,y,bW,bH,color,4);
-    var stats=brandCalls[b]+(brandDM[b]?' · DM '+brandDM[b]:'')+(brandFU[b]?' · FU '+brandFU[b]:'');
-    out+=svgText(pL+bW+6,y+bH/2+4,stats,{size:10,fill:'var(--dark)',weight:600});
+    out+=svgRect(pL,y,wTotal,bH,'#EDE8F5',4);
+    if(wAns>0) out+=svgRect(pL,y,wAns,bH,'#EB92BD',4);
+    if(wDM>0) out+=svgRect(pL,y,wDM,bH,'#DE4990',4);
+    out+=svgText(W-2,y+bH/2+4,brandCalls[b],{anchor:'end',size:10,fill:'var(--muted)'});
   });
-  c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>';
+  var legend='<div class="chart-legend">'
+    +'<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#EDE8F5;border:1px solid #C8C0D8"></div>Total Calls</div>'
+    +'<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#EB92BD"></div>Answered (human)</div>'
+    +'<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#DE4990"></div>DM Reached</div>'
+    +'</div>';
+  c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>'+legend;
 }
 
 // ── Duration by outcome ───────────────────────────────────────────────────────

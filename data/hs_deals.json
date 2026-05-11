@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-05-11T04:06:04.285144Z",
+  "fetchedAt": "2026-05-11T11:31:07.284254Z",
   "deals": [
     {
       "id": "4014966213",
@@ -26350,16 +26350,6 @@
       "owner": "Steve Siegel",
       "stage": "5. Negotiation",
       "pipeline": "Sales Pipeline"
-    },
-    {
-      "id": "60006217835",
-      "date": "2026-05-04",
-      "brand": "Unknown",
-      "stores": 1,
-      "dealname": "lula test  SSR",
-      "owner": "Unassigned",
-      "stage": "4. Signed Agreement",
-      "pipeline": "SS Pipeline"
     },
     {
       "id": "60078459416",

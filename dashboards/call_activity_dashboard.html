@@ -288,10 +288,10 @@
     <div class="kpi-section-label">Interest &amp; Conversion</div>
     <div class="grid3 gap">
       <div class="metric-card">
-        <div class="metric-label">Top Objection</div>
-        <div id="k-top-obj" class="metric-val" style="font-size:15px;margin-top:6px;line-height:1.3;word-break:break-word">—</div>
-        <div id="k-top-obj-sub" class="metric-sub" style="margin-top:4px"></div>
-        <div id="k-top-obj2" class="metric-sub" style="margin-top:3px"></div>
+        <div class="metric-label">Conversion Rate</div>
+        <div id="k-conv" class="metric-val" style="margin-top:4px">0%</div>
+        <div id="k-conv-sub" class="metric-sub"></div>
+        <div id="k-conv-detail" style="margin-top:8px"></div>
       </div>
       <div class="metric-card">
         <div class="metric-label">Callback Scheduled</div>
@@ -732,27 +732,30 @@ function renderKPIs(){
   el('k-sms').textContent=pct(smsP,dtm||1)+'%'; el('k-sms-sub').textContent=smsP+' of '+dtm+' DMs';
   el('k-eperm').textContent=pct(emlP,dtm||1)+'%'; el('k-eperm-sub').textContent=emlP+' of '+dtm+' DMs';
 
-  // Row 4 — Top Objection
-  var objCounts={};
-  recs.forEach(function(r){var v=fldStr(r,'Primary Objection');if(v)objCounts[v]=(objCounts[v]||0)+1;});
-  var topObjKeys=Object.keys(objCounts).sort(function(a,b){return objCounts[b]-objCounts[a];});
-  var topObjEl=el('k-top-obj'),topObjSubEl=el('k-top-obj-sub'),topObj2El=el('k-top-obj2');
-  if(topObjEl){
-    if(!topObjKeys.length){topObjEl.textContent='—';topObjSubEl.textContent='no objection data';topObj2El.textContent='';}
-    else{
-      var t1=topObjKeys[0],t1s=t1.length>22?t1.substring(0,21)+'…':t1;
-      topObjEl.textContent=t1s;
-      topObjSubEl.textContent=objCounts[t1]+' calls · '+pct(objCounts[t1],trueAnswered||1)+'% of answered';
-      topObj2El.textContent=topObjKeys[1]?'2nd: '+(topObjKeys[1].length>18?topObjKeys[1].substring(0,17)+'…':topObjKeys[1])+' · '+objCounts[topObjKeys[1]]:'';
+  // Row 4 — Conversion Rate, Callbacks, Win Rate (precompute all three first)
+  var cbs=recs.filter(function(r){return fldStr(r,'Callback Time');}).length;
+  var wins=recs.filter(function(r){return isYes(fld(r,'SMS Permission'))||isYes(fld(r,'Email Permission'));}).length;
+  var convCount=recs.filter(function(r){
+    return fldStr(r,'Follow-Up Scheduled')||fldStr(r,'Callback Time')||
+           isYes(fld(r,'SMS Permission'))||isYes(fld(r,'Email Permission'));
+  }).length;
+  var convEl=el('k-conv'),convSubEl=el('k-conv-sub'),convDetailEl=el('k-conv-detail');
+  if(convEl){
+    convEl.textContent=pct(convCount,trueAnswered||1)+'%';
+    convSubEl.textContent=convCount+' of '+trueAnswered+' humans';
+    if(convDetailEl){
+      convDetailEl.innerHTML='<div style="font-size:10px;color:var(--muted);display:grid;grid-template-columns:auto auto;gap:2px 14px;margin-top:2px">'
+        +'<span>Follow-Up</span><span style="color:var(--dark);font-weight:600">'+fu+'</span>'
+        +'<span>Callback</span><span style="color:var(--dark);font-weight:600">'+cbs+'</span>'
+        +'<span>Win</span><span style="color:var(--dark);font-weight:600">'+wins+'</span>'
+        +'</div>';
     }
   }
 
   // Callbacks
-  var cbs=recs.filter(function(r){return fldStr(r,'Callback Time');}).length;
   el('k-callback').textContent=cbs;
 
   // Win Rate (SMS or Email permission out of DMs reached)
-  var wins=recs.filter(function(r){return isYes(fld(r,'SMS Permission'))||isYes(fld(r,'Email Permission'));}).length;
   var winRateEl=el('k-winrate'),winRateSubEl=el('k-winrate-sub'),winRateBarEl=el('k-winrate-bar');
   if(winRateEl){
     winRateEl.textContent=pct(wins,dtm||1)+'%';

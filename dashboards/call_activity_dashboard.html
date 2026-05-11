@@ -302,7 +302,7 @@
         <div class="metric-label">Win Rate</div>
         <div id="k-winrate" class="metric-val" style="margin-top:4px">0%</div>
         <div id="k-winrate-sub" class="metric-sub"></div>
-        <div id="k-winrate-detail" class="metric-sub" style="margin-top:3px"></div>
+        <div id="k-winrate-bar" style="margin-top:8px"></div>
       </div>
     </div>
 
@@ -334,7 +334,7 @@
         <div id="chart-results"><div class="chart-empty">No data</div></div>
       </div>
       <div class="card gap">
-        <div class="section-title">Primary Objections</div>
+        <div class="section-title">Avg Human Talk Time by Brand</div>
         <div id="chart-objections"><div class="chart-empty">No data</div></div>
       </div>
     </div>
@@ -345,7 +345,7 @@
         <div id="chart-brands"><div class="chart-empty">No data</div></div>
       </div>
       <div class="card gap">
-        <div class="section-title">Avg Duration by Call Status</div>
+        <div class="section-title">Avg Human Talk Time</div>
         <div id="chart-duration"><div class="chart-empty">No data</div></div>
       </div>
     </div>
@@ -444,6 +444,7 @@ function parseDuration(val){
   return parseInt(val)||0;
 }
 function fmtDuration(secs){if(!secs) return '0:00';var m=Math.floor(secs/60),s=secs%60;return m+':'+(s<10?'0':'')+s;}
+function calcMedian(arr){if(!arr.length)return 0;var s=arr.slice().sort(function(a,b){return a-b;});var m=Math.floor(s.length/2);return s.length%2?s[m]:Math.round((s[m-1]+s[m])/2);}
 function timeAgo(iso){
   if(!iso) return 'never';
   var diff=(Date.now()-new Date(iso).getTime())/1000;
@@ -752,11 +753,22 @@ function renderKPIs(){
 
   // Win Rate (SMS or Email permission out of DMs reached)
   var wins=recs.filter(function(r){return isYes(fld(r,'SMS Permission'))||isYes(fld(r,'Email Permission'));}).length;
-  var winRateEl=el('k-winrate'),winRateSubEl=el('k-winrate-sub'),winRateDetailEl=el('k-winrate-detail');
+  var winRateEl=el('k-winrate'),winRateSubEl=el('k-winrate-sub'),winRateBarEl=el('k-winrate-bar');
   if(winRateEl){
     winRateEl.textContent=pct(wins,dtm||1)+'%';
     winRateSubEl.textContent=wins+' of '+dtm+' DMs';
-    winRateDetailEl.textContent='SMS '+smsP+' · Email '+emlP;
+    if(winRateBarEl){
+      var sPct=dtm>0?Math.round(smsP/dtm*100):0;
+      var ePct=dtm>0?Math.round(emlP/dtm*100):0;
+      winRateBarEl.innerHTML='<div style="display:flex;height:8px;border-radius:4px;overflow:hidden;background:var(--border)">'
+        +'<div style="width:'+sPct+'%;background:#DE4990;transition:.4s"></div>'
+        +'<div style="width:'+ePct+'%;background:#EB92BD;transition:.4s"></div>'
+        +'</div>'
+        +'<div style="display:flex;gap:12px;margin-top:5px;font-size:10px;color:var(--muted);white-space:nowrap">'
+        +'<span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#DE4990;vertical-align:middle;margin-right:3px"></span>SMS '+smsP+'</span>'
+        +'<span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#EB92BD;vertical-align:middle;margin-right:3px"></span>Email '+emlP+'</span>'
+        +'</div>';
+    }
   }
 
   // Row 5 — Execution Health
@@ -880,25 +892,44 @@ function renderResultsDonut(){
     +'<div class="chart-legend" style="justify-content:center;flex-wrap:wrap;gap:8px 16px;margin-top:6px">'+legend+'</div>';
 }
 
-// ── Objections horizontal bar ─────────────────────────────────────────────────
+// ── Avg Human Talk Time by Brand (bar + median marker) ───────────────────────
 function renderObjectionsChart(){
   var c=el('chart-objections');
-  var counts={};
-  filteredRecs.forEach(function(r){var v=fldStr(r,'Primary Objection');if(v)counts[v]=(counts[v]||0)+1;});
-  var data=Object.keys(counts).sort(function(a,b){return counts[b]-counts[a];}).slice(0,8).map(function(k){return {name:k,v:counts[k]};});
-  if(!data.length){c.innerHTML='<div class="chart-empty">No objection data</div>';return;}
-  var maxV=data[0].v;
-  var barH=20,gap=8,pL=130,pR=40,W=420,pT=4;
-  var H=data.length*(barH+gap)+pT*2;
-  var bars='',labels='',vals='';
-  data.forEach(function(d,i){
-    var y=pT+i*(barH+gap);
-    var bW=Math.max(4,Math.round((d.v/maxV)*(W-pL-pR)));
-    bars+=svgRect(pL,y,bW,barH,'#DE4990',4);
-    labels+=svgText(pL-6,y+barH/2+3,d.name,{anchor:'end',size:10,fill:'var(--text)'});
-    vals+=svgText(pL+bW+5,y+barH/2+3,d.v,{size:10,fill:'var(--dark)',weight:700});
+  var brandDurs={};
+  filteredRecs.forEach(function(r){
+    if(fldStr(r,'Call Status')!=='answered'||isIVR(r)) return;
+    var b=fldStr(r,'Brand')||'Unknown';
+    var d=parseDuration(fld(r,'Call Duration'));
+    if(d>0){if(!brandDurs[b])brandDurs[b]=[];brandDurs[b].push(d);}
   });
-  c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+bars+labels+vals+'</svg>';
+  var brands=Object.keys(brandDurs).filter(function(b){return brandDurs[b].length>0;})
+    .sort(function(a,b){
+      var avgA=brandDurs[a].reduce(function(s,v){return s+v;},0)/brandDurs[a].length;
+      var avgB=brandDurs[b].reduce(function(s,v){return s+v;},0)/brandDurs[b].length;
+      return avgB-avgA;
+    }).slice(0,7);
+  if(!brands.length){c.innerHTML='<div class="chart-empty">No human call data</div>';return;}
+  var avgs=brands.map(function(b){return Math.round(brandDurs[b].reduce(function(s,v){return s+v;},0)/brandDurs[b].length);});
+  var meds=brands.map(function(b){return calcMedian(brandDurs[b]);});
+  var maxAvg=Math.max.apply(null,avgs)||1;
+  var W=420,pL=110,pR=6,lblW=70,barH=20,gap=12,pT=4;
+  var maxBarW=W-pL-pR-lblW;
+  var H=brands.length*(barH+gap)+pT+18;
+  var out='';
+  brands.forEach(function(b,i){
+    var y=pT+i*(barH+gap);
+    var bW=Math.max(4,Math.round((avgs[i]/maxAvg)*maxBarW));
+    var medX=pL+Math.round((meds[i]/maxAvg)*maxBarW);
+    var name=b.length>14?b.substring(0,13)+'…':b;
+    out+=svgText(pL-6,y+barH/2+4,name,{anchor:'end',size:10,fill:'var(--text)'});
+    out+=svgRect(pL,y,bW,barH,'#EB92BD',3);
+    out+='<rect x="'+medX+'" y="'+(y-3)+'" width="2" height="'+(barH+6)+'" rx="1" fill="#2C023B"/>';
+    out+=svgText(pL+maxBarW+pR+4,y+barH/2+4,fmtDuration(avgs[i]),{anchor:'start',size:10,fill:'var(--dark)',weight:600});
+    out+=svgText(pL+maxBarW+pR+4,y+barH/2+14,'med '+fmtDuration(meds[i]),{anchor:'start',size:9,fill:'var(--muted)'});
+  });
+  var legend='<div class="chart-legend"><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#EB92BD"></div>Avg duration</div>'
+    +'<div class="chart-legend-item"><div style="width:3px;height:12px;background:#2C023B;border-radius:1px;flex-shrink:0"></div>Median</div></div>';
+  c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>'+legend;
 }
 
 // ── Brand performance (layered: total / answered / DM) ───────────────────────
@@ -938,37 +969,25 @@ function renderBrandChart(){
   c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>'+legend;
 }
 
-// ── Duration by outcome ───────────────────────────────────────────────────────
+// ── Avg Human Talk Time (single bar + median marker) ─────────────────────────
 function renderDurationChart(){
   var c=el('chart-duration');
-  var sums={},cnts={};
-  filteredRecs.forEach(function(r){
-    var res=fldStr(r,'Call Status')||'Unknown';
-    var dur=parseDuration(fld(r,'Call Duration'));
-    if(dur>0){sums[res]=(sums[res]||0)+dur;cnts[res]=(cnts[res]||0)+1;}
-  });
-  var data=Object.keys(cnts).map(function(k){return {name:k,avg:Math.round(sums[k]/cnts[k])};})
-    .sort(function(a,b){return b.avg-a.avg;}).slice(0,7);
-  if(!data.length){c.innerHTML='<div class="chart-empty">No duration data</div>';return;}
-  var W=420,H=160,pT=10,pB=36,pL=28,pR=16;
-  var pW=W-pL-pR,pH=H-pT-pB;
-  var maxV=data[0].avg||1;
-  var n=data.length,bW=Math.min(36,pW/n*0.6),gap=(pW-bW*n)/(n+1);
-  var sx=function(i){return pL+gap*(i+1)+bW*i;};
-  var sy=function(v){return pT+pH-(v/maxV)*pH;};
-  var bars='',xlbls='',ylbls='';
-  data.forEach(function(d,i){
-    var x=sx(i).toFixed(1),y=sy(d.avg).toFixed(1),h=((d.avg/maxV)*pH).toFixed(1);
-    bars+=svgRect(x,y,bW.toFixed(1),h,'#EB92BD',4);
-    bars+=svgText((sx(i)+bW/2).toFixed(1),(sy(d.avg)-3).toFixed(1),fmtDuration(d.avg),{anchor:'middle',size:9,fill:'var(--dark)'});
-    var lbl=d.name.length>10?d.name.substring(0,10)+'…':d.name;
-    xlbls+=svgText((sx(i)+bW/2).toFixed(1),(H-4).toFixed(1),lbl,{anchor:'middle',size:8});
-  });
-  [0,Math.round(maxV/2),maxV].forEach(function(v){
-    var y=sy(v).toFixed(1);
-    ylbls+=svgText(pL-3,parseFloat(y)+3,fmtDuration(v),{anchor:'end'});
-  });
-  c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+ylbls+bars+xlbls+'</svg>';
+  var durs=filteredRecs.filter(function(r){return fldStr(r,'Call Status')==='answered'&&!isIVR(r);})
+    .map(function(r){return parseDuration(fld(r,'Call Duration'));}).filter(function(v){return v>0;});
+  if(!durs.length){c.innerHTML='<div class="chart-empty">No human call data</div>';return;}
+  var avg=Math.round(durs.reduce(function(a,b){return a+b;},0)/durs.length);
+  var med=calcMedian(durs);
+  var W=420,H=100,pL=14,pR=14,barY=18,barH=40;
+  var barW=W-pL-pR;
+  var medX=pL+Math.round((med/avg)*barW);
+  var out='';
+  out+='<rect x="'+pL+'" y="'+barY+'" width="'+barW+'" height="'+barH+'" rx="6" fill="#EB92BD"/>';
+  out+='<rect x="'+medX.toFixed(0)+'" y="'+(barY-6)+'" width="2.5" height="'+(barH+12)+'" rx="1" fill="#2C023B"/>';
+  out+=svgText(pL+barW/2,barY+barH/2+5,fmtDuration(avg),{anchor:'middle',size:14,fill:'#fff',weight:700});
+  out+=svgText(pL+4,barY+barH+14,'Avg: '+fmtDuration(avg),{anchor:'start',size:10,fill:'var(--dark)',weight:600});
+  out+=svgText(medX,barY+barH+14,'Median: '+fmtDuration(med),{anchor:'middle',size:10,fill:'var(--dark)',weight:600});
+  out+=svgText(W-pR,barY+barH+14,durs.length+' calls',{anchor:'end',size:10,fill:'var(--muted)'});
+  c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>';
 }
 
 // ── Variant performance ───────────────────────────────────────────────────────
@@ -1126,25 +1145,30 @@ function renderDurationBuckets(){
   });
   var humanTotal=trueHuman.length||1;
   var ivrTotal=ivrCalls.length;
-  var W=420,barH=22,gap=8,pL=200,pR=60,pT=4;
-  var H=(buckets.length+1)*(barH+gap)+pT+20;
+  var W=420,barH=26,gap=10,pL=155,pR=4,pT=4;
+  var maxBarW=W-pL-pR;
+  var H=(buckets.length+1)*(barH+gap)+pT+4;
   var maxCount=Math.max.apply(null,counts)||1;
   var out='';
   buckets.forEach(function(b,i){
     var y=pT+i*(barH+gap);
-    var bW=Math.max(4,Math.round((counts[i]/maxCount)*(W-pL-pR)));
-    out+=svgText(pL-8,y+barH/2+3,b.label,{anchor:'end',size:10,fill:'var(--text)'});
+    var bW=Math.max(4,Math.round((counts[i]/maxCount)*maxBarW));
+    var lbl=counts[i]+' ('+pct(counts[i],humanTotal)+'%)';
+    out+=svgText(pL-6,y+barH/2+4,b.label,{anchor:'end',size:10,fill:'var(--text)'});
     out+=svgRect(pL,y,bW,barH,b.color,4);
-    out+=svgText(pL+bW+6,y+barH/2+3,counts[i]+' ('+pct(counts[i],humanTotal)+'%)',{size:10,fill:'var(--dark)',weight:600});
+    if(bW>52){
+      out+=svgText(pL+bW-5,y+barH/2+4,lbl,{anchor:'end',size:10,fill:'#fff',weight:600});
+    } else {
+      out+=svgText(pL+bW+5,y+barH/2+4,lbl,{size:9,fill:'var(--dark)'});
+    }
   });
-  // IVR excluded row
   var ivrY=pT+buckets.length*(barH+gap)+gap;
-  var ivrW=Math.max(4,Math.round((ivrTotal/Math.max(ivrTotal,maxCount))*(W-pL-pR)));
-  out+=svgText(pL-8,ivrY+barH/2+3,'IVR / Automated',{anchor:'end',size:10,fill:'var(--muted)'});
+  var ivrW=Math.max(4,Math.round((ivrTotal/Math.max(ivrTotal,maxCount))*maxBarW));
+  out+=svgText(pL-6,ivrY+barH/2+4,'IVR / Automated',{anchor:'end',size:10,fill:'var(--muted)'});
   out+=svgRect(pL,ivrY,Math.max(4,ivrW),barH,'#EDE8F5',4);
-  out+=svgText(pL+Math.max(4,ivrW)+6,ivrY+barH/2+3,ivrTotal+' excluded from above',{size:9,fill:'var(--muted)'});
+  out+=svgText(pL+Math.max(4,ivrW)+5,ivrY+barH/2+4,ivrTotal+' excl.',{size:9,fill:'var(--muted)'});
   c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>'
-    +'<div style="font-size:11px;color:var(--muted);margin-top:4px">Scoped to '+trueHuman.length+' true-human answered calls. IVR machine time excluded.</div>';
+    +'<div style="font-size:10px;color:var(--muted);margin-top:3px">'+trueHuman.length+' human calls · IVR excluded</div>';
 }
 
 // ── IVR / List Quality by Brand ───────────────────────────────────────────────

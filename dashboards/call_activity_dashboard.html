@@ -356,6 +356,7 @@
       <div class="card gap">
         <div class="section-title">Call Duration Distribution</div>
         <div id="chart-dur-buckets"><div class="chart-empty">No data</div></div>
+        <div id="chart-dur-bucket-detail" style="display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)"></div>
       </div>
       <div class="card gap">
         <div class="section-title">IVR / List Quality by Brand</div>
@@ -1127,20 +1128,23 @@ function renderHourChart(){
 }
 
 // ── Call Duration Distribution (True Answered only) ──────────────────────────
+var DURATION_BUCKETS=[
+  {label:'Ghost (0–5s)',min:0,max:5,color:'#AEAEAE'},
+  {label:'Hang-up (6–15s)',min:6,max:15,color:'#ED8585'},
+  {label:'Partial (16–60s)',min:16,max:60,color:'#F59E0B'},
+  {label:'Conversation (61–180s)',min:61,max:180,color:'#60A5FA'},
+  {label:'Win Zone (180s+)',min:181,max:Infinity,color:'#10B981'}
+];
+
 function renderDurationBuckets(){
   var c=el('chart-dur-buckets');
   if(!c){return;}
+  var det=el('chart-dur-bucket-detail');
+  if(det) det.style.display='none';
   var recs=filteredRecs;
   var trueHuman=recs.filter(function(r){return fldStr(r,'Call Status')==='answered'&&!isIVR(r);});
   var ivrCalls=recs.filter(function(r){return fldStr(r,'Call Status')==='answered'&&isIVR(r);});
-  var buckets=[
-    {label:'Ghost (0–5s)',min:0,max:5,color:'#AEAEAE'},
-    {label:'Hang-up (6–15s)',min:6,max:15,color:'#ED8585'},
-    {label:'Partial (16–60s)',min:16,max:60,color:'#F59E0B'},
-    {label:'Conversation (61–180s)',min:61,max:180,color:'#60A5FA'},
-    {label:'Win Zone (180s+)',min:181,max:Infinity,color:'#10B981'}
-  ];
-  var counts=buckets.map(function(b){
+  var counts=DURATION_BUCKETS.map(function(b){
     return trueHuman.filter(function(r){
       var d=parseDuration(fld(r,'Call Duration'));
       return d>=b.min&&d<=b.max;
@@ -1150,13 +1154,14 @@ function renderDurationBuckets(){
   var ivrTotal=ivrCalls.length;
   var W=420,barH=26,gap=10,pL=155,pR=4,pT=4;
   var maxBarW=W-pL-pR;
-  var H=(buckets.length+1)*(barH+gap)+pT+4;
+  var H=(DURATION_BUCKETS.length+1)*(barH+gap)+pT+4;
   var maxCount=Math.max.apply(null,counts)||1;
   var out='';
-  buckets.forEach(function(b,i){
+  DURATION_BUCKETS.forEach(function(b,i){
     var y=pT+i*(barH+gap);
     var bW=Math.max(4,Math.round((counts[i]/maxCount)*maxBarW));
     var lbl=counts[i]+' ('+pct(counts[i],humanTotal)+'%)';
+    out+='<g onclick="showBucketDetail('+i+')" style="cursor:pointer">';
     out+=svgText(pL-6,y+barH/2+4,b.label,{anchor:'end',size:10,fill:'var(--text)'});
     out+=svgRect(pL,y,bW,barH,b.color,4);
     if(bW>52){
@@ -1164,14 +1169,62 @@ function renderDurationBuckets(){
     } else {
       out+=svgText(pL+bW+5,y+barH/2+4,lbl,{size:9,fill:'var(--dark)'});
     }
+    out+='</g>';
   });
-  var ivrY=pT+buckets.length*(barH+gap)+gap;
+  var ivrY=pT+DURATION_BUCKETS.length*(barH+gap)+gap;
   var ivrW=Math.max(4,Math.round((ivrTotal/Math.max(ivrTotal,maxCount))*maxBarW));
   out+=svgText(pL-6,ivrY+barH/2+4,'IVR / Automated',{anchor:'end',size:10,fill:'var(--muted)'});
   out+=svgRect(pL,ivrY,Math.max(4,ivrW),barH,'#EDE8F5',4);
   out+=svgText(pL+Math.max(4,ivrW)+5,ivrY+barH/2+4,ivrTotal+' excl.',{size:9,fill:'var(--muted)'});
   c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>'
-    +'<div style="font-size:10px;color:var(--muted);margin-top:3px">'+trueHuman.length+' human calls · IVR excluded</div>';
+    +'<div style="font-size:10px;color:var(--muted);margin-top:3px">'+trueHuman.length+' human calls · IVR excluded · click a bar to drill down</div>';
+}
+
+function classifyHangup(summary){
+  var s=(summary||'').toLowerCase();
+  if(s.match(/voicemail|automated system|cut off by the automated|answering machine/)) return 'IVR / Voicemail';
+  if(s.match(/mistakenly|addressed.*as simone/)) return 'Name confusion bug';
+  if(s.match(/staff member|employee/)) return 'Staff / gatekeeper';
+  if(s.match(/simply said|only said|only response|answered with/)) return 'One-word answer';
+  if(/reached \w+ (at|and)|spoke with \w+/.test(s)) return 'Named contact, still hung up';
+  return 'Silent hang-up (no response)';
+}
+
+function showBucketDetail(idx){
+  var c=el('chart-dur-bucket-detail');
+  if(!c){return;}
+  var bkt=DURATION_BUCKETS[idx];
+  var trueHuman=filteredRecs.filter(function(r){return fldStr(r,'Call Status')==='answered'&&!isIVR(r);});
+  var inBkt=trueHuman.filter(function(r){var d=parseDuration(fld(r,'Call Duration'));return d>=bkt.min&&d<=bkt.max;});
+  var total=inBkt.length||1;
+  var html='<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:8px">'+bkt.label+' breakdown ('+inBkt.length+' calls)</div>';
+  if(idx===1){
+    var cats={};
+    inBkt.forEach(function(r){var cat=classifyHangup(fldStr(r,'Call Summary Log'));cats[cat]=(cats[cat]||0)+1;});
+    Object.keys(cats).sort(function(a,b){return cats[b]-cats[a];}).forEach(function(cat){
+      var p=pct(cats[cat],total);
+      html+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">'
+        +'<div style="flex:0 0 175px;font-size:11px;color:var(--text)">'+cat+'</div>'
+        +'<div style="flex:1;background:var(--border);border-radius:3px;height:7px">'
+        +'<div style="background:'+bkt.color+';width:'+p+'%;height:7px;border-radius:3px"></div></div>'
+        +'<div style="flex:0 0 58px;font-size:11px;color:var(--muted);text-align:right">'+cats[cat]+' ('+p+'%)</div>'
+        +'</div>';
+    });
+  } else {
+    var ers={};
+    inBkt.forEach(function(r){var v=fldStr(r,'End Result')||'(none)';ers[v]=(ers[v]||0)+1;});
+    Object.keys(ers).sort(function(a,b){return ers[b]-ers[a];}).slice(0,6).forEach(function(er){
+      var p=pct(ers[er],total);
+      html+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">'
+        +'<div style="flex:0 0 175px;font-size:11px;color:var(--text)">'+er+'</div>'
+        +'<div style="flex:1;background:var(--border);border-radius:3px;height:7px">'
+        +'<div style="background:'+bkt.color+';width:'+p+'%;height:7px;border-radius:3px"></div></div>'
+        +'<div style="flex:0 0 58px;font-size:11px;color:var(--muted);text-align:right">'+ers[er]+' ('+p+'%)</div>'
+        +'</div>';
+    });
+  }
+  c.innerHTML=html;
+  c.style.display='block';
 }
 
 // ── IVR / List Quality by Brand ───────────────────────────────────────────────

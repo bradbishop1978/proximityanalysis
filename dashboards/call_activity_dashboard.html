@@ -215,6 +215,15 @@
     .wlq-interest.high{background:#D1FAE5;color:#065F46}
     .wlq-interest.medium{background:#FEF3C7;color:#92400E}
     .wlq-empty{text-align:center;padding:28px;color:var(--gray);font-size:13px}
+    .wlq-scroll{max-height:520px;overflow-y:auto;padding-right:2px}
+    .wlq-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+    .wlq-sdr{margin-top:5px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+    .wlq-sdr-tag{padding:2px 7px;border-radius:6px;font-size:10px;font-weight:700;border:1px solid var(--border);background:var(--bg);color:var(--muted)}
+    .wlq-sdr-tag.converted{background:#D1FAE5;color:#065F46;border-color:#A7F3D0}
+    .wlq-sdr-tag.not-interested{background:#FEE2E2;color:#991B1B;border-color:#FCA5A5}
+    .wlq-sdr-tag.rescheduled{background:#FEF3C7;color:#92400E;border-color:#FDE68A}
+    .wlq-sdr-tag.no-answer{background:var(--pink-pale);color:var(--dark);border-color:var(--border)}
+    .wlq-sdr-date{font-size:10px;color:var(--muted)}
   </style>
 </head>
 <body>
@@ -465,9 +474,13 @@
         <div id="chart-heatmap"><div class="chart-empty">No data</div></div>
         <div style="font-size:10px;color:var(--muted);margin-top:6px">Each cell: hang-up% (top) · DM% (mid) · n calls (small). Green = lower hang-up = better window.</div>
       </div>
-      <div class="card gap">
-        <div class="section-title">Warm Lead Queue — SDR Priority Callbacks</div>
-        <div id="warm-lead-queue"><div class="chart-empty">No data</div></div>
+      <div class="card gap" style="display:flex;flex-direction:column">
+        <div class="wlq-toolbar">
+          <div class="section-title" style="margin-bottom:0">Warm Lead Queue — SDR Priority Callbacks</div>
+          <button class="btn btn-s btn-sm" onclick="downloadWarmLeadCSV()">&#8595; Export CSV</button>
+        </div>
+        <div id="wlq-meta-row" style="font-size:11px;color:var(--muted);margin-bottom:8px"></div>
+        <div id="warm-lead-queue" class="wlq-scroll"><div class="chart-empty">No data</div></div>
       </div>
     </div>
 
@@ -862,7 +875,45 @@ function renderLeadershipStrip(){
     else if(bHuman.length>=10&&dmRate<0.02) alerts.push({cls:'ls-alert-amber',icon:'⚠',txt:bShort+': '+Math.round(dmRate*100)+'% DM rate — lowest performer'});
     if(bHuman.length>=10&&dmRate>bestDM){bestDM=dmRate;bestBrand={name:bShort,rate:Math.round(dmRate*100)};}
   });
-  if(bestBrand) alerts.push({cls:'ls-alert-green',icon:'✓',txt:bestBrand.name+': '+bestBrand.rate+'% DM rate — best brand right now'});
+  if(bestBrand) alerts.push({cls:'ls-alert-green',icon:'&#10003;',txt:bestBrand.name+': '+bestBrand.rate+'% DM rate — best brand right now'});
+
+  // ── WoW Root Cause Diagnostic (fires when DM rate dropped vs last week) ────
+  if(hmLW.length>=5 && dmRateTW < dmRateLW) {
+    var dmdAbs=Math.abs(Math.round((dmRateTW-dmRateLW)*100));
+    // Check 1: IVR wall rate shift
+    var ivrTW2=thisWeekRecs.filter(function(r){return fldStr(r,'Call Status')==='answered'&&isIVR(r);}).length;
+    var ansTW2=thisWeekRecs.filter(function(r){return fldStr(r,'Call Status')==='answered';}).length;
+    var ivrLW2=lastWeekRecs.filter(function(r){return fldStr(r,'Call Status')==='answered'&&isIVR(r);}).length;
+    var ansLW2=lastWeekRecs.filter(function(r){return fldStr(r,'Call Status')==='answered';}).length;
+    var ivrDelta2=Math.round(((ansTW2?ivrTW2/ansTW2:0)-(ansLW2?ivrLW2/ansLW2:0))*100);
+    // Check 2: Avg call hour shift (earlier = worse)
+    var getHr=function(r){var d=new Date(r.createdTime||'');return isNaN(d)?-1:d.getHours();};
+    var avgHrTW=thisWeekRecs.reduce(function(a,r){var h=getHr(r);return h>-1?a+h:a;},0)/(thisWeekRecs.filter(function(r){return getHr(r)>-1;}).length||1);
+    var avgHrLW=lastWeekRecs.reduce(function(a,r){var h=getHr(r);return h>-1?a+h:a;},0)/(lastWeekRecs.filter(function(r){return getHr(r)>-1;}).length||1);
+    var hrDelta=avgHrTW-avgHrLW;
+    // Check 3: Brand allocation — did a low-performing brand get more dials?
+    var lowBrand=null, worstDelta=0;
+    brands.forEach(function(b){
+      var brAll=allRecords.filter(function(r){return fldStr(r,'Brand')===b;});
+      var brHu=brAll.filter(isTrueHuman);
+      var brDM=brAll.filter(function(r){return isTrueHuman(r)&&isYes(fld(r,'Spoke to Manager'));});
+      var bdm=brHu.length?brDM.length/brHu.length:0;
+      if(bdm<0.02&&brAll.length>10){
+        var shareTW2=thisWeekRecs.length?thisWeekRecs.filter(function(r){return fldStr(r,'Brand')===b;}).length/thisWeekRecs.length:0;
+        var shareLW2=lastWeekRecs.length?lastWeekRecs.filter(function(r){return fldStr(r,'Brand')===b;}).length/lastWeekRecs.length:0;
+        var sd=Math.round((shareTW2-shareLW2)*100);
+        if(sd>worstDelta){worstDelta=sd;var bShortN=b.length>20?b.substring(0,18)+'…':b;lowBrand={name:bShortN,delta:sd};}
+      }
+    });
+    // Score and surface top cause
+    var causes=[];
+    if(ivrDelta2>=5) causes.push({score:ivrDelta2,txt:'IVR wall up '+ivrDelta2+'pts — list quality degraded this week'});
+    if(hrDelta<-0.7) causes.push({score:Math.round(Math.abs(hrDelta)*8),txt:'Calls shifted '+Math.abs(hrDelta).toFixed(1)+'h earlier avg — more 9AM dials vs last week'});
+    if(lowBrand&&lowBrand.delta>=10) causes.push({score:lowBrand.delta,txt:lowBrand.name+' share up '+lowBrand.delta+'pts — low-DM brand getting more dials'});
+    causes.sort(function(a,b){return b.score-a.score;});
+    var causeStr=causes.length?causes[0].txt:'check brand mix and call timing';
+    alerts.push({cls:'ls-alert-amber',icon:'&#128270;',txt:'DM rate down '+dmdAbs+'pts vs last week &mdash; likely: '+causeStr});
+  }
 
   // Best call window from filtered data
   var bestHour=-1, bestHourDM=0;
@@ -971,6 +1022,22 @@ function renderWarmLeadQueue(){
   var c=el('warm-lead-queue');
   if(!c) return;
   var queue=buildWarmLeads(filteredRecs);
+
+  // Update meta row counts
+  var metaEl=el('wlq-meta-row');
+  if(metaEl){
+    var p1c=queue.filter(function(i){return i.pri===1;}).length;
+    var p2c=queue.filter(function(i){return i.pri===2;}).length;
+    var p4c=queue.filter(function(i){return i.pri===4;}).length;
+    var contacted=filteredRecs.filter(function(r){return fldStr(r,'SDR Outcome').length>0;}).length;
+    var converted=filteredRecs.filter(function(r){return fldStr(r,'SDR Outcome')==='Reached / Converted';}).length;
+    metaEl.innerHTML=queue.length+' leads &nbsp;·&nbsp; '
+      +'<b style="color:#DC2626">P1:</b> '+p1c
+      +'&nbsp; <b style="color:#059669">P2:</b> '+p2c
+      +'&nbsp; <b>P4:</b> '+p4c
+      +(contacted?'&nbsp;&nbsp;| SDR contacted: '+contacted+(converted?' &nbsp;· converted: '+converted:''):'');
+  }
+
   if(!queue.length){c.innerHTML='<div class="wlq-empty">No warm leads in current filter</div>';return;}
 
   var priLabel={1:'P1',2:'P2',4:'P4'};
@@ -983,29 +1050,82 @@ function renderWarmLeadQueue(){
     +'<span><b style="color:var(--dark)">P4</b> = Callback, no time</span>'
     +'</div>';
 
-  queue.slice(0,30).forEach(function(item){
+  // SDR outcome → CSS class map
+  var sdrCls={'Reached / Converted':'converted','Reached / Not Interested':'not-interested','Rescheduled':'rescheduled','No Answer / Left VM':'no-answer'};
+
+  queue.forEach(function(item){
     var r=item.r, pri=item.pri;
     var brand=fldStr(r,'Brand')||'?';
     var bShort={'Krispy Krunchy Chicken':'KKC','Genuine Broasters':'GB','Champs Chicken':'CC',"Godfather's Pizza Express":'GPE',"Simple Simon's Pizza":'SSP'};
     var b=bShort[brand]||brand.substring(0,10);
     var contact=fldStr(r,'Contact Name')||'(no name)';
+    var store=fldStr(r,'Store Name');
     var phone=fldStr(r,'Dialed Phone Number')||'—';
     var cbt=fldStr(r,'Callback Time');
     var interest=(fld(r,'Interest Level')||'').toLowerCase();
     var intCls=interest==='high'?'high':interest==='medium'?'medium':'';
+    var sdrOut=fldStr(r,'SDR Outcome');
+    var sdrDate=fldStr(r,'SDR Contact Date');
+    var sdrNotes=fldStr(r,'SDR Notes');
+    var sdrCssClass=sdrCls[sdrOut]||'';
+
+    var sdrHtml='';
+    if(sdrOut){
+      sdrHtml='<div class="wlq-sdr">'
+        +'<span class="wlq-sdr-tag '+sdrCssClass+'">'+escAttr(sdrOut)+'</span>'
+        +(sdrDate?'<span class="wlq-sdr-date">'+escAttr(sdrDate)+'</span>':'')
+        +(sdrNotes?'<span class="wlq-sdr-date" style="color:var(--text);font-style:italic">"'+escAttr(sdrNotes)+'"</span>':'')
+        +'</div>';
+    }
+
     html+='<div class="wlq-item">'
       +'<div class="wlq-pri '+priCls[pri]+'">'+priLabel[pri]+'</div>'
       +'<div class="wlq-body">'
-        +'<div class="wlq-brand">'+b+' &nbsp;·&nbsp; '+priDesc[pri]+'</div>'
-        +'<div class="wlq-contact">'+escAttr(contact)+'</div>'
+        +'<div class="wlq-brand">'+escAttr(b)+' &nbsp;·&nbsp; '+priDesc[pri]+'</div>'
+        +(store?'<div class="wlq-contact">'+escAttr(store)+'</div>':'')
+        +'<div class="wlq-contact" style="font-weight:400;font-size:12px;color:var(--muted)">'+escAttr(contact)+'</div>'
         +'<div class="wlq-phone">'+phone+'</div>'
-        +(cbt?'<div class="wlq-cbt">⏰ '+escAttr(cbt)+'</div>':'')
+        +(cbt?'<div class="wlq-cbt">&#9200; '+escAttr(cbt)+'</div>':'')
         +(interest&&interest!=='none'?'<div style="margin-top:4px"><span class="wlq-interest '+intCls+'">'+interest+'</span></div>':'')
+        +sdrHtml
       +'</div>'
       +'</div>';
   });
-  if(queue.length>30) html+='<div style="font-size:11px;color:var(--muted);padding:8px 0">+ '+(queue.length-30)+' more records</div>';
   c.innerHTML=html;
+}
+
+// ── Warm Lead CSV Export ─────────────────────────────────────────────────────
+function downloadWarmLeadCSV(){
+  var queue=buildWarmLeads(filteredRecs);
+  var rows=[['Priority','Brand','Store Name','Contact Name','Phone','Callback Time','Interest Level','SDR Outcome','SDR Contact Date','SDR Notes','Call Date']];
+  queue.forEach(function(item){
+    var r=item.r;
+    rows.push([
+      item.pri===1?'P1':item.pri===2?'P2':'P4',
+      fldStr(r,'Brand'),
+      fldStr(r,'Store Name'),
+      fldStr(r,'Contact Name'),
+      fldStr(r,'Dialed Phone Number'),
+      fldStr(r,'Callback Time'),
+      fldStr(r,'Interest Level'),
+      fldStr(r,'SDR Outcome'),
+      fldStr(r,'SDR Contact Date'),
+      fldStr(r,'SDR Notes'),
+      getRecordDate(r),
+    ]);
+  });
+  var csv=rows.map(function(row){
+    return row.map(function(cell){
+      var s=String(cell||'');
+      if(s.indexOf(',')>-1||s.indexOf('"')>-1||s.indexOf('\n')>-1) s='"'+s.replace(/"/g,'""')+'"';
+      return s;
+    }).join(',');
+  }).join('\n');
+  var blob=new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url; a.download='warm_leads_'+today()+'.csv'; a.click();
+  URL.revokeObjectURL(url);
 }
 
 // ── KPIs ─────────────────────────────────────────────────────────────────────

@@ -185,6 +185,18 @@
     .ls-alert-blue{background:rgba(99,102,241,.2);color:#A5B4FC;border:1px solid rgba(99,102,241,.3)}
     @media(max-width:768px){.ls-kpis{flex-direction:column}.ls-kpi{border-right:none;border-bottom:1px solid rgba(255,255,255,.1)}.ls-kpi:last-child{border-bottom:none}}
 
+    /* ── SDR Conversion Funnel ── */
+    .sdr-funnel{display:flex;align-items:center;gap:0;margin-bottom:10px;flex-wrap:wrap}
+    .sdr-step{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:10px 16px;text-align:center;min-width:100px}
+    .sdr-step-val{font-family:'Gabarito',sans-serif;font-size:22px;font-weight:900;color:var(--dark);line-height:1}
+    .sdr-step-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
+    .sdr-step-rate{font-size:11px;font-weight:700;margin-top:2px}
+    .sdr-step-rate.good{color:#059669}.sdr-step-rate.warn{color:#D97706}.sdr-step-rate.none{color:var(--muted)}
+    .sdr-step.highlight{border-color:#059669;background:#F0FDF4}
+    .sdr-step.converted{border-color:#7C3AED;background:#F5F3FF}
+    .sdr-arrow{font-size:18px;color:var(--border);margin:0 8px;line-height:1}
+    .sdr-pris{display:flex;gap:12px;font-size:11px;color:var(--muted);margin-top:6px;flex-wrap:wrap}
+
     /* ── Time Heatmap ── */
     .heatmap-wrap{overflow-x:auto}
     .heatmap-table{border-collapse:separate;border-spacing:3px;width:100%}
@@ -313,6 +325,12 @@
           <div class="ls-kpi-label">Warm Leads (SDR Queue)</div>
           <div id="ls-leads" class="ls-kpi-val">—</div>
           <div class="ls-kpi-sub">callbacks + guide accepts</div>
+        </div>
+        <div class="ls-kpi">
+          <div class="ls-kpi-label">VM SMS Delivered</div>
+          <div id="ls-vm-del" class="ls-kpi-val">—</div>
+          <div id="ls-vm-del-sub" class="ls-kpi-sub">of VM drops sent</div>
+          <div id="ls-vm-del-rate" class="ls-kpi-delta flat">—</div>
         </div>
       </div>
       <div id="ls-alerts" class="ls-alerts"></div>
@@ -888,6 +906,18 @@ function renderLeadershipStrip(){
   var leads=buildWarmLeads(recs);
   el('ls-leads').textContent=leads.length;
 
+  // VM SMS Delivery
+  var vmSent=recs.filter(function(r){return isYes(fld(r,'Voicemail SMS Sent'));});
+  var vmDel=recs.filter(function(r){return (fldStr(r,'Voicemail SMS Status')||'').toLowerCase()==='delivered';});
+  el('ls-vm-del').textContent=vmDel.length;
+  el('ls-vm-del-sub').textContent=vmSent.length+' sent · mobile channel';
+  var vmDelRate=vmSent.length?Math.round(vmDel.length/vmSent.length*100):null;
+  var vmRateEl=el('ls-vm-del-rate');
+  if(vmSent.length===0){vmRateEl.textContent='Run enrich_vm_sms.py to populate';vmRateEl.className='ls-kpi-delta flat';}
+  else if(vmDelRate>=70){vmRateEl.textContent=vmDelRate+'% delivery rate';vmRateEl.className='ls-kpi-delta up';}
+  else if(vmDelRate>=40){vmRateEl.textContent=vmDelRate+'% delivery rate';vmRateEl.className='ls-kpi-delta flat';}
+  else{vmRateEl.textContent=vmDelRate+'% delivery — check carrier blocks';vmRateEl.className='ls-kpi-delta down';}
+
   // Brand alerts
   var brands=[];
   allRecords.forEach(function(r){var b=fldStr(r,'Brand');if(b&&brands.indexOf(b)<0)brands.push(b);});
@@ -1055,19 +1085,42 @@ function renderWarmLeadQueue(){
   if(!c) return;
   var queue=buildWarmLeads(filteredRecs);
 
-  // Update meta row counts
+  // SDR conversion funnel
   var metaEl=el('wlq-meta-row');
   if(metaEl){
     var p1c=queue.filter(function(i){return i.pri===1;}).length;
     var p2c=queue.filter(function(i){return i.pri===2;}).length;
     var p4c=queue.filter(function(i){return i.pri===4;}).length;
+    var qTotal=queue.length;
     var contacted=filteredRecs.filter(function(r){return fldStr(r,'SDR Outcome').length>0;}).length;
     var converted=filteredRecs.filter(function(r){return fldStr(r,'SDR Outcome')==='Reached / Converted';}).length;
-    metaEl.innerHTML=queue.length+' leads &nbsp;·&nbsp; '
-      +'<b style="color:#DC2626">P1:</b> '+p1c
-      +'&nbsp; <b style="color:#059669">P2:</b> '+p2c
-      +'&nbsp; <b>P4:</b> '+p4c
-      +(contacted?'&nbsp;&nbsp;| SDR contacted: '+contacted+(converted?' &nbsp;· converted: '+converted:''):'');
+    var contRate=qTotal?Math.round(contacted/qTotal*100):0;
+    var convRate=contacted?Math.round(converted/contacted*100):0;
+    var contRateCls=contRate>=50?'good':contRate>=20?'warn':'none';
+    var convRateCls=convRate>=30?'good':convRate>=10?'warn':'none';
+    metaEl.innerHTML='<div class="sdr-funnel">'
+      +'<div class="sdr-step">'
+        +'<div class="sdr-step-val">'+qTotal+'</div>'
+        +'<div class="sdr-step-label">Warm Leads</div>'
+      +'</div>'
+      +'<div class="sdr-arrow">&#8594;</div>'
+      +'<div class="sdr-step'+(contacted?' highlight':'')+'"">'
+        +'<div class="sdr-step-val">'+contacted+'</div>'
+        +'<div class="sdr-step-label">SDR Contacted</div>'
+        +'<div class="sdr-step-rate '+contRateCls+'">'+contRate+'% worked</div>'
+      +'</div>'
+      +'<div class="sdr-arrow">&#8594;</div>'
+      +'<div class="sdr-step'+(converted?' converted':'')+'"">'
+        +'<div class="sdr-step-val">'+converted+'</div>'
+        +'<div class="sdr-step-label">Converted</div>'
+        +'<div class="sdr-step-rate '+convRateCls+'">'+(contacted?convRate+'% close rate':'—')+'</div>'
+      +'</div>'
+      +'</div>'
+      +'<div class="sdr-pris">'
+        +'<span><b style="color:#DC2626">P1</b> '+p1c+' callback w/ time</span>'
+        +'<span><b style="color:#059669">P2</b> '+p2c+' DM + guide</span>'
+        +'<span><b style="color:var(--dark)">P4</b> '+p4c+' callback, no time</span>'
+      +'</div>';
   }
 
   if(!queue.length){c.innerHTML='<div class="wlq-empty">No warm leads in current filter</div>';return;}

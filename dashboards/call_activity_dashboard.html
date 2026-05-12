@@ -215,6 +215,20 @@
     .wlq-interest.high{background:#D1FAE5;color:#065F46}
     .wlq-interest.medium{background:#FEF3C7;color:#92400E}
     .wlq-empty{text-align:center;padding:28px;color:var(--gray);font-size:13px}
+    .gate-col{background:var(--bg);border-radius:10px;padding:16px;border:1px solid var(--border)}
+    .gate-col.after{border-color:var(--green);background:#F0FDF4}
+    .gate-col-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+    .gate-col-label .gate-badge{padding:2px 7px;border-radius:8px;font-size:9px;font-weight:800;background:var(--pink-pale);color:var(--dark)}
+    .gate-col.after .gate-col-label .gate-badge{background:#D1FAE5;color:#065F46}
+    .gate-metric{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px}
+    .gate-metric:last-child{border-bottom:none}
+    .gate-metric-name{color:var(--muted)}
+    .gate-metric-val{font-family:'Gabarito',sans-serif;font-size:16px;font-weight:800;color:var(--dark)}
+    .gate-metric-val.better{color:var(--green)}
+    .gate-metric-val.worse{color:#EF4444}
+    .gate-metric-val.pending{color:var(--gray);font-size:12px;font-weight:400;font-family:'Inter',sans-serif}
+    .gate-delta{font-size:11px;font-weight:700;margin-left:6px}
+    .gate-delta.up{color:var(--green)}.gate-delta.down{color:#EF4444}
     .wlq-scroll{max-height:520px;overflow-y:auto;padding-right:2px}
     .wlq-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
     .wlq-sdr{margin-top:5px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
@@ -466,8 +480,23 @@
       </div>
     </div>
 
-    <!-- Analyst View: Heatmap + Warm Lead Queue -->
+    <!-- Analyst View: Opener A/B Gate + Heatmap + Warm Lead Queue -->
     <div class="kpi-section-label">Analyst View</div>
+
+    <!-- Opener A/B Comparison -->
+    <div class="card gap" style="margin-bottom:16px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <div class="section-title" style="margin-bottom:0">Opener A vs B — Impact Tracker</div>
+        <div style="font-size:11px;color:var(--muted)">Gate: <b>2026-05-12</b> &mdash; Variant C Confirm&rarr;Qualify&rarr;Reveal</div>
+      </div>
+      <div id="opener-gate" style="display:grid;grid-template-columns:1fr 1fr;gap:16px"></div>
+      <div style="font-size:10px;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
+        Opener A: <i>"Hi — this is Simone from Lula Commerce, calling for [store]. We have a program to get your store on DoorDash, Uber Eats, and Grubhub — no charge for the first 90 days..."</i>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        Opener B: <i>"Hey — quick question, is this [store]?" → qualify before pitch</i>
+      </div>
+    </div>
+
     <div class="grid2">
       <div class="card gap">
         <div class="section-title">Call Timing Heatmap — Hang-up Rate by Day &amp; Hour</div>
@@ -527,6 +556,8 @@ var TABLE_NAME = 'Call Logs';
 var KEY_CACHE = 'lula_call_cache';
 var COLORS = ['#DE4990','#2C023B','#EB92BD','#B799FF','#F59E0B','#10B981','#EC4899','#8B5CF6'];
 var PAGE_SIZE = 25;
+// Opener A/B gate — date Variant C opener was changed (Confirm→Qualify→Reveal)
+var OPENER_CHANGE_DATE = '2026-05-12';
 
 // ── State ────────────────────────────────────────────────────────────────────
 var allRecords = [];
@@ -783,6 +814,7 @@ function renderAll(){
   renderDowChart();
   renderHourChart();
   renderLeadershipStrip();
+  renderOpenerGate();
   renderTimeHeatmap();
   renderWarmLeadQueue();
   renderTable();
@@ -1091,6 +1123,93 @@ function renderWarmLeadQueue(){
       +'</div>'
       +'</div>';
   });
+  c.innerHTML=html;
+}
+
+// ── Opener A/B Gate ──────────────────────────────────────────────────────────
+function renderOpenerGate(){
+  var c=el('opener-gate');
+  if(!c) return;
+
+  // Only use allRecords (ignore date filter — gate needs the full picture)
+  var before=allRecords.filter(function(r){return getRecordDate(r)<OPENER_CHANGE_DATE;});
+  var after =allRecords.filter(function(r){return getRecordDate(r)>=OPENER_CHANGE_DATE;});
+
+  function parseDur(v){
+    if(!v) return 0;
+    if(typeof v==='number') return Math.round(v);
+    if(typeof v==='string'&&v.indexOf(':')>-1){var p=v.split(':');return parseInt(p[0])*60+parseInt(p[1]||0);}
+    return parseInt(v)||0;
+  }
+
+  function metrics(recs){
+    var humans=recs.filter(isTrueHuman);
+    var n=humans.length;
+    var hangup6_15=humans.filter(function(r){var d=parseDur(fld(r,'Call Duration'));return d>=6&&d<=15;}).length;
+    var hangup0_30=humans.filter(function(r){var d=parseDur(fld(r,'Call Duration'));return d<=30;}).length;
+    var convo=humans.filter(function(r){var d=parseDur(fld(r,'Call Duration'));return d>60;}).length;
+    var dms=humans.filter(function(r){return isYes(fld(r,'Spoke to Manager'));}).length;
+    return {
+      n:n, dials:recs.length,
+      hangupRate: n?Math.round(hangup6_15/n*100):null,
+      earlyHangup: n?Math.round(hangup0_30/n*100):null,
+      convoRate:   n?Math.round(convo/n*100):null,
+      dmRate:      n?Math.round(dms/n*100):null,
+      rawHangup:hangup6_15, rawConvo:convo, rawDM:dms,
+    };
+  }
+
+  var A=metrics(before), B=metrics(after);
+  var MIN_AFTER=30; // need this many humans before showing live delta
+
+  function row(label, aVal, bVal, lowerIsBetter){
+    var aStr=aVal!==null?aVal+'%':'—';
+    var bStr, bCls='', deltaStr='', deltaCls='';
+    if(B.n<MIN_AFTER){
+      bStr='<span class="gate-metric-val pending">'+B.n+' humans so far — need '+MIN_AFTER+'+ to compare</span>';
+    } else {
+      bStr='<span class="gate-metric-val'+(bVal!==null?' '+(
+        lowerIsBetter?(bVal<aVal?'better':bVal>aVal?'worse':''):
+                       (bVal>aVal?'better':bVal<aVal?'worse':'')
+      ):'')+'">'+bVal+'%</span>';
+      if(aVal!==null&&bVal!==null){
+        var d=bVal-aVal;
+        if(d!==0){
+          var isGood=lowerIsBetter?d<0:d>0;
+          deltaCls=isGood?'up':'down';
+          deltaStr='<span class="gate-delta '+deltaCls+'">'+(d>0?'↑':'↓')+Math.abs(d)+'pts</span>';
+        }
+      }
+    }
+    return '<div class="gate-metric">'
+      +'<span class="gate-metric-name">'+label+'</span>'
+      +'<span style="display:flex;align-items:baseline;gap:4px">'
+        +'<span class="gate-metric-val">'+aStr+'</span>'
+        +'<span style="color:var(--border);margin:0 4px">→</span>'
+        +bStr+deltaStr
+      +'</span>'
+      +'</div>';
+  }
+
+  var html='';
+  // Before column
+  html+='<div class="gate-col">'
+    +'<div class="gate-col-label"><span class="gate-badge">Opener A</span> Pre-'+OPENER_CHANGE_DATE+' &nbsp;·&nbsp; '+A.dials.toLocaleString()+' dials, '+A.n+' humans</div>'
+    +row('6-15s hang-up rate', A.hangupRate, B.hangupRate, true)
+    +row('Early hang-up (≤30s)', A.earlyHangup, B.earlyHangup, true)
+    +row('Conversation rate (>60s)', A.convoRate, B.convoRate, false)
+    +row('DM contact rate', A.dmRate, B.dmRate, false)
+    +'</div>';
+  // After column
+  html+='<div class="gate-col after">'
+    +'<div class="gate-col-label"><span class="gate-badge">Opener B</span> Post-'+OPENER_CHANGE_DATE+' &nbsp;·&nbsp; '+after.length.toLocaleString()+' dials, '+B.n+' humans</div>'
+    +row('6-15s hang-up rate', A.hangupRate, B.hangupRate, true)
+    +row('Early hang-up (≤30s)', A.earlyHangup, B.earlyHangup, true)
+    +row('Conversation rate (>60s)', A.convoRate, B.convoRate, false)
+    +row('DM contact rate', A.dmRate, B.dmRate, false)
+    +(B.n<MIN_AFTER?'<div style="margin-top:12px;font-size:11px;color:#059669;font-weight:600">Live — updating as calls come in</div>':'')
+    +'</div>';
+
   c.innerHTML=html;
 }
 

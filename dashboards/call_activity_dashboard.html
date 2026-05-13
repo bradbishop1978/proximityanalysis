@@ -899,10 +899,10 @@ function renderLeadershipStrip(){
     else{dmDeltaEl.textContent='— flat vs last week';dmDeltaEl.className='ls-kpi-delta flat';}
   }
 
-  // Guide Delivery Rate
+  // Guide Delivery Rate — denominator is DMs reached, not total dials
   var guides=recs.filter(isGuideDelivered).length;
-  el('ls-gdr').textContent=pct(guides,recs.length||1)+'%';
-  el('ls-gdr-sub').textContent=guides+' guide'+(guides!==1?'s':'')+' / '+recs.length+' dials';
+  el('ls-gdr').textContent=pct(guides,dms.length||1)+'%';
+  el('ls-gdr-sub').textContent=guides+' guide'+(guides!==1?'s':'')+' / '+dms.length+' DMs reached';
 
   // Warm leads count
   var leads=buildWarmLeads(recs);

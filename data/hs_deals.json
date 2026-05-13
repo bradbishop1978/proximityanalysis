@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-05-13T14:49:40.010810Z",
+  "fetchedAt": "2026-05-13T18:06:17.540671Z",
   "deals": [
     {
       "id": "4014966213",
@@ -26380,6 +26380,16 @@
       "owner": "Bernard Penoliar",
       "stage": "7. Closed Won",
       "pipeline": "SS Pipeline"
+    },
+    {
+      "id": "60236758541",
+      "date": "2026-03-17",
+      "brand": "Top 200 Target",
+      "stores": 80,
+      "dealname": "Panjwani Energy LLC",
+      "owner": "Adit Gupta",
+      "stage": "8. Closed Won",
+      "pipeline": "Sales Pipeline"
     }
   ]
 }

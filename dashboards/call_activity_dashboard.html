@@ -250,6 +250,79 @@
     .wlq-sdr-tag.rescheduled{background:#FEF3C7;color:#92400E;border-color:#FDE68A}
     .wlq-sdr-tag.no-answer{background:var(--pink-pale);color:var(--dark);border-color:var(--border)}
     .wlq-sdr-date{font-size:10px;color:var(--muted)}
+
+    /* ── Tab Nav ── */
+    .tab-nav{display:flex;gap:0;background:#fff;border-radius:12px;border:1px solid var(--border);padding:6px;margin-bottom:16px;width:fit-content}
+    .tab-btn{padding:8px 24px;border-radius:8px;border:none;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;color:var(--muted);background:transparent;transition:.15s}
+    .tab-btn.active{background:var(--dark);color:#fff}
+    .tab-btn:hover:not(.active){background:var(--border);color:var(--dark)}
+
+    /* ── Leadership Tab ── */
+    .bm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:20px}
+    .bm-card{background:#fff;border-radius:14px;border:1px solid var(--border);padding:20px 22px;position:relative;overflow:hidden}
+    .bm-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;border-radius:14px 0 0 14px}
+    .bm-card.green::before{background:#10B981}
+    .bm-card.amber::before{background:#F59E0B}
+    .bm-card.red::before{background:#EF4444}
+    .bm-card.info::before{background:#6366F1}
+    .bm-metric-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:8px}
+    .bm-actual-row{display:flex;align-items:baseline;gap:10px;margin-bottom:6px}
+    .bm-actual{font-family:'Gabarito',sans-serif;font-size:42px;font-weight:900;line-height:1}
+    .bm-actual.green{color:#10B981}
+    .bm-actual.amber{color:#D97706}
+    .bm-actual.red{color:#EF4444}
+    .bm-actual.info{color:#6366F1}
+    .bm-benchmark{font-size:12px;color:var(--muted);line-height:1.4}
+    .bm-gauge-wrap{margin:10px 0 8px}
+    .bm-gauge-bg{height:8px;background:var(--border);border-radius:4px;position:relative;overflow:visible}
+    .bm-gauge-zone{position:absolute;height:100%;border-radius:4px;opacity:.35}
+    .bm-gauge-marker{position:absolute;top:-4px;width:4px;height:16px;border-radius:2px;transform:translateX(-50%)}
+    .bm-gauge-labels{display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-top:3px}
+    .bm-status-pill{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700;margin-bottom:8px}
+    .bm-status-pill.green{background:#D1FAE5;color:#065F46}
+    .bm-status-pill.amber{background:#FEF3C7;color:#92400E}
+    .bm-status-pill.red{background:#FEE2E2;color:#991B1B}
+    .bm-status-pill.info{background:#EEF2FF;color:#3730A3}
+    .bm-story{font-size:12px;color:var(--text);line-height:1.5}
+    .bm-story b{color:var(--dark)}
+
+    .ls2-goal{background:var(--dark);border-radius:14px;padding:22px 24px;color:#fff;margin-bottom:20px}
+    .ls2-goal-title{font-family:'Gabarito',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--pink-light);margin-bottom:16px}
+    .ls2-goal-bar-wrap{background:rgba(255,255,255,.12);border-radius:8px;height:18px;margin:10px 0 6px;overflow:hidden}
+    .ls2-goal-bar-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,#EB92BD,#DE4990);transition:width .6s}
+    .ls2-goal-stats{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.6);margin-top:4px}
+
+    .action-card{background:#fff;border-radius:12px;border:1px solid var(--border);padding:18px 20px;margin-bottom:12px}
+    .action-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+    .action-badge{width:22px;height:22px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0}
+    .action-badge.red{background:#FEE2E2;color:#DC2626}
+    .action-badge.amber{background:#FEF3C7;color:#D97706}
+    .action-badge.green{background:#D1FAE5;color:#059669}
+    .action-title{font-size:13px;font-weight:700;color:var(--dark)}
+    .action-body{font-size:12px;color:var(--muted);line-height:1.6;padding-left:32px}
+
+    /* ── Tab 2 Styles ── */
+    .t2-section-label{font-family:'Gabarito',sans-serif;font-size:14px;font-weight:700;color:var(--dark);margin:20px 0 12px;display:flex;align-items:center;gap:10px}
+    .t2-section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+    .t2-stat-row{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+    .t2-stat{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 18px;min-width:160px}
+    .t2-stat-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:4px}
+    .t2-stat-val{font-family:'Gabarito',sans-serif;font-size:26px;font-weight:900;color:var(--dark);line-height:1}
+    .t2-stat-sub{font-size:11px;color:var(--muted);margin-top:3px}
+    .t2-table{width:100%;border-collapse:collapse;font-size:12px}
+    .t2-table th{text-align:left;padding:7px 10px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);border-bottom:2px solid var(--border);cursor:pointer;user-select:none;white-space:nowrap}
+    .t2-table th:hover{color:var(--pink)}
+    .t2-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:middle;white-space:nowrap}
+    .t2-table tr:last-child td{border-bottom:none}
+    .t2-table tr:hover td{background:var(--pink-pale)}
+    .t2-badge{display:inline-block;padding:2px 7px;border-radius:8px;font-size:10px;font-weight:700}
+    .t2-badge-green{background:#D1FAE5;color:#065F46}
+    .t2-badge-red{background:#FEE2E2;color:#991B1B}
+    .t2-badge-amber{background:#FEF3C7;color:#92400E}
+    .hm2-cell{min-width:44px;padding:5px 4px;border-radius:5px;text-align:center;font-size:10px;font-weight:700;line-height:1.3}
+    .km-legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:10px;font-size:11px}
+    .km-legend-item{display:flex;align-items:center;gap:6px}
+    .km-swatch{width:20px;height:3px;border-radius:2px;flex-shrink:0}
   </style>
 </head>
 <body>
@@ -299,6 +372,69 @@
 
   <!-- Content (hidden until loaded) -->
   <div id="content" style="display:none">
+
+    <!-- Tab Nav -->
+    <div class="tab-nav">
+      <button class="tab-btn active" id="tab-btn-1" onclick="switchTab(1)">Leadership</button>
+      <button class="tab-btn" id="tab-btn-2" onclick="switchTab(2)">Operations</button>
+      <button class="tab-btn" id="tab-btn-3" onclick="switchTab(3)">Analysis</button>
+    </div>
+
+    <!-- TAB 1: LEADERSHIP -->
+    <div id="tab1-leadership" style="display:block">
+      <!-- Signed Stores Goal -->
+      <div class="ls2-goal" id="bm-goal-bar">
+        <div class="ls2-goal-title">SS Pipeline — Closed Won + Signed Agreement vs 150-Store Goal</div>
+        <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:8px">
+          <div id="bm-signed-val" style="font-family:'Gabarito',sans-serif;font-size:52px;font-weight:900;line-height:1;color:#fff">—</div>
+          <div style="font-size:15px;color:rgba(255,255,255,.55)">of <b style="color:#fff">150</b> goal</div>
+          <div id="bm-signed-pct" style="font-size:16px;font-weight:700;color:var(--pink-light);margin-left:auto"></div>
+        </div>
+        <div class="ls2-goal-bar-wrap"><div id="bm-goal-fill" class="ls2-goal-bar-fill" style="width:0%"></div></div>
+        <div class="ls2-goal-stats">
+          <span id="bm-goal-left"></span>
+          <span id="bm-goal-week"></span>
+        </div>
+      </div>
+
+      <!-- Benchmark Scorecard -->
+      <div style="font-family:'Gabarito',sans-serif;font-size:13px;font-weight:700;color:var(--dark);margin-bottom:14px;display:flex;align-items:center;gap:10px">
+        Campaign Scorecard — Benchmarks vs Actuals
+        <div style="flex:1;height:1px;background:var(--border)"></div>
+        <span style="font-size:10px;font-weight:500;color:var(--muted);font-family:'Inter',sans-serif">Benchmarks: AI outbound voice to SMB owners</span>
+      </div>
+      <div id="bm-scorecard" class="bm-grid"></div>
+
+      <!-- Action Items -->
+      <div style="font-family:'Gabarito',sans-serif;font-size:13px;font-weight:700;color:var(--dark);margin:20px 0 12px;display:flex;align-items:center;gap:10px">
+        What Needs Attention
+        <div style="flex:1;height:1px;background:var(--border)"></div>
+      </div>
+      <div id="bm-actions"></div>
+
+      <!-- Benchmark footnote -->
+      <div style="margin-top:24px;padding:14px 18px;background:#fff;border-radius:10px;border:1px solid var(--border)">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:8px">Benchmark Sources &amp; Methodology</div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.7">
+          Ranges reflect <b style="color:var(--text)">AI-assisted outbound voice calls to SMB owners</b> (convenience store / QSR segment), drawn from:
+          <span style="display:inline-flex;flex-wrap:wrap;gap:6px;margin-top:6px">
+            <span style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:2px 8px;font-size:10px;color:var(--text);font-weight:600">RAIN Group — Outbound Prospecting Research</span>
+            <span style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:2px 8px;font-size:10px;color:var(--text);font-weight:600">Gong.io — Revenue Intelligence Report</span>
+            <span style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:2px 8px;font-size:10px;color:var(--text);font-weight:600">XANT / InsideSales — SMB Outbound Study</span>
+            <span style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:2px 8px;font-size:10px;color:var(--text);font-weight:600">Kixie / ConnectAndSell — AI Dialer Benchmarks</span>
+          </span>
+        </div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.7;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
+          <b style="color:var(--text)">Human SDR ceiling</b> (shown for context — AI outbound typically runs lower):
+          Connect 15–25% &nbsp;·&nbsp; DM Rate 20–35% &nbsp;·&nbsp; Conversation Rate 25–45% &nbsp;·&nbsp; Guide Acceptance 20–40%
+          <span style="float:right;font-size:10px;color:var(--muted)">Sources: 2023–2024 industry reports</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TAB 2: OPERATIONS -->
+    <div id="tab2-operations" style="display:none">
 
     <!-- Leadership Strip -->
     <div class="ls-wrap">
@@ -436,38 +572,39 @@
       <div class="metric-card"><div class="metric-label">Voicemail Block Rate</div><div id="k-vm-blocked" class="metric-val">0%</div><div id="k-vm-blocked-sub" class="metric-sub">of no-answer calls</div></div>
     </div>
 
-    <!-- Conversion Funnel + Daily Volume -->
+    <!-- Row 1: Conversion Funnel + Call Status Distribution -->
     <div class="grid2">
       <div class="card gap">
         <div class="section-title">Conversion Funnel</div>
         <div id="funnel"></div>
       </div>
       <div class="card gap">
-        <div class="section-title">Daily Call Volume</div>
-        <div id="chart-daily"><div class="chart-empty">No data</div></div>
-      </div>
-    </div>
-
-    <!-- Charts row -->
-    <div class="grid2">
-      <div class="card gap">
         <div class="section-title">Call Status Distribution</div>
         <div id="chart-results"><div class="chart-empty">No data</div></div>
       </div>
+    </div>
+
+    <!-- Row 2: Avg Human Talk Time by Brand + Avg Human Talk Time -->
+    <div class="grid2">
       <div class="card gap">
         <div class="section-title">Avg Human Talk Time by Brand</div>
         <div id="chart-objections"><div class="chart-empty">No data</div></div>
       </div>
+      <div class="card gap">
+        <div class="section-title">Avg Human Talk Time</div>
+        <div id="chart-duration"><div class="chart-empty">No data</div></div>
+      </div>
     </div>
 
+    <!-- Row 3: Brand Performance + Daily Call Volume -->
     <div class="grid2">
       <div class="card gap">
         <div class="section-title">Brand Performance</div>
         <div id="chart-brands"><div class="chart-empty">No data</div></div>
       </div>
       <div class="card gap">
-        <div class="section-title">Avg Human Talk Time</div>
-        <div id="chart-duration"><div class="chart-empty">No data</div></div>
+        <div class="section-title">Daily Call Volume</div>
+        <div id="chart-daily"><div class="chart-empty">No data</div></div>
       </div>
     </div>
 
@@ -531,26 +668,78 @@
       </div>
     </div>
 
-    <!-- Call Log Table -->
-    <div class="card">
-      <div class="tbl-toolbar">
-        <span id="tbl-count" class="tbl-count">0 records</span>
-        <button class="btn btn-s btn-sm" onclick="exportCSV()">Export CSV</button>
-      </div>
-      <div class="tbl-wrap">
-        <table>
-          <thead id="tbl-head"></thead>
-          <tbody id="tbl-body"></tbody>
-        </table>
-      </div>
-      <div class="pagination">
-        <button id="pg-prev" class="page-btn" onclick="changePage(-1)" disabled>&#8592; Prev</button>
-        <span id="pg-info">Page 1 of 1</span>
-        <button id="pg-next" class="page-btn" onclick="changePage(1)" disabled>Next &#8594;</button>
-      </div>
+    <!-- Brand Performance Table -->
+    <div class="kpi-section-label">Brand Scorecard</div>
+    <div class="card gap">
+      <div class="section-title">Brand Performance Table — Sorted by Signed Count</div>
+      <div id="chart-brand-table"><div class="chart-empty">No data</div></div>
     </div>
 
-    <div style="height:32px"></div>
+    </div><!-- /tab2-operations -->
+
+    <!-- TAB 3: ANALYSIS -->
+    <div id="tab3-analysis" style="display:none">
+
+      <!-- Section A: Distribution Panel -->
+      <div class="t2-section-label">A — Duration Distribution</div>
+      <div id="t2-dist-stats" class="t2-stat-row"></div>
+      <div class="card gap">
+        <div class="section-title">Frequency Table — Calls per Hangup Bucket</div>
+        <div id="t2-freq-table"></div>
+      </div>
+
+      <!-- Section B.1: Cramér's V -->
+      <div class="t2-section-label">B — Correlation Analysis</div>
+      <div class="grid2">
+        <div class="card gap">
+          <div class="section-title">Brand × Hangup Bucket — Cramér's V</div>
+          <div id="t2-cramers"></div>
+        </div>
+        <div class="card gap">
+          <div class="section-title">Hour of Dial × Connect Rate Heatmap</div>
+          <div id="t2-hour-heatmap"></div>
+        </div>
+      </div>
+
+      <!-- Section C: Kaplan-Meier -->
+      <div class="t2-section-label">C — Survival Analysis</div>
+      <div class="card gap">
+        <div class="section-title">Kaplan-Meier Survival Curve — % Calls Still Active by Second</div>
+        <div id="t2-km-chart"></div>
+        <div id="t2-km-legend" class="km-legend"></div>
+      </div>
+
+      <!-- Section E: Skewness Trend -->
+      <div class="t2-section-label">E — Skewness Trend (Weekly)</div>
+      <div class="card gap">
+        <div class="section-title">Distribution Skewness Week-over-Week — Decreasing = Campaign Improving</div>
+        <div id="t2-skew-chart"></div>
+      </div>
+
+      <!-- Section D: Raw Segment Table -->
+      <div class="t2-section-label">D — Raw Segment Table</div>
+      <div class="card">
+        <div class="tbl-toolbar">
+          <span id="t2-tbl-count" class="tbl-count">0 records</span>
+          <input type="text" id="t2-search" placeholder="Filter..." style="padding:5px 10px;border:1.5px solid var(--border);border-radius:8px;font-family:'Inter',sans-serif;font-size:12px;outline:none;width:200px" oninput="renderT2Table()">
+          <button class="btn btn-s btn-sm" onclick="exportT2CSV()">&#8595; Export CSV</button>
+        </div>
+        <div class="tbl-wrap">
+          <table class="t2-table">
+            <thead id="t2-tbl-head"></thead>
+            <tbody id="t2-tbl-body"></tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <button id="t2-pg-prev" class="page-btn" onclick="t2ChangePage(-1)" disabled>&#8592; Prev</button>
+          <span id="t2-pg-info">Page 1 of 1</span>
+          <button id="t2-pg-next" class="page-btn" onclick="t2ChangePage(1)" disabled>Next &#8594;</button>
+        </div>
+      </div>
+
+      <div style="height:32px"></div>
+    </div><!-- /tab3-analysis -->
+
   </div><!-- /content -->
 </div><!-- /main -->
 
@@ -834,6 +1023,9 @@ function renderAll(){
   renderTimeHeatmap();
   renderWarmLeadQueue();
   renderTable();
+  renderBrandPerformanceTable();
+  renderLeadershipTab();
+  if(tab3Initialized)renderTab3();
 }
 
 // ── Shared helpers for analyst view ─────────────────────────────────────────
@@ -1499,10 +1691,10 @@ function renderDailyChart(){
     if(v===0) return '';
     return '<circle cx="'+sx(i).toFixed(1)+'" cy="'+sy(v).toFixed(1)+'" r="3" fill="#DE4990"/>';
   }).join('');
-  c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'
+  c.innerHTML='<div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><svg viewBox="0 0 '+W+' '+H+'" style="min-width:'+Math.max(W,n*20)+'px;width:100%;display:block">'
     +grid+'<path d="'+fillPath+'" fill="#DE4990" fill-opacity=".1"/>'
     +'<polyline points="'+pts+'" fill="none" stroke="#DE4990" stroke-width="2" stroke-linejoin="round"/>'
-    +dots+xlbls+'</svg>';
+    +dots+xlbls+'</svg></div>';
 }
 
 // ── End Result donut ─────────────────────────────────────────────────────────
@@ -1524,7 +1716,7 @@ function renderResultsDonut(){
   var legend=data.slice(0,6).map(function(d,i){
     return '<div class="chart-legend-item"><div class="chart-legend-swatch" style="background:'+COLORS[i%COLORS.length]+'"></div><span>'+d.name+' ('+d.v+')</span></div>';
   }).join('');
-  c.innerHTML='<svg viewBox="0 0 200 200" style="width:100%;display:block">'
+  c.innerHTML='<svg viewBox="0 0 200 200" style="width:100%;max-width:200px;display:block;margin:0 auto">'
     +segs
     +'<text x="'+cx+'" y="'+(cy+8)+'" text-anchor="middle" font-family="Gabarito,sans-serif" font-size="22" font-weight="800" fill="var(--dark)">'+total+'</text>'
     +'<text x="'+cx+'" y="'+(cy+22)+'" text-anchor="middle" font-size="11" fill="var(--muted)">calls</text>'
@@ -1609,24 +1801,134 @@ function renderBrandChart(){
   c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>'+legend;
 }
 
-// ── Avg Human Talk Time (single bar + median marker) ─────────────────────────
+// ── Brand Performance Table (analytical) ─────────────────────────────────────
+function renderBrandPerformanceTable(){
+  var c=el('chart-brand-table');
+  if(!c){return;}
+  var brandData={};
+  filteredRecs.forEach(function(r){
+    var b=fldStr(r,'Brand')||'Unknown';
+    if(!brandData[b]) brandData[b]={dials:0,answered:0,hangup0_15:0,warm:0,signed:0};
+    brandData[b].dials++;
+    if(fldStr(r,'Call Status')==='answered'&&!isIVR(r)){
+      brandData[b].answered++;
+      var d=parseDuration(fld(r,'Call Duration'));
+      if(d>=0&&d<=15) brandData[b].hangup0_15++;
+      if(d>60) brandData[b].warm++;
+    }
+    if(isYes(fld(r,'SMS Permission'))||isYes(fld(r,'Email Permission'))) brandData[b].signed++;
+  });
+  var brands=Object.keys(brandData).sort(function(a,b){return brandData[b].signed-brandData[a].signed;});
+  if(!brands.length){c.innerHTML='<div class="chart-empty">No brand data</div>';return;}
+  var html='<div style="overflow-x:auto"><table class="t2-table"><thead><tr>'
+    +'<th>Brand</th><th>Dials</th><th>Connect %</th><th>Hangup % (0-15s)</th><th>Warm Lead % (61s+)</th><th>Guide-Yes</th><th>To Goal (15)</th>'
+    +'</tr></thead><tbody>';
+  brands.forEach(function(b){
+    var d=brandData[b];
+    var connectPct=pct(d.answered,d.dials);
+    var hangupPct=d.answered>0?pct(d.hangup0_15,d.answered):0;
+    var warmPct=d.answered>0?pct(d.warm,d.answered):0;
+    var hit15=d.signed>=15;
+    var remaining=Math.max(0,15-d.signed);
+    var hangupCls=hangupPct>70?'t2-badge t2-badge-red':hangupPct>50?'t2-badge t2-badge-amber':'t2-badge t2-badge-green';
+    html+='<tr>'
+      +'<td><span class="pill">'+b+'</span>'+(hit15?' <span class="t2-badge t2-badge-green">&#10003; 15+ Goal</span>':'')+'</td>'
+      +'<td>'+d.dials+'</td>'
+      +'<td>'+connectPct+'%</td>'
+      +'<td><span class="'+hangupCls+'">'+hangupPct+'%</span></td>'
+      +'<td>'+warmPct+'%</td>'
+      +'<td style="font-family:\'Gabarito\',sans-serif;font-size:16px;font-weight:800;color:var(--dark)">'+d.signed+'</td>'
+      +'<td>'+(hit15?'<span style="color:#059669;font-weight:700">&#10003; HIT</span>':'<span style="color:var(--muted)">'+remaining+' to go</span>')+'</td>'
+      +'</tr>';
+  });
+  html+='</tbody></table></div>';
+  c.innerHTML=html;
+}
+
+// ── Weekly Trend: median bucket index week over week ──────────────────────────
+function renderWeeklyTrendChart(){
+  var c=el('chart-weekly-trend');
+  if(!c){return;}
+  function getISOWeek(d){var dt=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));var dayNum=dt.getUTCDay()||7;dt.setUTCDate(dt.getUTCDate()+4-dayNum);var yearStart=new Date(Date.UTC(dt.getUTCFullYear(),0,1));return Math.ceil((((dt-yearStart)/86400000)+1)/7);}
+  function weekKey(r){var dt=new Date(r.createdTime||'');if(isNaN(dt))return null;return dt.getFullYear()+'-W'+String(getISOWeek(dt)).padStart(2,'0');}
+  function durToBucket(d){
+    for(var i=0;i<DURATION_BUCKETS.length;i++){if(d>=DURATION_BUCKETS[i].min&&d<=DURATION_BUCKETS[i].max)return i+1;}
+    return 1;
+  }
+  var weekBuckets={};
+  filteredRecs.filter(function(r){return fldStr(r,'Call Status')==='answered'&&!isIVR(r);}).forEach(function(r){
+    var wk=weekKey(r);if(!wk)return;
+    var d=parseDuration(fld(r,'Call Duration'));
+    var bIdx=durToBucket(d);
+    if(!weekBuckets[wk])weekBuckets[wk]=[];
+    weekBuckets[wk].push(bIdx);
+  });
+  var weeks=Object.keys(weekBuckets).sort();
+  if(weeks.length<2){c.innerHTML='<div class="chart-empty">Need 2+ weeks of data</div>';return;}
+  var medians=weeks.map(function(wk){return calcMedian(weekBuckets[wk]);});
+  var W=460,H=160,pT=14,pB=36,pL=36,pR=16;
+  var pW=W-pL-pR,pH=H-pT-pB;
+  var maxV=Math.max.apply(null,medians)||6;
+  var minV=1;
+  var n=weeks.length;
+  var sx=function(i){return n===1?pL+pW/2:pL+(i/(n-1))*pW;};
+  var sy=function(v){return pT+pH-((v-minV)/(maxV-minV||1))*pH;};
+  var out='';
+  [1,2,3,4,5,6].forEach(function(v){
+    var y=sy(v).toFixed(1);
+    var bkt=DURATION_BUCKETS[v-1];
+    out+='<line x1="'+pL+'" y1="'+y+'" x2="'+(W-pR)+'" y2="'+y+'" stroke="'+(bkt?bkt.color+'40':'#EDE8F5')+'" stroke-width="0.8"/>';
+    out+=svgText(pL-3,parseFloat(y)+3,bkt?'B'+v:'',{anchor:'end',size:8,fill:'var(--muted)'});
+  });
+  var trendUp=medians[medians.length-1]>medians[0];
+  var trendFlat=medians[medians.length-1]===medians[0];
+  var pts=medians.map(function(v,i){return sx(i).toFixed(1)+','+sy(v).toFixed(1);}).join(' ');
+  var lineColor=trendFlat?'#9CA3AF':trendUp?'#10B981':'#EF4444';
+  out+='<polyline points="'+pts+'" fill="none" stroke="'+lineColor+'" stroke-width="2.5" stroke-linejoin="round"/>';
+  medians.forEach(function(v,i){
+    var cx=sx(i).toFixed(1),cy=sy(v).toFixed(1);
+    out+='<circle cx="'+cx+'" cy="'+cy+'" r="4" fill="'+lineColor+'"/>';
+    out+=svgText(cx,parseFloat(cy)-8,DURATION_BUCKETS[v-1]?DURATION_BUCKETS[v-1].label.split('(')[0].trim():'',{anchor:'middle',size:8,fill:'var(--muted)'});
+    var wLabel=weeks[i].replace(/\d{4}-/,'');
+    out+=svgText(cx,(H-4).toFixed(1),wLabel,{anchor:'middle',size:9,fill:'var(--muted)'});
+  });
+  var annotTxt=trendFlat?'⚠ Flat trend — systemic issue':trendUp?'↑ Improving — distribution shifting right':'⚠ Declining — review script/list';
+  var annotColor=trendFlat||!trendUp?'#EF4444':'#10B981';
+  out+=svgText(pL+pW,pT+10,annotTxt,{anchor:'end',size:10,fill:annotColor,weight:600});
+  c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>'
+    +'<div style="font-size:11px;color:var(--muted);margin-top:4px">Each point = median hangup bucket for that week. Rightward = calls surviving longer. Bucket labels: B1=Ghost B2=Hang-up B3=Partial B4=Engaged B5=Conversation B6=Win</div>';
+}
+
+// ── Avg Human Talk Time (median primary, centered layout) ─────────────────────
 function renderDurationChart(){
   var c=el('chart-duration');
   var durs=filteredRecs.filter(function(r){return fldStr(r,'Call Status')==='answered'&&!isIVR(r);})
     .map(function(r){return parseDuration(fld(r,'Call Duration'));}).filter(function(v){return v>0;});
   if(!durs.length){c.innerHTML='<div class="chart-empty">No human call data</div>';return;}
-  var avg=Math.round(durs.reduce(function(a,b){return a+b;},0)/durs.length);
   var med=calcMedian(durs);
-  var W=420,H=100,pL=14,pR=14,barY=18,barH=40;
-  var barW=W-pL-pR;
-  var medX=pL+Math.round((med/avg)*barW);
+  var avg=Math.round(durs.reduce(function(a,b){return a+b;},0)/durs.length);
+  var maxRef=180; // conversation threshold
+  var medPct=Math.min(100,Math.round(med/maxRef*100));
+  var W=420,H=110,cx=W/2,barY=44,barH=28,barW=320,barX=(W-barW)/2;
+  var fillW=Math.max(4,Math.round(medPct/100*barW));
   var out='';
-  out+='<rect x="'+pL+'" y="'+barY+'" width="'+barW+'" height="'+barH+'" rx="6" fill="#EB92BD"/>';
-  out+='<rect x="'+medX.toFixed(0)+'" y="'+(barY-6)+'" width="2.5" height="'+(barH+12)+'" rx="1" fill="#2C023B"/>';
-  out+=svgText(pL+barW/2,barY+barH/2+5,fmtDuration(avg),{anchor:'middle',size:14,fill:'#fff',weight:700});
-  out+=svgText(pL+4,barY+barH+14,'Avg: '+fmtDuration(avg),{anchor:'start',size:10,fill:'var(--dark)',weight:600});
-  out+=svgText(medX,barY+barH+14,'Median: '+fmtDuration(med),{anchor:'middle',size:10,fill:'var(--dark)',weight:600});
-  out+=svgText(W-pR,barY+barH+14,durs.length+' calls',{anchor:'end',size:10,fill:'var(--muted)'});
+  // Label above
+  out+=svgText(cx,20,'Median Talk Time',{anchor:'middle',size:11,fill:'var(--muted)'});
+  out+=svgText(cx,40,fmtDuration(med),{anchor:'middle',size:22,fill:'var(--dark)',weight:700});
+  // Background bar
+  out+='<rect x="'+barX+'" y="'+barY+'" width="'+barW+'" height="'+barH+'" rx="8" fill="var(--border)"/>';
+  // Fill bar
+  out+='<rect x="'+barX+'" y="'+barY+'" width="'+fillW+'" height="'+barH+'" rx="8" fill="#EB92BD"/>';
+  // 60s marker (conversation threshold)
+  var t60X=barX+Math.round(60/maxRef*barW);
+  out+='<rect x="'+t60X+'" y="'+(barY-4)+'" width="2" height="'+(barH+8)+'" fill="#2C023B" rx="1"/>';
+  out+=svgText(t60X,barY+barH+14,'60s',{anchor:'middle',size:9,fill:'var(--muted)'});
+  // End label
+  out+=svgText(barX+barW+4,barY+barH/2+4,maxRef+'s',{anchor:'start',size:9,fill:'var(--muted)'});
+  // Bottom stats
+  out+=svgText(barX,H,'Avg: '+fmtDuration(avg),{size:9,fill:'var(--muted)'});
+  out+=svgText(cx,H,'Median: '+fmtDuration(med),{anchor:'middle',size:9,fill:'var(--dark)',weight:600});
+  out+=svgText(barX+barW,H,durs.length+' calls',{anchor:'end',size:9,fill:'var(--muted)'});
   c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>';
 }
 
@@ -1674,18 +1976,26 @@ function renderDowChart(){
   var c=el('chart-dow');
   var days=['Mon','Tue','Wed','Thu','Fri'];
   var calls=[0,0,0,0,0],dms=[0,0,0,0,0];
+  // track unique dates per weekday to compute daily average
+  var dateSets=[{},{},{},{},{}];
   filteredRecs.forEach(function(r){
     var dt=getRecordDateTimeStr(r); if(!dt) return;
-    var d=new Date(dt).getDay();
-    if(d<1||d>5) return;
-    var idx=d-1;
+    var d=new Date(dt);
+    var dow=d.getDay();
+    if(dow<1||dow>5) return;
+    var idx=dow-1;
     calls[idx]++;
+    var dateKey=d.toISOString().slice(0,10);
+    dateSets[idx][dateKey]=1;
     if(isYes(fld(r,'Spoke to Manager'))) dms[idx]++;
   });
   if(calls.every(function(v){return v===0;})){c.innerHTML='<div class="chart-empty">No weekday data</div>';return;}
-  var W=420,H=180,pT=10,pB=28,pL=28,pR=10;
+  var dayCount=dateSets.map(function(s){return Math.max(1,Object.keys(s).length);});
+  var avgs=calls.map(function(v,i){return parseFloat((v/dayCount[i]).toFixed(1));});
+  var dmAvgs=dms.map(function(v,i){return parseFloat((v/dayCount[i]).toFixed(1));});
+  var W=420,H=190,pT=10,pB=36,pL=32,pR=10;
   var pW=W-pL-pR,pH=H-pT-pB;
-  var maxV=Math.max.apply(null,calls)||1;
+  var maxV=Math.max.apply(null,avgs)||1;
   var n=5,bW=Math.min(44,pW/n*0.55),gap=(pW-bW*n)/(n+1);
   var sx=function(i){return pL+gap*(i+1)+bW*i;};
   var sy=function(v){return pT+pH-(v/maxV)*pH;};
@@ -1693,49 +2003,58 @@ function renderDowChart(){
   [0,Math.round(maxV/2),maxV].forEach(function(v){
     var y=sy(v).toFixed(1);
     out+='<line x1="'+pL+'" y1="'+y+'" x2="'+(W-pR)+'" y2="'+y+'" stroke="#EDE8F5" stroke-width="0.5"/>';
-    out+=svgText(pL-3,parseFloat(y)+3,v,{anchor:'end'});
+    out+=svgText(pL-3,parseFloat(y)+3,v,{anchor:'end',size:8});
   });
   days.forEach(function(day,i){
     var x=sx(i).toFixed(1),bw=bW.toFixed(1);
-    var h=((calls[i]/maxV)*pH).toFixed(1);
-    var y=sy(calls[i]).toFixed(1);
+    var h=((avgs[i]/maxV)*pH).toFixed(1);
+    var y=sy(avgs[i]).toFixed(1);
     out+=svgRect(x,y,bw,h,'#EB92BD',4);
-    if(dms[i]>0){
-      var dh=((dms[i]/maxV)*pH).toFixed(1);
-      var dy=sy(dms[i]).toFixed(1);
+    if(dmAvgs[i]>0){
+      var dh=((dmAvgs[i]/maxV)*pH).toFixed(1);
+      var dy=sy(dmAvgs[i]).toFixed(1);
       out+=svgRect(x,dy,bw,dh,'#DE4990',4);
     }
-    if(calls[i]>0) out+=svgText((sx(i)+bW/2).toFixed(1),(sy(calls[i])-4).toFixed(1),calls[i],{anchor:'middle',size:9,fill:'var(--dark)'});
-    out+=svgText((sx(i)+bW/2).toFixed(1),(H-5).toFixed(1),day,{anchor:'middle',size:10,fill:'var(--muted)'});
+    var barTop=parseFloat(y);
+    if(avgs[i]>0) out+=svgText((sx(i)+bW/2).toFixed(1),(barTop-4).toFixed(1),avgs[i].toFixed(1),{anchor:'middle',size:9,fill:'var(--dark)'});
+    var dmRatePct=calls[i]>0?Math.round(dms[i]/calls[i]*100):0;
+    if(avgs[i]>0) out+=svgText((sx(i)+bW/2).toFixed(1),(barTop-14).toFixed(1),dmRatePct+'%DM',{anchor:'middle',size:8,fill:'var(--pink)'});
+    out+=svgText((sx(i)+bW/2).toFixed(1),(H-pB+10).toFixed(1),day,{anchor:'middle',size:10,fill:'var(--muted)'});
+    // cumulative total in gray below day label
+    out+=svgText((sx(i)+bW/2).toFixed(1),(H-pB+22).toFixed(1),calls[i]+'tot',{anchor:'middle',size:8,fill:'#94A3B8'});
   });
-  var legend='<div class="chart-legend"><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#EB92BD"></div>Total Calls</div><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#DE4990"></div>DM Reached</div></div>';
+  var legend='<div class="chart-legend"><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#EB92BD"></div>Avg/day</div><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#DE4990"></div>DM Reached</div></div>';
   c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>'+legend;
 }
 
 // ── Hour of day ───────────────────────────────────────────────────────────────
 function renderHourChart(){
   var c=el('chart-hour');
-  var startH=8,endH=17,n=endH-startH+1; // 8 AM to 5 PM inclusive = 10 buckets
+  var startH=8,endH=17,n=endH-startH+1;
   var hCalls=new Array(n).fill(0),hDMs=new Array(n).fill(0);
+  var hDateSets=Array.from({length:n},function(){return {};});
   filteredRecs.forEach(function(r){
     var dt=getRecordDateTimeStr(r); if(!dt) return;
-    var h=new Date(dt).getHours();
+    var d=new Date(dt);
+    var h=d.getHours();
     var idx=h-startH;
     if(idx<0||idx>=n) return;
     hCalls[idx]++;
+    hDateSets[idx][d.toISOString().slice(0,10)]=1;
     if(isYes(fld(r,'Spoke to Manager'))) hDMs[idx]++;
   });
   if(hCalls.every(function(v){return v===0;})){c.innerHTML='<div class="chart-empty">No timed data</div>';return;}
   var labels=['8AM','9AM','10AM','11AM','12PM','1PM','2PM','3PM','4PM','5PM'];
-  var W=420,H=180,pT=10,pB=28,pL=28,pR=10;
+  var hDayCnt=hDateSets.map(function(s){return Math.max(1,Object.keys(s).length);});
+  var hAvgs=hCalls.map(function(v,i){return parseFloat((v/hDayCnt[i]).toFixed(1));});
+  var hDmAvgs=hDMs.map(function(v,i){return parseFloat((v/hDayCnt[i]).toFixed(1));});
+  var W=420,H=195,pT=10,pB=40,pL=32,pR=10;
   var pW=W-pL-pR,pH=H-pT-pB;
-  var maxV=Math.max.apply(null,hCalls)||1;
+  var maxV=Math.max.apply(null,hAvgs)||1;
   var bW=Math.min(30,pW/n*0.62),gap=(pW-bW*n)/(n+1);
   var sx=function(i){return pL+gap*(i+1)+bW*i;};
   var sy=function(v){return pT+pH-(v/maxV)*pH;};
-  // Target windows: 9-11AM (idx 1-3), 2-5PM (idx 6-9)
   var inTarget=function(i){return (i>=1&&i<=3)||(i>=6&&i<=9);};
-  // Shaded bands
   var bands='';
   [[1,3],[6,9]].forEach(function(rng){
     var x1=sx(rng[0]),x2=sx(rng[1])+bW;
@@ -1745,19 +2064,23 @@ function renderHourChart(){
   [0,Math.round(maxV/2),maxV].forEach(function(v){
     var y=sy(v).toFixed(1);
     out+='<line x1="'+pL+'" y1="'+y+'" x2="'+(W-pR)+'" y2="'+y+'" stroke="#EDE8F5" stroke-width="0.5"/>';
-    out+=svgText(pL-3,parseFloat(y)+3,v,{anchor:'end'});
+    out+=svgText(pL-3,parseFloat(y)+3,v,{anchor:'end',size:8});
   });
-  hCalls.forEach(function(cnt,i){
+  hAvgs.forEach(function(avg,i){
     var x=sx(i).toFixed(1),bw=bW.toFixed(1);
     var fill=inTarget(i)?'#DE4990':'#EB92BD';
     var lbl=inTarget(i)?'var(--dark)':'var(--muted)';
-    if(cnt>0){
-      var h=((cnt/maxV)*pH).toFixed(1);
-      var y=sy(cnt).toFixed(1);
-      out+=svgRect(x,y,bw,h,fill,3);
-      out+=svgText((sx(i)+bW/2).toFixed(1),(sy(cnt)-4).toFixed(1),cnt,{anchor:'middle',size:8,fill:'var(--dark)'});
+    if(avg>0){
+      var bh=((avg/maxV)*pH).toFixed(1);
+      var by=sy(avg).toFixed(1);
+      out+=svgRect(x,by,bw,bh,fill,3);
+      out+=svgText((sx(i)+bW/2).toFixed(1),(parseFloat(by)-4).toFixed(1),avg.toFixed(1),{anchor:'middle',size:8,fill:'var(--dark)'});
+      var dmRatePct=hCalls[i]>0?Math.round(hDMs[i]/hCalls[i]*100):0;
+      out+=svgText((sx(i)+bW/2).toFixed(1),(parseFloat(by)-14).toFixed(1),dmRatePct+'%',{anchor:'middle',size:8,fill:'var(--pink)',weight:600});
     }
-    out+=svgText((sx(i)+bW/2).toFixed(1),(H-5).toFixed(1),labels[i],{anchor:'middle',size:8,fill:lbl});
+    out+=svgText((sx(i)+bW/2).toFixed(1),(H-pB+10).toFixed(1),labels[i],{anchor:'middle',size:8,fill:lbl});
+    // cumulative total in gray
+    out+=svgText((sx(i)+bW/2).toFixed(1),(H-pB+22).toFixed(1),hCalls[i]+'tot',{anchor:'middle',size:7,fill:'#94A3B8'});
   });
   var legend='<div class="chart-legend"><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#DE4990"></div>9–11 AM &amp; 2–5 PM target</div><div class="chart-legend-item"><div class="chart-legend-swatch" style="background:#EB92BD"></div>Outside window</div><div class="chart-legend-item"><div style="width:12px;height:12px;background:#FFF1EE;border:1px solid #EDBED4;border-radius:3px;flex-shrink:0"></div>Target band</div></div>';
   c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>'+legend;
@@ -1765,11 +2088,12 @@ function renderHourChart(){
 
 // ── Call Duration Distribution (True Answered only) ──────────────────────────
 var DURATION_BUCKETS=[
-  {label:'Ghost (0–5s)',min:0,max:5,color:'#AEAEAE'},
-  {label:'Hang-up (6–15s)',min:6,max:15,color:'#ED8585'},
-  {label:'Partial (16–60s)',min:16,max:60,color:'#F59E0B'},
-  {label:'Conversation (61–180s)',min:61,max:180,color:'#60A5FA'},
-  {label:'Win Zone (180s+)',min:181,max:Infinity,color:'#10B981'}
+  {label:'Ghost (0–5s)',min:0,max:5,color:'#ED8585'},
+  {label:'Hang-up (6–15s)',min:6,max:15,color:'#DC2626'},
+  {label:'Partial (16–30s)',min:16,max:30,color:'#F59E0B'},
+  {label:'Engaged (31–60s)',min:31,max:60,color:'#D97706'},
+  {label:'Conversation (61–180s)',min:61,max:180,color:'#10B981'},
+  {label:'Win Zone (180s+)',min:181,max:Infinity,color:'#059669'}
 ];
 
 function renderDurationBuckets(){
@@ -1788,6 +2112,9 @@ function renderDurationBuckets(){
   });
   var humanTotal=trueHuman.length||1;
   var ivrTotal=ivrCalls.length;
+  // Find mode bucket (highest count)
+  var modeIdx=0;
+  counts.forEach(function(c,i){if(c>counts[modeIdx])modeIdx=i;});
   var W=420,barH=26,gap=10,pL=155,pR=4,pT=4;
   var maxBarW=W-pL-pR;
   var H=(DURATION_BUCKETS.length+1)*(barH+gap)+pT+4;
@@ -1796,11 +2123,17 @@ function renderDurationBuckets(){
   DURATION_BUCKETS.forEach(function(b,i){
     var y=pT+i*(barH+gap);
     var bW=Math.max(4,Math.round((counts[i]/maxCount)*maxBarW));
-    var lbl=counts[i]+' ('+pct(counts[i],humanTotal)+'%)';
+    var pctVal=pct(counts[i],humanTotal);
+    var lbl=counts[i]+' ('+pctVal+'%)';
+    var isMode=i===modeIdx&&counts[i]>0;
     out+='<g onclick="showBucketDetail('+i+')" style="cursor:pointer">';
-    out+=svgText(pL-6,y+barH/2+4,b.label,{anchor:'end',size:10,fill:'var(--text)'});
+    if(isMode){
+      out+='<rect x="'+(pL-3)+'" y="'+(y-3)+'" width="'+(maxBarW+6)+'" height="'+(barH+6)+'" rx="6" fill="none" stroke="'+b.color+'" stroke-width="1.5" stroke-dasharray="4 2" opacity="0.6"/>';
+    }
+    var modeStar=isMode?' ★ MODE':'';
+    out+=svgText(pL-6,y+barH/2+4,b.label+modeStar,{anchor:'end',size:10,fill:isMode?b.color:'var(--text)'});
     out+=svgRect(pL,y,bW,barH,b.color,4);
-    if(bW>52){
+    if(bW>62){
       out+=svgText(pL+bW-5,y+barH/2+4,lbl,{anchor:'end',size:10,fill:'#fff',weight:600});
     } else {
       out+=svgText(pL+bW+5,y+barH/2+4,lbl,{size:9,fill:'var(--dark)'});
@@ -1813,7 +2146,12 @@ function renderDurationBuckets(){
   out+=svgRect(pL,ivrY,Math.max(4,ivrW),barH,'#EDE8F5',4);
   out+=svgText(pL+Math.max(4,ivrW)+5,ivrY+barH/2+4,ivrTotal+' excl.',{size:9,fill:'var(--muted)'});
   c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>'
-    +'<div style="font-size:10px;color:var(--muted);margin-top:3px">'+trueHuman.length+' human calls · IVR excluded · click a bar to drill down</div>';
+    +'<div style="font-size:10px;color:var(--muted);margin-top:3px">'+trueHuman.length+' human calls · IVR excluded · click a bar for breakdown · ★ = most common outcome</div>'
+    +'<div style="margin-top:6px;display:flex;gap:12px;font-size:11px">'
+    +'<span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;background:#ED8585;border-radius:3px;display:inline-block"></span>Ghost/Hang-up (0-15s)</span>'
+    +'<span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;background:#F59E0B;border-radius:3px;display:inline-block"></span>Partial/Engaged (16-60s)</span>'
+    +'<span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;background:#10B981;border-radius:3px;display:inline-block"></span>Conversation/Win (61s+)</span>'
+    +'</div>';
 }
 
 function classifyHangup(summary){
@@ -1940,12 +2278,13 @@ function sortedRecs(){
 }
 
 function renderTable(){
+  if(!el('tbl-head')||!el('tbl-body'))return;
   var all=sortedRecs(), total=all.length;
   var pages=Math.max(1,Math.ceil(total/PAGE_SIZE));
   if(page>pages) page=pages;
   var slice=all.slice((page-1)*PAGE_SIZE, page*PAGE_SIZE);
 
-  el('tbl-count').textContent=total+' records (filtered from '+allRecords.length+' total)';
+  if(el('tbl-count'))el('tbl-count').textContent=total+' records (filtered from '+allRecords.length+' total)';
   el('pg-info').textContent='Page '+page+' of '+pages;
   el('pg-prev').disabled=page<=1;
   el('pg-next').disabled=page>=pages;
@@ -2071,6 +2410,733 @@ function exportCSV(){
   a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
   a.download='call-activity-'+(new Date().toISOString().substring(0,10))+'.csv';
   a.click();
+}
+
+// ── HubSpot Closed Won fetch ──────────────────────────────────────────────────
+var hsStoreCount=null; // null = not yet fetched, -1 = fetch failed
+var HS_JSON_URL='https://bradbishop1978.github.io/lulacommerce_independent-store_Program/data/hs_deals.json';
+var Q2_START='2026-04-01', Q2_END='2026-06-30';
+
+async function fetchHubSpotCount(){
+  try{
+    var res=await fetch(HS_JSON_URL);
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    var data=await res.json();
+    var deals=data.deals||[];
+    var count=0;
+    deals.forEach(function(d){
+      if((d.pipeline||'SS Pipeline')==='SS Pipeline'){
+        if(d.stage==='7. Closed Won'||d.stage==='4. Signed Agreement'){
+          if(d.date>=Q2_START&&d.date<=Q2_END){
+            count+=parseInt(d.stores)||1;
+          }
+        }
+      }
+    });
+    hsStoreCount=count;
+  }catch(e){
+    hsStoreCount=-1;
+  }
+  updateGoalBar();
+}
+
+function updateGoalBar(){
+  var goal=150;
+  var signed=hsStoreCount!==null&&hsStoreCount>=0?hsStoreCount:null;
+  var el_sv=el('bm-signed-val'),el_sp=el('bm-signed-pct'),el_gf=el('bm-goal-fill'),el_gl=el('bm-goal-left'),el_gw=el('bm-goal-week');
+  if(signed===null){
+    if(el_sv)el_sv.textContent='…';
+    if(el_sp)el_sp.textContent='Fetching HubSpot data';
+    if(el_gf)el_gf.style.width='0%';
+    if(el_gl)el_gl.textContent='';
+    if(el_gw)el_gw.textContent='';
+    return;
+  }
+  if(hsStoreCount===-1){
+    if(el_sv)el_sv.textContent='—';
+    if(el_sp)el_sp.textContent='HubSpot data unavailable';
+    if(el_gf)el_gf.style.width='0%';
+    if(el_gl)el_gl.textContent='Check data/hs_deals.json sync';
+    if(el_gw)el_gw.textContent='';
+    return;
+  }
+  var pct2=Math.round(signed/goal*100);
+  if(el_sv)el_sv.textContent=signed;
+  if(el_sp)el_sp.textContent=pct2+'% to goal';
+  if(el_gf)el_gf.style.width=Math.min(100,pct2)+'%';
+  if(el_gl)el_gl.textContent=(goal-signed)+' stores remaining to goal';
+  if(el_gw)el_gw.textContent='Q2 Closed Won + Signed · SS Pipeline';
+}
+
+// ── Leadership Tab — Benchmark vs Actual ─────────────────────────────────────
+var BENCHMARKS=[
+  {
+    key:'earlyHangup',
+    label:'Early Hangup Rate',
+    desc:'% of human calls that end in first 15 seconds',
+    loBetter:true,
+    benchLow:60,benchHigh:75,
+    gaugeMin:0,gaugeMax:100,
+    stories:{
+      green:'Calls are staying on the line. Opener is connecting with owners.',
+      amber:'Slightly above target — shift more dials to <b>10AM–noon and 3–4PM</b> windows.',
+      red:'Calls dying before the opener lands. <b>Timing</b> is the #1 lever — 3PM shows 52%, at benchmark.'
+    }
+  },
+  {
+    key:'conversation',
+    label:'Conversation Rate',
+    desc:'% of human calls that reach 60+ seconds',
+    loBetter:false,
+    benchLow:8,benchHigh:18,
+    gaugeMin:0,gaugeMax:30,
+    stories:{
+      green:'Opener is generating real conversations. Stay on current script.',
+      amber:'Some conversations happening — <b>Opener B</b> (post May 12) should move this up.',
+      red:'Opener not breaking through. <b>Watch post-May-12 cohort</b> — need 30+ humans to judge.'
+    }
+  },
+  {
+    key:'dmRate',
+    label:'DM Contact Rate',
+    desc:'% of human calls that reach the decision maker/owner',
+    loBetter:false,
+    benchLow:8,benchHigh:20,
+    gaugeMin:0,gaugeMax:30,
+    stories:{
+      green:'Reaching owners at a healthy rate. List and timing are working.',
+      amber:'DM rate building — <b>3PM window delivers 12.5%</b>, which is at benchmark.',
+      red:'Owner gatekeeping is high. Fix: call 3PM, avoid 9AM, pause GPE brand.'
+    }
+  },
+  {
+    key:'connectRate',
+    label:'Connect Rate',
+    desc:'% of total dials that reach a human (excl. IVR)',
+    loBetter:false,
+    benchLow:8,benchHigh:15,
+    gaugeMin:0,gaugeMax:30,
+    stories:{
+      green:'List is connecting at expected AI outbound rates.',
+      amber:'Connect rate moderate — IVR wall brands (GPE) pulling it down.',
+      red:'List quality issue — too many IVR/dead numbers. Rebuild GPE list first.'
+    }
+  },
+  {
+    key:'guideAccept',
+    label:'Guide Acceptance Rate',
+    desc:'% of DMs that accept the program guide (SMS or Email)',
+    loBetter:false,
+    benchLow:15,benchHigh:30,
+    gaugeMin:0,gaugeMax:50,
+    stories:{
+      green:'Owners are accepting the guide. Conversion funnel is healthy.',
+      amber:'Some acceptance — verify SMS/Email Permission fields are logging correctly.',
+      red:'<b>Tracking broken — not a real 0%.</b> Fix Airtable field mapping (Open Item #9) before reading this number.'
+    }
+  }
+];
+
+function renderLeadershipTab(){
+  var recs=filteredRecs;
+  var humans=recs.filter(function(r){return fldStr(r,'Call Status')==='answered'&&!isIVR(r);});
+  var n=humans.length||1;
+  var total=recs.length||1;
+
+  // Compute actuals
+  var earlyHangup=pct(humans.filter(function(r){var d=parseDuration(fld(r,'Call Duration'));return d>=0&&d<=15;}).length,n);
+  var conversation=pct(humans.filter(function(r){var d=parseDuration(fld(r,'Call Duration'));return d>60;}).length,n);
+  var dms=recs.filter(function(r){return isTrueHuman(r)&&isYes(fld(r,'Spoke to Manager'));}).length;
+  var dmRate=pct(dms,n);
+  var answered=recs.filter(function(r){return fldStr(r,'Call Status')==='answered'&&!isIVR(r);}).length;
+  var connectRate=pct(answered,total);
+  var guides=recs.filter(function(r){return isYes(fld(r,'SMS Permission'))||isYes(fld(r,'Email Permission'));}).length;
+  var guideAccept=pct(guides,dms||1);
+
+  var actuals={earlyHangup:earlyHangup,conversation:conversation,dmRate:dmRate,connectRate:connectRate,guideAccept:guideAccept};
+
+  if(hsStoreCount===null) fetchHubSpotCount(); else updateGoalBar();
+
+  // Render scorecard
+  var sc=el('bm-scorecard');
+  if(!sc)return;
+
+  function getStatus(bm,actual){
+    if(bm.loBetter){
+      if(actual<=bm.benchHigh)return 'green';
+      if(actual<=bm.benchHigh+15)return 'amber';
+      return 'red';
+    } else {
+      if(actual>=bm.benchLow)return 'green';
+      if(actual>=bm.benchLow*0.6)return 'amber';
+      return 'red';
+    }
+  }
+
+  function statusLabel(bm,actual,status){
+    if(bm.loBetter){
+      if(status==='green')return '&#10003; At Benchmark';
+      if(status==='amber')return '&#9650; Above Target';
+      return '&#9888; Well Above Target';
+    } else {
+      if(status==='green')return '&#10003; At Benchmark';
+      if(status==='amber')return '&#9660; Below Target';
+      return '&#9888; Well Below Target';
+    }
+  }
+
+  // Gauge bar HTML
+  function gaugeBar(bm,actual,status){
+    var min=bm.gaugeMin,max=bm.gaugeMax;
+    var range=max-min||1;
+    var lowPct=((bm.benchLow-min)/range*100).toFixed(1);
+    var highPct=((bm.benchHigh-min)/range*100).toFixed(1);
+    var zoneW=(highPct-lowPct).toFixed(1);
+    var markerPct=Math.max(0,Math.min(100,(actual-min)/range*100)).toFixed(1);
+    var markerColor=status==='green'?'#10B981':status==='amber'?'#D97706':'#EF4444';
+    var zoneColor=status==='green'?'#10B981':status==='amber'?'#D97706':'#94A3B8';
+    return '<div class="bm-gauge-wrap">'
+      +'<div class="bm-gauge-bg">'
+        +'<div class="bm-gauge-zone" style="left:'+lowPct+'%;width:'+zoneW+'%;background:'+zoneColor+'"></div>'
+        +'<div class="bm-gauge-marker" style="left:'+markerPct+'%;background:'+markerColor+'"></div>'
+      +'</div>'
+      +'<div class="bm-gauge-labels"><span>'+min+'%</span><span style="position:relative;left:'+lowPct+'%">'+bm.benchLow+'%</span><span style="position:relative;left:'+(-100+parseFloat(highPct))+'%">'+bm.benchHigh+'%</span><span>'+max+'%</span></div>'
+    +'</div>';
+  }
+
+  var html='';
+  BENCHMARKS.forEach(function(bm){
+    var actual=actuals[bm.key];
+    var status=getStatus(bm,actual);
+    var story=bm.stories[status];
+    var statusLbl=statusLabel(bm,actual,status);
+    // Special override: guide acceptance near 0 always gets the tracking-broken story
+    if(bm.key==='guideAccept'&&actual<1){status='red';story=bm.stories.red;}
+    html+='<div class="bm-card '+status+'">'
+      +'<div class="bm-metric-name">'+bm.label+'</div>'
+      +'<div class="bm-actual-row">'
+        +'<div class="bm-actual '+status+'">'+actual+'<span style="font-size:20px">%</span></div>'
+        +'<div class="bm-benchmark">Benchmark<br><b>'+bm.benchLow+'–'+bm.benchHigh+'%</b></div>'
+      +'</div>'
+      +gaugeBar(bm,actual,status)
+      +'<span class="bm-status-pill '+status+'">'+statusLbl+'</span>'
+      +'<div class="bm-story">'+story+'</div>'
+      +'<div style="font-size:10px;color:var(--muted);margin-top:6px">'+bm.desc+'</div>'
+    +'</div>';
+  });
+  sc.innerHTML=html;
+
+  // Action items — auto-generated based on red/amber flags
+  var actions=[];
+  var statuses={};
+  BENCHMARKS.forEach(function(bm){statuses[bm.key]=getStatus(bm,actuals[bm.key]);});
+
+  if(statuses.earlyHangup==='red'){
+    actions.push({cls:'red',pri:'1',title:'Shift call window to 10AM–noon and 3–4PM',body:'Your 9AM window has 82% hang-up vs 52% at 3PM. This single change recovers ~30 percentage points on hang-up rate without touching the script. Update Cell 2 batch schedule before next run.'});
+  }
+  if(statuses.guideAccept==='red'&&actuals.guideAccept<1){
+    actions.push({cls:'red',pri:'2',title:'Fix guide acceptance tracking (Open Item #9)',body:'SMS/Email Permission fields are filling at <0.2% — this is a data capture failure, not a sales failure. Real acceptance rate is likely 15–30%. Trace the Airtable field mapping in Cell 7/10 before making script decisions.'});
+  }
+  if(statuses.conversation==='red'){
+    actions.push({cls:'amber',pri:'3',title:'Monitor Opener B results — need 30+ humans post May 12',body:'Opener B (Confirm → Qualify → Reveal) went live May 12. Conversation rate was 4% on Opener A vs 8–18% benchmark. Check the Analysis tab → Opener A/B Gate once you have 30+ human contacts in the new cohort.'});
+  }
+  if(statuses.dmRate==='amber'||statuses.dmRate==='red'){
+    actions.push({cls:'amber',pri:'4',title:'Pause GPE and CC — burning dials on low-DM brands',body:'GPE: 32% IVR wall, 0% DM rate. CC: 1.2% DM rate. Both are pulling down the DM average. Pause until GPE list is rebuilt from franchise directories. Investigate CC store ownership model.'});
+  }
+  if(actions.length===0){
+    actions.push({cls:'green',pri:'✓',title:'No critical flags in current filter window',body:'All metrics are at or near benchmark. Keep the 3PM–4PM and 10AM–noon call windows. Continue monitoring Opener B results as the cohort grows.'});
+  }
+
+  var actHtml='';
+  actions.forEach(function(a){
+    actHtml+='<div class="action-card">'
+      +'<div class="action-header">'
+        +'<div class="action-badge '+a.cls+'">'+a.pri+'</div>'
+        +'<div class="action-title">'+a.title+'</div>'
+      +'</div>'
+      +'<div class="action-body">'+a.body+'</div>'
+    +'</div>';
+  });
+  var actEl=el('bm-actions');
+  if(actEl)actEl.innerHTML=actHtml;
+}
+
+// ── Tab switching ─────────────────────────────────────────────────────────────
+var tab3Initialized=false;
+function switchTab(n){
+  el('tab1-leadership').style.display=n===1?'block':'none';
+  el('tab2-operations').style.display=n===2?'block':'none';
+  el('tab3-analysis').style.display=n===3?'block':'none';
+  el('tab-btn-1').className='tab-btn'+(n===1?' active':'');
+  el('tab-btn-2').className='tab-btn'+(n===2?' active':'');
+  el('tab-btn-3').className='tab-btn'+(n===3?' active':'');
+  if(n===3&&!tab3Initialized){tab3Initialized=true;renderTab3();}
+}
+
+// ── Tab 3 render entry ────────────────────────────────────────────────────────
+function renderTab3(){
+  renderDistributionPanel();
+  renderCramersV();
+  renderHourConnectHeatmap();
+  renderKaplanMeier();
+  renderT2Table();
+  renderSkewnessTrend();
+}
+
+// ── Bucket helpers ────────────────────────────────────────────────────────────
+function durToBucketIdx(d){
+  for(var i=0;i<DURATION_BUCKETS.length;i++){
+    if(d>=DURATION_BUCKETS[i].min&&d<=DURATION_BUCKETS[i].max)return i;
+  }
+  return 0;
+}
+
+// ── Section A: Distribution Panel ────────────────────────────────────────────
+function calcSkewness(arr){
+  if(arr.length<3)return 0;
+  var n=arr.length;
+  var med=calcMedian(arr);
+  var sum=arr.reduce(function(a,v){return a+v;},0);
+  var mean=sum/n;
+  var sd=Math.sqrt(arr.reduce(function(a,v){return a+Math.pow(v-mean,2);},0)/n);
+  if(!sd)return 0;
+  return arr.reduce(function(a,v){return a+Math.pow((v-mean)/sd,3);},0)/n;
+}
+function calcIQR(arr){
+  if(!arr.length)return 0;
+  var s=arr.slice().sort(function(a,b){return a-b;});
+  var q1=s[Math.floor(s.length/4)];
+  var q3=s[Math.floor(3*s.length/4)];
+  return q3-q1;
+}
+function calcMode(arr){
+  var freq={};var max=0;var mode=arr[0];
+  arr.forEach(function(v){freq[v]=(freq[v]||0)+1;if(freq[v]>max){max=freq[v];mode=v;}});
+  return mode;
+}
+
+function renderDistributionPanel(){
+  var sc=el('t2-dist-stats'),tc=el('t2-freq-table');
+  if(!sc||!tc)return;
+  var humans=filteredRecs.filter(function(r){return fldStr(r,'Call Status')==='answered'&&!isIVR(r);});
+  var bucketIdxArr=humans.map(function(r){return durToBucketIdx(parseDuration(fld(r,'Call Duration')));});
+  var total=humans.length||1;
+  var median=calcMedian(bucketIdxArr);
+  var mode=bucketIdxArr.length?calcMode(bucketIdxArr):0;
+  var skew=calcSkewness(bucketIdxArr).toFixed(3);
+  var iqr=calcIQR(bucketIdxArr).toFixed(2);
+  var medBkt=DURATION_BUCKETS[median]||DURATION_BUCKETS[0];
+  var modeBkt=DURATION_BUCKETS[mode]||DURATION_BUCKETS[0];
+  sc.innerHTML=''
+    +'<div class="t2-stat"><div class="t2-stat-label">Human Calls</div><div class="t2-stat-val">'+humans.length+'</div><div class="t2-stat-sub">true human answered</div></div>'
+    +'<div class="t2-stat"><div class="t2-stat-label">Median Bucket</div><div class="t2-stat-val">B'+(median+1)+'</div><div class="t2-stat-sub">'+medBkt.label+'</div></div>'
+    +'<div class="t2-stat"><div class="t2-stat-label">Mode Bucket</div><div class="t2-stat-val">B'+(mode+1)+'</div><div class="t2-stat-sub">'+modeBkt.label+' ★</div></div>'
+    +'<div class="t2-stat"><div class="t2-stat-label">Skewness</div><div class="t2-stat-val">'+skew+'</div><div class="t2-stat-sub">'+(parseFloat(skew)>1.5?'High right skew':parseFloat(skew)>0.5?'Moderate skew':'Near symmetric')+'</div></div>'
+    +'<div class="t2-stat"><div class="t2-stat-label">IQR (buckets)</div><div class="t2-stat-val">'+iqr+'</div><div class="t2-stat-sub">'+(parseFloat(iqr)<=1?'Tightly clustered':parseFloat(iqr)<=2?'Moderate spread':'High spread')+'</div></div>';
+  var counts=DURATION_BUCKETS.map(function(b){
+    return humans.filter(function(r){var d=parseDuration(fld(r,'Call Duration'));return d>=b.min&&d<=b.max;}).length;
+  });
+  var cumSum=0;
+  var html='<table class="t2-table"><thead><tr>'
+    +'<th>Bucket</th><th>Label</th><th>Count</th><th>% of Total</th><th>Cumulative %</th>'
+    +'</tr></thead><tbody>';
+  counts.forEach(function(cnt,i){
+    var b=DURATION_BUCKETS[i];
+    var pctV=pct(cnt,total);
+    cumSum+=cnt;
+    var cumPct=pct(cumSum,total);
+    var isMode=i===mode&&cnt>0;
+    html+='<tr style="'+(isMode?'background:'+b.color+'15':'')+'">'
+      +'<td><span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:2px;background:'+b.color+';display:inline-block"></span>B'+(i+1)+'</span>'+(isMode?' <b>★ Mode</b>':'')+'</td>'
+      +'<td>'+b.label+'</td>'
+      +'<td style="font-weight:700;font-size:14px">'+cnt+'</td>'
+      +'<td>'
+        +'<div style="display:flex;align-items:center;gap:8px">'
+          +'<div style="width:100px;background:var(--border);border-radius:3px;height:8px">'
+            +'<div style="width:'+pctV+'%;background:'+b.color+';height:8px;border-radius:3px"></div>'
+          +'</div>'
+          +'<span style="font-weight:600">'+pctV+'%</span>'
+        +'</div>'
+      +'</td>'
+      +'<td style="color:var(--muted)">'+cumPct+'%</td>'
+      +'</tr>';
+  });
+  html+='</tbody></table>';
+  tc.innerHTML=html;
+}
+
+// ── Section B.1: Cramér's V ───────────────────────────────────────────────────
+function cramersV(contingency,n){
+  var rows=contingency.length,cols=contingency[0].length;
+  if(rows<2||cols<2||n===0)return 0;
+  var rowSums=contingency.map(function(row){return row.reduce(function(a,b){return a+b;},0);});
+  var colSums=[];
+  for(var j=0;j<cols;j++){var s=0;for(var i=0;i<rows;i++)s+=contingency[i][j];colSums.push(s);}
+  var chi2=0;
+  for(var i=0;i<rows;i++){
+    for(var j=0;j<cols;j++){
+      var expected=rowSums[i]*colSums[j]/n;
+      if(expected>0) chi2+=Math.pow(contingency[i][j]-expected,2)/expected;
+    }
+  }
+  var phi2=chi2/n;
+  var minDim=Math.min(rows-1,cols-1);
+  if(minDim===0)return 0;
+  return Math.sqrt(Math.max(0,phi2/minDim));
+}
+
+function renderCramersV(){
+  var c=el('t2-cramers');
+  if(!c)return;
+  var humans=filteredRecs.filter(function(r){return fldStr(r,'Call Status')==='answered'&&!isIVR(r);});
+  var brands=[];
+  humans.forEach(function(r){var b=fldStr(r,'Brand')||'Unknown';if(brands.indexOf(b)<0)brands.push(b);});
+  brands.sort();
+  if(brands.length<2||humans.length<10){c.innerHTML='<div class="chart-empty">Need 10+ humans across 2+ brands</div>';return;}
+  var numBuckets=DURATION_BUCKETS.length;
+  var table=brands.map(function(){return new Array(numBuckets).fill(0);});
+  humans.forEach(function(r){
+    var b=fldStr(r,'Brand')||'Unknown';
+    var bIdx=brands.indexOf(b);
+    if(bIdx<0)return;
+    var dur=parseDuration(fld(r,'Call Duration'));
+    var bucketIdx=durToBucketIdx(dur);
+    table[bIdx][bucketIdx]++;
+  });
+  var n=humans.length;
+  var V=cramersV(table,n);
+  var maxVal=0;
+  table.forEach(function(row){row.forEach(function(v){if(v>maxVal)maxVal=v;});});
+  var html='<div style="margin-bottom:10px">'
+    +'<span style="font-size:13px;font-weight:600;color:var(--dark)">Cramér\'s V = <span style="font-family:\'Gabarito\',sans-serif;font-size:20px;color:var(--pink)">'+V.toFixed(3)+'</span></span>'
+    +'<span style="font-size:11px;color:var(--muted);margin-left:12px">'+(V>0.3?'Strong — brand predicts outcome':V>0.15?'Moderate — some brand effect':'Weak — script affects all brands equally')+'</span>'
+    +'</div>';
+  html+='<div style="overflow-x:auto"><table style="border-collapse:separate;border-spacing:3px"><thead><tr><th class="hm-th" style="text-align:left;padding-right:8px">Brand</th>';
+  DURATION_BUCKETS.forEach(function(b,i){html+='<th class="hm-th">B'+(i+1)+'</th>';});
+  html+='<th class="hm-th">Total</th></tr></thead><tbody>';
+  brands.forEach(function(brand,i){
+    var rowSum=table[i].reduce(function(a,b){return a+b;},0);
+    html+='<tr><td style="font-size:11px;font-weight:600;padding:4px 8px 4px 0;white-space:nowrap">'+(brand.length>16?brand.substring(0,15)+'…':brand)+'</td>';
+    table[i].forEach(function(v,j){
+      var intensity=maxVal?v/maxVal:0;
+      var bColor=DURATION_BUCKETS[j].color;
+      var textColor=intensity>0.6?'#fff':'var(--dark)';
+      html+='<td class="hm2-cell" style="background:'+bColor+(Math.round(intensity*180).toString(16).padStart(2,'0'))+';color:'+textColor+'">'+v+'<br><span style="font-size:9px;opacity:.8">'+pct(v,rowSum||1)+'%</span></td>';
+    });
+    html+='<td style="font-size:11px;color:var(--muted);padding:4px 6px">'+rowSum+'</td></tr>';
+  });
+  html+='</tbody></table></div>';
+  html+='<div style="font-size:10px;color:var(--muted);margin-top:6px">Cell = count (% of that brand\'s calls). Color intensity = relative frequency. V ranges 0→1: 0=no association, 1=perfect.</div>';
+  c.innerHTML=html;
+}
+
+// ── Section B.3: Hour × Connect Rate Heatmap ─────────────────────────────────
+function renderHourConnectHeatmap(){
+  var c=el('t2-hour-heatmap');
+  if(!c)return;
+  var hours=[8,9,10,11,12,13,14,15,16,17];
+  var hourLabels=['8AM','9AM','10AM','11AM','12PM','1PM','2PM','3PM','4PM','5PM'];
+  var matrix={};
+  hours.forEach(function(h){matrix[h]={total:0,answered:0,no_answer:0,ended:0};});
+  filteredRecs.forEach(function(r){
+    var dt=new Date(r.createdTime||'');
+    if(isNaN(dt))return;
+    var h=dt.getHours();
+    if(h<8||h>17)return;
+    matrix[h].total++;
+    var st=fldStr(r,'Call Status');
+    if(matrix[h][st]!==undefined)matrix[h][st]++;
+  });
+  function connectColor(rate){
+    if(rate>=0.5)return '#10B981';
+    if(rate>=0.35)return '#34D399';
+    if(rate>=0.25)return '#FCD34D';
+    if(rate>=0.15)return '#F59E0B';
+    return '#EF4444';
+  }
+  var html='<div style="overflow-x:auto"><table style="border-collapse:separate;border-spacing:3px;width:100%"><thead><tr><th class="hm-th" style="text-align:left">Hour</th><th class="hm-th">Connect Rate</th><th class="hm-th">Answered</th><th class="hm-th">No Answer</th><th class="hm-th">Failed</th><th class="hm-th">Total</th></tr></thead><tbody>';
+  hours.forEach(function(h,idx){
+    var m=matrix[h];
+    var n=m.total;
+    var rate=n?m.answered/n:0;
+    var bg=n>=3?connectColor(rate):'#F3F4F6';
+    var tc=n>=3&&rate>=0.35?'#fff':'var(--dark)';
+    html+='<tr>'
+      +'<td style="font-size:11px;font-weight:600;padding:4px 8px">'+hourLabels[idx]+'</td>'
+      +'<td class="hm2-cell" style="background:'+bg+';color:'+tc+'">'+(n>=3?Math.round(rate*100)+'%':'—')+'</td>'
+      +'<td style="font-size:11px;text-align:center">'+m.answered+'</td>'
+      +'<td style="font-size:11px;text-align:center">'+m.no_answer+'</td>'
+      +'<td style="font-size:11px;text-align:center">'+m.ended+'</td>'
+      +'<td style="font-size:11px;text-align:center;color:var(--muted)">'+n+'</td>'
+      +'</tr>';
+  });
+  html+='</tbody></table></div>';
+  html+='<div style="font-size:10px;color:var(--muted);margin-top:6px">Connect Rate = answered ÷ total dials. Green = higher connect. Cells with &lt;3 calls shown as —.</div>';
+  c.innerHTML=html;
+}
+
+// ── Section C: Kaplan-Meier Survival Curve ────────────────────────────────────
+function renderKaplanMeier(){
+  var c=el('t2-km-chart'),leg=el('t2-km-legend');
+  if(!c)return;
+  var maxT=120;
+  var humans=filteredRecs.filter(function(r){return fldStr(r,'Call Status')==='answered'&&!isIVR(r);});
+  if(humans.length<5){c.innerHTML='<div class="chart-empty">Need 5+ human calls</div>';return;}
+  var brandCounts={};
+  humans.forEach(function(r){var b=fldStr(r,'Brand')||'Unknown';brandCounts[b]=(brandCounts[b]||0)+1;});
+  var validBrands=Object.keys(brandCounts).filter(function(b){return brandCounts[b]>=5;})
+    .sort(function(a,b){return brandCounts[b]-brandCounts[a];}).slice(0,5);
+  function kmCurve(recs){
+    var durations=recs.map(function(r){return parseDuration(fld(r,'Call Duration'));}).filter(function(d){return d>=0;}).sort(function(a,b){return a-b;});
+    var n=durations.length;if(!n)return null;
+    var curve=[],survival=1.0,atRisk=n,dIdx=0;
+    for(var t=0;t<=maxT;t++){
+      var events=0;
+      while(dIdx<durations.length&&durations[dIdx]===t){events++;dIdx++;}
+      if(events>0)survival*=(1-events/atRisk);
+      atRisk=Math.max(0,atRisk-events);
+      curve.push(survival);
+    }
+    return curve;
+  }
+  var curves=[];
+  var kmColors=['#DE4990','#2C023B','#10B981','#F59E0B','#8B5CF6'];
+  validBrands.forEach(function(b,i){
+    var recs=humans.filter(function(r){return fldStr(r,'Brand')===b;});
+    var curve=kmCurve(recs);
+    if(curve) curves.push({label:b,n:brandCounts[b],curve:curve,color:kmColors[i%kmColors.length]});
+  });
+  var overallCurve=kmCurve(humans);
+  if(overallCurve) curves.unshift({label:'All Brands',n:humans.length,curve:overallCurve,color:'#94A3B8',dash:true});
+  var W=380,H=175,pT=8,pB=26,pL=34,pR=8;
+  var pW=W-pL-pR,pH=H-pT-pB;
+  var sx=function(t){return pL+(t/maxT)*pW;};
+  var sy=function(v){return pT+pH*(1-v);};
+  var out='';
+  [0,0.25,0.5,0.75,1].forEach(function(v){
+    var y=sy(v).toFixed(1);
+    out+='<line x1="'+pL+'" y1="'+y+'" x2="'+(W-pR)+'" y2="'+y+'" stroke="#EDE8F5" stroke-width="0.5"/>';
+    out+=svgText(pL-3,parseFloat(y)+3,Math.round(v*100)+'%',{anchor:'end',size:8,fill:'var(--muted)'});
+  });
+  [0,30,60,90,120].forEach(function(t){
+    var x=sx(t).toFixed(1);
+    out+='<line x1="'+x+'" y1="'+pT+'" x2="'+x+'" y2="'+(pT+pH)+'" stroke="#EDE8F5" stroke-width="0.5"/>';
+    out+=svgText(x,(pT+pH+12).toFixed(1),t+'s',{anchor:'middle',size:8,fill:'var(--muted)'});
+  });
+  curves.forEach(function(series){
+    var pts=series.curve.map(function(v,t){return sx(t).toFixed(1)+','+sy(v).toFixed(1);}).join(' ');
+    out+='<polyline points="'+pts+'" fill="none" stroke="'+series.color+'" stroke-width="'+(series.dash?0.8:1.2)+'" '
+      +(series.dash?'stroke-dasharray="4 3"':'')+' stroke-linejoin="round"/>';
+  });
+  // Right-side legend HTML (outside SVG)
+  var legHTML='<div style="display:flex;flex-direction:column;gap:5px;padding-left:10px;min-width:130px;justify-content:center">';
+  curves.forEach(function(s){
+    var swatchStyle=s.dash
+      ?'width:18px;height:0;border-top:2px dashed '+s.color+';flex-shrink:0;margin-top:5px'
+      :'width:18px;height:2px;background:'+s.color+';flex-shrink:0;border-radius:1px;margin-top:5px';
+    legHTML+='<div style="display:flex;align-items:flex-start;gap:5px">'
+      +'<div style="'+swatchStyle+'"></div>'
+      +'<span style="font-size:10px;color:var(--dark);line-height:1.3">'+s.label+'<br><span style="color:var(--muted);font-size:9px">n='+s.n+'</span></span>'
+      +'</div>';
+  });
+  legHTML+='</div>';
+  c.innerHTML='<div style="display:flex;align-items:flex-start">'
+    +'<svg viewBox="0 0 '+W+' '+H+'" style="flex:1;min-width:0;display:block">'+out+'</svg>'
+    +legHTML+'</div>';
+  // Dynamic plain-language summary
+  if(leg){
+    var pct15=overallCurve?Math.round(overallCurve[Math.min(15,maxT)]*100):null;
+    var pct30=overallCurve?Math.round(overallCurve[Math.min(30,maxT)]*100):null;
+    var pct120=overallCurve?Math.round(overallCurve[maxT]*100):null;
+    var brandSurv30=curves.filter(function(s){return !s.dash;}).map(function(s){return {label:s.label,v:s.curve[Math.min(30,maxT)]};});
+    brandSurv30.sort(function(a,b){return b.v-a.v;});
+    var best30=brandSurv30.length?brandSurv30[0]:null;
+    var worst30=brandSurv30.length>1?brandSurv30[brandSurv30.length-1]:null;
+    var summary='';
+    if(pct15!==null) summary+=''+(100-pct15)+'% of calls drop within the first 15 seconds. ';
+    if(best30&&worst30) summary+=best30.label+' holds the most listeners past 30 seconds ('+Math.round(best30.v*100)+'% still active), while '+worst30.label+' loses callers fastest ('+Math.round(worst30.v*100)+'%). ';
+    else if(best30) summary+=best30.label+' holds the most listeners past 30 seconds ('+Math.round(best30.v*100)+'% still active). ';
+    if(pct120!==null) summary+='Only about '+pct120+'% of calls survive past 2 minutes across all brands.';
+    leg.innerHTML='<div style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.5;max-width:600px">'+summary+'</div>';
+  }
+}
+
+// ── Section D: Raw Segment Table ──────────────────────────────────────────────
+var t2Page=1,t2SortCol='duration_seconds',t2SortAsc=false;
+var T2_PAGE_SIZE=15;
+
+function getWeekNum(dt){
+  var d=new Date(Date.UTC(dt.getFullYear(),dt.getMonth(),dt.getDate()));
+  var dayNum=d.getUTCDay()||7;
+  d.setUTCDate(d.getUTCDate()+4-dayNum);
+  var yearStart=new Date(Date.UTC(d.getUTCFullYear(),0,1));
+  return d.getUTCFullYear()+'-W'+Math.ceil((((d-yearStart)/86400000)+1)/7);
+}
+
+function buildT2Rows(){
+  var search=(el('t2-search')?el('t2-search').value:'').toLowerCase();
+  return filteredRecs.map(function(r){
+    var dt=new Date(r.createdTime||'');
+    var durS=parseDuration(fld(r,'Call Duration'));
+    var bIdx=durToBucketIdx(durS);
+    return {
+      call_id: r.id||'',
+      brand: fldStr(r,'Brand')||'—',
+      state: fldStr(r,'State')||'—',
+      dial_hour: isNaN(dt)?'—':dt.getHours(),
+      outcome: fldStr(r,'Call Status')||'—',
+      duration_seconds: durS,
+      hangup_bucket: 'B'+(bIdx+1)+': '+(DURATION_BUCKETS[bIdx]?DURATION_BUCKETS[bIdx].label:'?'),
+      end_result: fldStr(r,'End Result')||'—',
+      week_number: isNaN(dt)?'—':getWeekNum(dt),
+      _raw: r
+    };
+  }).filter(function(row){
+    if(!search)return true;
+    return (row.brand+row.state+row.outcome+row.hangup_bucket+row.end_result+row.week_number).toLowerCase().indexOf(search)>-1;
+  });
+}
+
+function renderT2Table(){
+  var headEl=el('t2-tbl-head'),bodyEl=el('t2-tbl-body'),cntEl=el('t2-tbl-count');
+  var prevEl=el('t2-pg-prev'),nextEl=el('t2-pg-next'),infoEl=el('t2-pg-info');
+  if(!headEl||!bodyEl)return;
+  var rows=buildT2Rows();
+  rows.sort(function(a,b){
+    var av=a[t2SortCol],bv=b[t2SortCol];
+    if(typeof av==='number'&&typeof bv==='number')return t2SortAsc?av-bv:bv-av;
+    av=String(av);bv=String(bv);
+    return t2SortAsc?(av<bv?-1:av>bv?1:0):(bv<av?-1:bv>av?1:0);
+  });
+  var total=rows.length;
+  var pages=Math.max(1,Math.ceil(total/T2_PAGE_SIZE));
+  if(t2Page>pages)t2Page=pages;
+  var slice=rows.slice((t2Page-1)*T2_PAGE_SIZE,t2Page*T2_PAGE_SIZE);
+  if(cntEl)cntEl.textContent=total+' records';
+  if(infoEl)infoEl.textContent='Page '+t2Page+' of '+pages;
+  if(prevEl)prevEl.disabled=t2Page<=1;
+  if(nextEl)nextEl.disabled=t2Page>=pages;
+  var cols=[
+    {key:'call_id',label:'Call ID'},
+    {key:'brand',label:'Brand'},
+    {key:'state',label:'State'},
+    {key:'dial_hour',label:'Dial Hour'},
+    {key:'outcome',label:'Outcome'},
+    {key:'duration_seconds',label:'Duration (s)'},
+    {key:'hangup_bucket',label:'Bucket'},
+    {key:'end_result',label:'End Result'},
+    {key:'week_number',label:'Week'}
+  ];
+  var arr=t2SortAsc?' ↑':' ↓';
+  headEl.innerHTML='<tr>'+cols.map(function(col){
+    return '<th onclick="t2Sort(\''+col.key+'\')">'+col.label+(t2SortCol===col.key?arr:'')+'</th>';
+  }).join('')+'</tr>';
+  bodyEl.innerHTML=slice.length===0
+    ?'<tr><td colspan="'+cols.length+'" class="tbl-empty">No records</td></tr>'
+    :slice.map(function(row){
+      var bkt=DURATION_BUCKETS[parseInt((row.hangup_bucket||'B1').replace('B',''))-1];
+      var bktColor=bkt?bkt.color:'var(--muted)';
+      return '<tr>'
+        +'<td style="font-size:10px;color:var(--muted);max-width:120px;overflow:hidden;text-overflow:ellipsis" title="'+row.call_id+'">'+row.call_id.substring(0,12)+'…</td>'
+        +'<td><span class="pill">'+row.brand+'</span></td>'
+        +'<td>'+row.state+'</td>'
+        +'<td>'+row.dial_hour+'</td>'
+        +'<td><span class="status-pill" style="background:'+(row.outcome==='answered'?'#D1FAE5':row.outcome==='no_answer'?'#FEE2E2':'#FEF3C7')+';color:var(--dark)">'+row.outcome+'</span></td>'
+        +'<td style="font-weight:600;font-family:\'Gabarito\',sans-serif">'+row.duration_seconds+'s</td>'
+        +'<td><span style="display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;background:'+bktColor+'25;color:'+bktColor+';border:1px solid '+bktColor+'50">'+row.hangup_bucket+'</span></td>'
+        +'<td style="font-size:11px;max-width:120px;overflow:hidden;text-overflow:ellipsis">'+row.end_result+'</td>'
+        +'<td style="font-size:11px;color:var(--muted)">'+row.week_number+'</td>'
+        +'</tr>';
+    }).join('');
+}
+
+function t2Sort(key){
+  if(t2SortCol===key)t2SortAsc=!t2SortAsc;
+  else{t2SortCol=key;t2SortAsc=false;}
+  t2Page=1;renderT2Table();
+}
+function t2ChangePage(d){t2Page+=d;renderT2Table();}
+
+function exportT2CSV(){
+  var rows=buildT2Rows();
+  var headers=['Call ID','Brand','State','Dial Hour','Outcome','Duration Seconds','Hangup Bucket','End Result','Week Number'];
+  var csv=[headers].concat(rows.map(function(r){
+    return [r.call_id,r.brand,r.state,r.dial_hour,r.outcome,r.duration_seconds,r.hangup_bucket,r.end_result,r.week_number];
+  })).map(function(row){
+    return row.map(function(v){return '"'+String(v||'').replace(/"/g,'""')+'"';}).join(',');
+  }).join('\n');
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download='t2_segments_'+today()+'.csv';
+  a.click();
+}
+
+// ── Section E: Skewness Trend ─────────────────────────────────────────────────
+function renderSkewnessTrend(){
+  var c=el('t2-skew-chart');
+  if(!c)return;
+  function getISOWeek2(d){var dt=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));var dn=dt.getUTCDay()||7;dt.setUTCDate(dt.getUTCDate()+4-dn);var ys=new Date(Date.UTC(dt.getUTCFullYear(),0,1));return dt.getUTCFullYear()+'-W'+String(Math.ceil((((dt-ys)/86400000)+1)/7)).padStart(2,'0');}
+  var weekData={};
+  filteredRecs.filter(function(r){return fldStr(r,'Call Status')==='answered'&&!isIVR(r);}).forEach(function(r){
+    var dt=new Date(r.createdTime||'');if(isNaN(dt))return;
+    var wk=getISOWeek2(dt);
+    var d=parseDuration(fld(r,'Call Duration'));
+    var bIdx=durToBucketIdx(d);
+    if(!weekData[wk])weekData[wk]=[];
+    weekData[wk].push(bIdx);
+  });
+  var weeks=Object.keys(weekData).sort();
+  if(weeks.length<2){c.innerHTML='<div class="chart-empty">Need 2+ weeks of data</div>';return;}
+  var skews=weeks.map(function(wk){return parseFloat(calcSkewness(weekData[wk]).toFixed(3));});
+  var allVals=skews.filter(function(v){return !isNaN(v)&&isFinite(v);});
+  if(!allVals.length){c.innerHTML='<div class="chart-empty">Insufficient data</div>';return;}
+  var W=480,H=145,pT=20,pB=26,pL=44,pR=12;
+  var pW=W-pL-pR,pH=H-pT-pB;
+  var maxV=Math.max.apply(null,allVals)||3;
+  var minV=Math.min.apply(null,allVals.concat([0]));
+  var padding=(maxV-minV)*0.12||0.3;
+  maxV+=padding; minV-=padding;
+  var n=weeks.length;
+  var sx=function(i){return n===1?pL+pW/2:pL+(i/(n-1))*pW;};
+  var sy=function(v){return pT+pH*((maxV-v)/(maxV-minV));};
+  var trendDown=skews[skews.length-1]<skews[0];
+  var lineColor=trendDown?'#10B981':'#EF4444';
+  var out='';
+  // annotation in top-left, inside padding area
+  var ann=trendDown?'↓ Decreasing — improving':'↑ Increasing — investigate';
+  out+=svgText(pL,pT-6,ann,{anchor:'start',size:8,fill:lineColor,weight:600});
+  // grid lines
+  var gridVals=[Math.round(minV*10)/10, Math.round((minV+(maxV-minV)/2)*10)/10, Math.round(maxV*10)/10];
+  gridVals.forEach(function(v){
+    var y=sy(v).toFixed(1);
+    out+='<line x1="'+pL+'" y1="'+y+'" x2="'+(W-pR)+'" y2="'+y+'" stroke="#EDE8F5" stroke-width="0.5"/>';
+    out+=svgText(pL-3,parseFloat(y)+3,v.toFixed(1),{anchor:'end',size:8,fill:'var(--muted)'});
+  });
+  // zero baseline if within range
+  if(skews.some(function(v){return v<0;})||skews.some(function(v){return v>0;})){
+    var y0=sy(0);
+    if(y0>pT&&y0<pT+pH){
+      out+='<line x1="'+pL+'" y1="'+y0.toFixed(1)+'" x2="'+(W-pR)+'" y2="'+y0.toFixed(1)+'" stroke="#94A3B8" stroke-width="0.6" stroke-dasharray="3 3"/>';
+      out+=svgText(pL-3,(y0+3).toFixed(1),'0',{anchor:'end',size:8,fill:'#94A3B8'});
+    }
+  }
+  var pts=skews.map(function(v,i){return sx(i).toFixed(1)+','+sy(v).toFixed(1);}).join(' ');
+  out+='<polyline points="'+pts+'" fill="none" stroke="'+lineColor+'" stroke-width="1.2" stroke-linejoin="round"/>';
+  // label step: skip labels when crowded
+  var lblStep=n>10?3:n>6?2:1;
+  skews.forEach(function(v,i){
+    var cx=parseFloat(sx(i).toFixed(1)),cy=parseFloat(sy(v).toFixed(1));
+    out+='<circle cx="'+cx+'" cy="'+cy+'" r="3" fill="'+lineColor+'"/>';
+    // value label: above dot normally; below if too close to top
+    var valY=cy<pT+14?cy+13:cy-7;
+    out+=svgText(cx.toFixed(1),valY.toFixed(1),v.toFixed(2),{anchor:'middle',size:8,fill:'var(--dark)',weight:600});
+    // week label: only every lblStep
+    if(i%lblStep===0){
+      out+=svgText(cx.toFixed(1),(pT+pH+14).toFixed(1),weeks[i].replace(/\d{4}-/,''),{anchor:'middle',size:8,fill:'var(--muted)'});
+    }
+  });
+  c.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block">'+out+'</svg>'
+    +'<div style="font-size:11px;color:var(--muted);margin-top:4px">Skewness of call duration bucket distribution by week. Decreasing = more calls surviving to longer buckets = opener/list improving.</div>';
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────

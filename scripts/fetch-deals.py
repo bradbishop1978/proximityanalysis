@@ -52,6 +52,7 @@ PROPS = ','.join([
     'dealstage',
     'pipeline',
     'createdate',
+    'closedate',
     'lula_deal_source',
     'number_of_locations',
     'hubspot_owner_id',
@@ -80,18 +81,22 @@ while True:
         raw_date = (p.get('createdate') or '')
         date = raw_date[:10] if raw_date else ''
 
+        raw_close = (p.get('closedate') or '')
+        close_date = raw_close[:10] if raw_close else ''
+
         raw_stage    = str(p.get('dealstage') or '')
         raw_pipeline = str(p.get('pipeline')  or '')
 
         deals.append({
-            'id':       d['id'],
-            'date':     date,
-            'brand':    (p.get('lula_deal_source') or '').strip() or 'Unknown',
-            'stores':   stores,
-            'dealname': (p.get('dealname') or '').strip() or '—',
-            'owner':    owners.get(str(p.get('hubspot_owner_id') or ''), 'Unassigned'),
-            'stage':    stage_labels.get(raw_stage, raw_stage),
-            'pipeline': pipeline_labels.get(raw_pipeline, raw_pipeline),
+            'id':         d['id'],
+            'date':       date,
+            'close_date': close_date,
+            'brand':      (p.get('lula_deal_source') or '').strip() or 'Unknown',
+            'stores':     stores,
+            'dealname':   (p.get('dealname') or '').strip() or '—',
+            'owner':      owners.get(str(p.get('hubspot_owner_id') or ''), 'Unassigned'),
+            'stage':      stage_labels.get(raw_stage, raw_stage),
+            'pipeline':   pipeline_labels.get(raw_pipeline, raw_pipeline),
         })
 
     after = (data.get('paging') or {}).get('next', {}).get('after')

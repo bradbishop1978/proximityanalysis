@@ -416,13 +416,16 @@ function loadFromCache() {
 }
 
 // ── Active pipeline + Q2 window filter — all metrics/charts run through this ──
+// Closed Won uses close_date so pre-Q2 deals closed in Q2 are included;
+// all other stages use createdate.
 function q2Entries() {
   return entries.filter(function(e){
     if (e.pipeline !== activePipeline) return false;
-    // Closed Won and Signed deals: use close_date so pre-Q2 created deals that closed in Q2 are included
-    var isClosed = e.stage === HS_CLOSED_STAGE || e.stage === HS_SIGNED_STAGE;
-    var dateToCheck = isClosed && e.close_date ? e.close_date : e.date;
-    return dateToCheck >= Q2_START && dateToCheck <= Q2_END;
+    if (e.stage === HS_CLOSED_STAGE) {
+      var d = e.close_date || e.date; // fall back to createdate for legacy records
+      return d >= Q2_START && d <= Q2_END;
+    }
+    return e.date >= Q2_START && e.date <= Q2_END;
   });
 }
 
@@ -439,11 +442,11 @@ function metrics() {
   var cum = cumClosed + cumSigned; // pendingStages are visual-only, never counted toward goal
 
   var ago7 = fmtYMD(addDays(now,-7));
-  // pace: last 7 days, counting only stages that contribute to cum (closed + signed — never pending)
+  // pace: last 7 days — Closed Won uses close_date, Signed uses createdate
   var pace = q2.filter(function(e){
-    if (e.stage!==HS_CLOSED_STAGE && e.stage!==HS_SIGNED_STAGE) return false;
-    var closeD = e.close_date || e.date;
-    return closeD >= ago7;
+    if (e.stage === HS_CLOSED_STAGE) { var d = e.close_date || e.date; return d >= ago7; }
+    if (e.stage === HS_SIGNED_STAGE) return e.date >= ago7;
+    return false;
   }).reduce(function(s,e){return s+e.stores;},0);
   var needed = Math.max(0,GOAL-cum);
   var reqPace = weeksRem>0 ? needed/weeksRem : Infinity;
@@ -462,12 +465,11 @@ function metrics() {
 function weeklyData() {
   var wks = {};
   q2Entries().forEach(function(e){
-    var isClosed = e.stage === HS_CLOSED_STAGE;
-    var dateForBucket = isClosed && e.close_date ? e.close_date : e.date;
+    var dateForBucket = (e.stage === HS_CLOSED_STAGE && e.close_date) ? e.close_date : e.date;
     var k = fmtYMD(monday(parseD(dateForBucket)));
     if (!wks[k]) wks[k] = {closed:0, pipeline:0};
-    if (isClosed) wks[k].closed  += e.stores;
-    else          wks[k].pipeline += e.stores;
+    if (e.stage === HS_CLOSED_STAGE) wks[k].closed  += e.stores;
+    else                             wks[k].pipeline += e.stores;
   });
   return Object.keys(wks).sort().map(function(k){
     return {l:fmtShort(k), v:wks[k].closed+wks[k].pipeline, closed:wks[k].closed, pipeline:wks[k].pipeline};

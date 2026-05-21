@@ -1068,13 +1068,9 @@ function renderLeadershipStrip(){
 
   // DM Contact Rate (filtered)
   var humans=recs.filter(isTrueHuman);
-  var dms=recs.filter(function(r){return isTrueHuman(r)&&isYes(fld(r,'Spoke to Manager'));});
-  // Duration gate: DM=true but call <30s is physically implausible as a real DM conversation
-  var suspectDMs=dms.filter(function(r){var d=parseDuration(fld(r,'Call Duration'));return d>0&&d<30;});
+  var dms=recs.filter(function(r){return isYes(fld(r,'Spoke to Manager'));});
   el('ls-dm').textContent=pct(dms.length,humans.length||1)+'%';
-  var dmSubText=dms.length+' DMs of '+humans.length+' humans';
-  if(suspectDMs.length>0) dmSubText+=' &nbsp;<span style="color:#FCD34D;font-weight:700">&#9888; '+suspectDMs.length+' suspect (&lt;30s)</span>';
-  el('ls-dm-sub').innerHTML=dmSubText;
+  el('ls-dm-sub').innerHTML=dms.length+' DMs of '+humans.length+' humans';
 
   // DM delta this week vs last (from allRecords)
   var dmTW=thisWeekRecs.filter(function(r){return isTrueHuman(r)&&isYes(fld(r,'Spoke to Manager'));});
@@ -1182,12 +1178,6 @@ function renderLeadershipStrip(){
   }
   function fmtHour(h){var h12=h===0?12:h>12?h-12:h;return h12+':00'+(h<12?'AM':'PM');}
   if(bestHour>=0) alerts.push({cls:'ls-alert-blue',icon:'&#9200;',txt:'Best time to call: '+fmtHour(bestHour)+'–'+fmtHour(bestHour+1)+' — '+Math.round(bestHourDM*100)+'% of calls in this window reached an owner'});
-
-  // Suspect DM gate alert
-  if(suspectDMs.length>0){
-    var suspectPct=Math.round(suspectDMs.length/dms.length*100);
-    alerts.push({cls:'ls-alert-amber',icon:'&#9888;',txt:suspectDMs.length+' of '+dms.length+' "owner contacts" lasted under 30 seconds — those may be wrong. Run <code>dm_confidence_scan.py</code> to check.'});
-  }
 
   el('ls-alerts').innerHTML=alerts.map(function(a){
     return '<div class="ls-alert '+a.cls+'"><span>'+a.icon+'</span><span>'+a.txt+'</span></div>';

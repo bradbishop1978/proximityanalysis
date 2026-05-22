@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delivery Readiness Scorecard — Lula Commerce</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #F8F4FB;
+      color: #2C023B;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 28px 16px 64px;
+    }
+
+    .container { width: 100%; max-width: 480px; }
+
+    /* ── Header ── */
+    .app-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+    .app-header h1 {
+      font-size: 20px;
+      font-weight: 900;
+      color: #2C023B;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+    .app-subtitle {
+      text-align: center;
+      font-size: 14px;
+      color: #7C5D8A;
+      margin-bottom: 24px;
+      line-height: 1.55;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 4px 24px rgba(44,2,59,.10), 0 1px 4px rgba(44,2,59,.06);
+      padding: 28px 24px;
+    }
+
+    /* ── Progress ── */
+    .progress {
+      font-size: 10px;
+      font-weight: 600;
+      color: #9B7FAC;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    /* ── Question ── */
+    .q-text {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: #2C023B;
+      line-height: 1.3;
+      text-align: center;
+      margin-bottom: 28px;
+      letter-spacing: -0.01em;
+    }
+
+    /* ── Option buttons ── */
+    .opt-btn {
+      display: block;
+      width: 100%;
+      background: #FAF7FC;
+      border: 1.5px solid #E8DDF0;
+      border-radius: 12px;
+      color: #5A4068;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 16px 20px;
+      text-align: left;
+      cursor: pointer;
+      margin-bottom: 10px;
+      transition: border-color 0.14s, background 0.14s, color 0.14s;
+      line-height: 1.4;
+    }
+    .opt-btn:hover { border-color: #DE4990; background: #FFF0F7; color: #2C023B; }
+    .opt-btn.selected { border-color: #DE4990; background: #FFF0F7; color: #DE4990; font-weight: 600; }
+
+    /* ── Back button ── */
+    .btn-back {
+      display: block;
+      width: 100%;
+      background: none;
+      border: none;
+      color: #B39CC0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 12px;
+      cursor: pointer;
+      padding: 8px 0;
+      text-align: center;
+      margin-top: 8px;
+      transition: color 0.14s;
+    }
+    .btn-back:hover { color: #7C5D8A; }
+
+    /* ── Lead capture ── */
+    .lead-title {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: #2C023B;
+      line-height: 1.3;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .lead-sub {
+      font-size: 13px;
+      color: #9B7FAC;
+      text-align: center;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    .field { margin-bottom: 14px; }
+    .field label {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      color: #9B7FAC;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 7px;
+    }
+    .field input {
+      width: 100%;
+      background: #FAF7FC;
+      border: 1.5px solid #E8DDF0;
+      border-radius: 10px;
+      color: #2C023B;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 15px;
+      padding: 14px 16px;
+      transition: border-color 0.14s;
+    }
+    .field input:focus { outline: none; border-color: #DE4990; }
+    .field input::placeholder { color: #B39CC0; }
+
+    /* ── Primary CTA ── */
+    .btn-cta {
+      display: block;
+      width: 100%;
+      background: linear-gradient(135deg, #DE4990 0%, #C0346E 100%);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 18px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: opacity 0.14s, transform 0.1s;
+      letter-spacing: 0.01em;
+      line-height: 1;
+      margin-top: 6px;
+    }
+    .btn-cta:hover:not([disabled]) { opacity: 0.88; transform: translateY(-1px); }
+    .btn-cta:active { transform: translateY(0); }
+
+    /* ── Skip link ── */
+    .skip-link {
+      display: block;
+      text-align: center;
+      font-size: 12px;
+      color: #B39CC0;
+      cursor: pointer;
+      margin-top: 16px;
+      text-decoration: none;
+      transition: color 0.14s;
+    }
+    .skip-link:hover { color: #7C5D8A; }
+
+    /* ── Result: band chip ── */
+    .band-chip {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border-radius: 20px;
+      padding: 5px 14px;
+      margin-bottom: 16px;
+    }
+    .band-green  { background: rgba(16,185,129,0.10); color: #0d9464; border: 1px solid rgba(16,185,129,0.22); }
+    .band-yellow { background: rgba(245,158,11,0.10); color: #c47d08; border: 1px solid rgba(245,158,11,0.22); }
+    .band-orange { background: rgba(249,115,22,0.10); color: #c45c10; border: 1px solid rgba(249,115,22,0.22); }
+
+    /* ── Result: score ── */
+    .score-wrap { display: flex; align-items: baseline; gap: 6px; margin-bottom: 18px; }
+    .score-num {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 900;
+      font-size: 54px;
+      line-height: 1;
+    }
+    .score-denom { font-size: 15px; color: #9B7FAC; }
+
+    /* ── Result: text ── */
+    .result-headline {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 22px;
+      font-weight: 900;
+      color: #2C023B;
+      line-height: 1.25;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .result-body {
+      font-size: 14px;
+      color: #7C5D8A;
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+
+    /* ── Revenue block ── */
+    .rev-block {
+      background: #FFF0F7;
+      border: 1.5px solid rgba(222,73,144,0.22);
+      border-radius: 16px;
+      padding: 22px 20px 20px;
+      margin-bottom: 16px;
+    }
+    .rev-eyebrow {
+      font-size: 10px;
+      color: #9B7FAC;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      margin-bottom: 10px;
+    }
+    .rev-number {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 34px;
+      font-weight: 900;
+      color: #DE4990;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      margin-bottom: 5px;
+    }
+    .rev-period { font-size: 12px; color: #9B7FAC; margin-bottom: 8px; }
+    .rev-total  { font-size: 13px; color: #7C5D8A; }
+
+    /* ── ROI breakdown ── */
+    .roi-block {
+      background: #FAF7FC;
+      border: 1.5px solid #E8DDF0;
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-bottom: 20px;
+    }
+    .roi-eyebrow {
+      font-size: 10px;
+      color: #9B7FAC;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      margin-bottom: 14px;
+    }
+    .roi-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(44,2,59,0.07);
+      font-size: 13px;
+    }
+    .roi-row:last-child { border-bottom: none; }
+    .roi-label { color: #7C5D8A; }
+    .roi-val   { font-family: 'Inter', sans-serif; color: #2C023B; font-weight: 500; }
+    .roi-row.net .roi-label { color: #2C023B; font-weight: 600; }
+    .roi-row.net .roi-val   { color: #10b981; font-weight: 700; }
+
+    /* ── Caveat ── */
+    .caveat {
+      background: rgba(245,158,11,0.06);
+      border: 1px solid rgba(245,158,11,0.18);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 13px;
+      color: #7C5D8A;
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+
+    /* ── Low-score note ── */
+    .low-note {
+      border-left: 3px solid #E8DDF0;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #7C5D8A;
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+
+    /* ── Divider ── */
+    .divider { border: none; border-top: 1px solid #EEE6F2; margin: 22px 0; }
+
+    /* ── Footnote ── */
+    .footnote {
+      text-align: center;
+      font-size: 11px;
+      color: #B39CC0;
+      line-height: 1.7;
+      margin-top: 20px;
+    }
+
+    /* ── Fade animation ── */
+    .fade-in { animation: fi 0.25s ease both; }
+    @keyframes fi { from { opacity:0; transform:translateY(7px); } to { opacity:1; transform:translateY(0); } }
+
+    [hidden] { display: none !important; }
+
+    @media (max-width: 360px) {
+      .q-text { font-size: 17px; }
+      .result-headline { font-size: 19px; }
+      .rev-number { font-size: 28px; }
+      .score-num { font-size: 44px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ══ ALWAYS-VISIBLE HEADER ══ -->
+  <header class="app-header">
+    <svg viewBox="0 0 460 195" style="height:52px;width:auto;flex-shrink:0;" role="img" aria-label="Lula Commerce" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sc_g0" x1="94.5263" y1="115.696" x2="28.2837" y2="72.704" gradientUnits="userSpaceOnUse"><stop stop-color="#FFF1EE"/><stop offset="1" stop-color="#EB92BD"/></linearGradient>
+        <linearGradient id="sc_g1" x1="59.2635" y1="108.652" x2="85.8843" y2="98.2142" gradientUnits="userSpaceOnUse"><stop stop-color="#DE4990"/><stop offset="1" stop-color="#E19898"/></linearGradient>
+        <linearGradient id="sc_g2" x1="75.5776" y1="88.2439" x2="150.581" y2="40.7866" gradientUnits="userSpaceOnUse"><stop stop-color="#FFF1EE"/><stop offset="1" stop-color="#EB92BD"/></linearGradient>
+        <linearGradient id="sc_g3" x1="115.228" y1="59.6721" x2="111.423" y2="84.117" gradientUnits="userSpaceOnUse"><stop stop-color="#DE4990"/><stop offset="1" stop-color="#E19898"/></linearGradient>
+        <linearGradient id="sc_g4" x1="115.095" y1="76.3696" x2="116.035" y2="165.059" gradientUnits="userSpaceOnUse"><stop stop-color="#FFF1EE"/><stop offset="1" stop-color="#EB92BD"/></linearGradient>
+        <linearGradient id="sc_g5" x1="118.622" y1="125.087" x2="99.8129" y2="108.99" gradientUnits="userSpaceOnUse"><stop stop-color="#DE4990"/><stop offset="1" stop-color="#E19898"/></linearGradient>
+      </defs>
+      <path d="M58.9392 78.4133C55.3128 75.3648 50.4233 74.236 45.805 75.3801L24 79.7648L30.2533 104.452L59.3809 98.2017L58.668 121.837C58.3193 133.317 65.3706 143.745 76.2189 147.792C78.559 148.667 81.1704 147.523 82.1002 145.219L89.9342 125.753C93.7544 116.255 91.0268 105.404 83.1618 98.793L58.9392 78.4133Z" fill="url(#sc_g0)"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M53.5459 75.526C55.4986 76.0942 57.3428 77.0618 58.9313 78.3979L83.1617 98.7853C91.0267 105.397 93.7542 116.255 89.9341 125.746L82.9912 145.311C82.0923 147.845 79.2098 149.082 76.7302 147.999L76.2963 147.815C65.4092 143.753 58.3269 133.279 58.6756 121.753L59.3575 99.2076C59.3575 99.1308 59.3575 99.0617 59.3342 98.9926C59.8611 95.8442 59.8999 92.5577 59.3807 89.2328C58.5748 84.0726 56.5059 79.4192 53.5459 75.5183V75.526Z" fill="url(#sc_g1)"/>
+      <path d="M132.928 68.1253C137.328 66.4151 140.618 62.6773 141.765 58.0865L148.1 36.8813L123.325 30.4983L115.21 59.0128L94.6181 47.0322C84.6181 41.2142 72.0855 42.3782 63.4293 49.9317C61.5647 51.5628 61.3476 54.3981 62.9513 56.3208L76.5078 72.5276C83.119 80.4338 94.0037 83.2689 103.543 79.5559L132.926 68.136L132.928 68.1253Z" fill="url(#sc_g2)"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M138.006 64.7866C136.59 66.223 134.871 67.3732 132.938 68.1187L103.543 79.5463C94.0004 83.2526 83.1204 80.4243 76.5096 72.5185L62.4436 57.0361C60.6286 55.0346 60.878 51.9155 62.9999 50.2624L63.3639 49.9744C72.0655 42.393 84.6489 41.2246 94.6818 47.0672L114.315 58.4912C114.381 58.5238 114.446 58.5563 114.509 58.5717C117.048 60.5457 119.94 62.1563 123.121 63.2981C128.061 65.0657 133.15 65.4954 137.991 64.7775L138.006 64.7866Z" fill="url(#sc_g3)"/>
+      <path d="M102.13 135.69C101.277 140.328 102.734 145.089 106.043 148.475L120.781 165L139.223 147.293L119.192 125.416L140.207 114.204C150.412 108.76 155.999 97.4952 154.108 86.1689C153.698 83.727 151.396 82.0531 148.917 82.4063L127.995 85.4164C117.79 86.8831 109.661 94.6464 107.817 104.706L102.122 135.682L102.13 135.69Z" fill="url(#sc_g4)"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M102.308 141.764C101.828 139.806 101.75 137.74 102.13 135.705L107.826 104.713C109.677 94.654 117.798 86.8907 128.003 85.424L148.576 81.5999C151.234 81.1085 153.76 82.9591 154.055 85.6313L154.109 86.0921C156 97.4721 150.389 108.783 140.146 114.243L120.107 124.932C120.045 124.97 119.983 125.009 119.937 125.055C116.923 126.176 114.032 127.788 111.39 129.892C107.291 133.163 104.253 137.264 102.324 141.756L102.308 141.764Z" fill="url(#sc_g5)"/>
+      <path d="M201.99 127C194.447 127 188.541 124.937 184.27 120.812C180.09 116.595 178 110.681 178 103.072V24H195.038V101.834C195.038 109.169 198.446 112.836 205.261 112.836C207.533 112.836 209.577 112.377 211.395 111.461L212.213 125.212C209.032 126.404 205.625 127 201.99 127Z" fill="#2C023B"/>
+      <path d="M289.534 52.6035V126.037H273.313V116.686C270.587 119.987 267.18 122.554 263.091 124.387C259.001 126.129 254.594 127 249.869 127C240.146 127 232.467 124.296 226.833 118.887C221.29 113.386 217.519 105.272 217.519 94.5461V52.6035H235.557V92.2083C235.557 98.8091 237.011 103.76 239.919 107.06C242.917 110.269 247.143 111.873 252.595 111.873C258.683 111.873 263.499 109.994 267.043 106.235C270.678 102.385 272.496 96.8838 272.496 89.733V52.6035H289.534Z" fill="#2C023B"/>
+      <path d="M327.106 127C319.563 127 313.657 124.937 309.386 120.812C305.206 116.595 303.116 110.681 303.116 103.072V24H320.154V101.834C320.154 109.169 323.562 112.836 330.377 112.836C332.649 112.836 334.693 112.377 336.511 111.461L337.328 125.212C334.148 126.404 330.74 127 327.106 127Z" fill="#2C023B"/>
+      <path d="M416 52.6035V127H400V116C397.183 119.484 393.464 122.645 389.284 124.387C385.195 126.129 380.652 127 375.654 127C368.566 127 362.205 125.441 356.571 122.324C351.028 119.207 346.666 114.807 343.486 109.123C340.396 103.439 338.851 96.838 338.851 89.3204C338.851 81.8028 340.396 75.2479 343.486 69.6555C346.666 63.9715 351.028 59.571 356.571 56.4539C362.205 53.3369 368.566 51.7784 375.654 51.7784C380.379 51.7784 384.695 52.6035 388.603 54.2537C392.601 55.9039 396.054 58.3333 398.962 61.5421V52.6035H416ZM377.562 112.286C383.832 112.286 389.012 110.177 393.101 105.96C397.19 101.743 399.234 96.1963 399.234 89.3204C399.234 82.4446 397.19 76.8981 393.101 72.6809C389.012 68.4637 383.832 66.3551 377.562 66.3551C371.292 66.3551 366.112 68.4637 362.023 72.6809C358.025 76.8981 356.026 82.4446 356.026 89.3204C356.026 96.1963 358.025 101.743 362.023 105.96C366.112 110.177 371.292 112.286 377.562 112.286Z" fill="#2C023B"/>
+      <path d="M431.426 127L428.064 119H429.585L431.851 124.674L434.106 119H435.628L432.277 127H431.426ZM427.691 127V119H429.255V127H427.691ZM434.436 127V119H436V127H434.436ZM422.383 127V119.696H423.947V127H422.383ZM420 120.37V119H426.33V120.37H420Z" fill="#2C023B"/>
+      <path d="M189.125 171C186.815 171 184.826 170.492 183.158 169.475C181.501 168.449 180.227 167.035 179.336 165.234C178.445 163.433 178 161.37 178 159.045C178 156.691 178.456 154.613 179.367 152.811C180.279 151 181.563 149.586 183.22 148.57C184.878 147.553 186.83 147.045 189.078 147.045C190.891 147.045 192.507 147.372 193.926 148.026C195.345 148.67 196.489 149.576 197.359 150.743C198.24 151.911 198.763 153.274 198.929 154.834H194.407C194.159 153.747 193.589 152.811 192.698 152.026C191.818 151.242 190.637 150.849 189.156 150.849C187.861 150.849 186.727 151.181 185.753 151.845C184.79 152.499 184.039 153.435 183.5 154.653C182.962 155.86 182.692 157.289 182.692 158.94C182.692 160.63 182.956 162.089 183.485 163.317C184.013 164.545 184.759 165.496 185.722 166.17C186.696 166.844 187.84 167.181 189.156 167.181C190.036 167.181 190.834 167.025 191.548 166.713C192.273 166.391 192.879 165.933 193.366 165.34C193.863 164.746 194.21 164.031 194.407 163.196H198.929C198.763 164.696 198.26 166.034 197.421 167.211C196.582 168.389 195.459 169.314 194.05 169.989C192.652 170.663 191.01 171 189.125 171Z" fill="#2C023B"/>
+      <path d="M217.012 171C214.775 171 212.822 170.502 211.154 169.506C209.487 168.509 208.192 167.116 207.27 165.325C206.348 163.533 205.887 161.44 205.887 159.045C205.887 156.64 206.348 154.537 207.27 152.736C208.192 150.935 209.487 149.536 211.154 148.54C212.822 147.543 214.775 147.045 217.012 147.045C219.249 147.045 221.202 147.543 222.869 148.54C224.537 149.536 225.832 150.935 226.754 152.736C227.676 154.537 228.136 156.64 228.136 159.045C228.136 161.44 227.676 163.533 226.754 165.325C225.832 167.116 224.537 168.509 222.869 169.506C221.202 170.502 219.249 171 217.012 171ZM217.027 167.211C218.478 167.211 219.679 166.839 220.632 166.094C221.585 165.35 222.289 164.358 222.745 163.121C223.211 161.883 223.444 160.519 223.444 159.03C223.444 157.551 223.211 156.192 222.745 154.955C222.289 153.707 221.585 152.706 220.632 151.951C219.679 151.196 218.478 150.819 217.027 150.819C215.567 150.819 214.355 151.196 213.392 151.951C212.439 152.706 211.729 153.707 211.263 154.955C210.807 156.192 210.579 157.551 210.579 159.03C210.579 160.519 210.807 161.883 211.263 163.121C211.729 164.358 212.439 165.35 213.392 166.094C214.355 166.839 215.567 167.211 217.027 167.211Z" fill="#2C023B"/>
+      <path d="M236.385 170.532V147.347H240.844V151.121H241.139C241.636 149.843 242.449 148.847 243.578 148.132C244.707 147.408 246.059 147.045 247.634 147.045C249.229 147.045 250.565 147.408 251.642 148.132C252.73 148.857 253.533 149.853 254.05 151.121H254.299C254.869 149.883 255.775 148.897 257.018 148.162C258.261 147.418 259.742 147.045 261.462 147.045C263.627 147.045 265.393 147.704 266.76 149.023C268.138 150.341 268.826 152.328 268.826 154.985V170.532H264.181V155.408C264.181 153.838 263.741 152.701 262.86 151.996C261.98 151.292 260.928 150.94 259.706 150.94C258.194 150.94 257.018 151.392 256.179 152.298C255.34 153.194 254.921 154.346 254.921 155.755V170.532H250.29V155.121C250.29 153.863 249.887 152.852 249.079 152.087C248.271 151.322 247.219 150.94 245.925 150.94C245.044 150.94 244.231 151.166 243.485 151.619C242.75 152.062 242.154 152.681 241.698 153.475C241.253 154.27 241.03 155.191 241.03 156.238V170.532H236.385Z" fill="#2C023B"/>
+      <path d="M278.116 170.532V147.347H282.575V151.121H282.87C283.367 149.843 284.18 148.847 285.309 148.132C286.438 147.408 287.79 147.045 289.364 147.045C290.96 147.045 292.296 147.408 293.373 148.132C294.461 148.857 295.263 149.853 295.781 151.121H296.03C296.6 149.883 297.506 148.897 298.749 148.162C299.992 147.418 301.473 147.045 303.193 147.045C305.357 147.045 307.123 147.704 308.491 149.023C309.868 150.341 310.557 152.328 310.557 154.985V170.532H305.912V155.408C305.912 153.838 305.471 152.701 304.591 151.996C303.71 151.292 302.659 150.94 301.437 150.94C299.925 150.94 298.749 151.392 297.91 152.298C297.071 153.194 296.651 154.346 296.651 155.755V170.532H292.021V155.121C292.021 153.863 291.617 152.852 290.809 152.087C290.002 151.322 288.95 150.94 287.655 150.94C286.775 150.94 285.962 151.166 285.216 151.619C284.481 152.062 283.885 152.681 283.429 153.475C282.984 154.27 282.761 155.191 282.761 156.238V170.532H278.116Z" fill="#2C023B"/>
+      <path d="M330.132 171C327.781 171 325.756 170.512 324.057 169.536C322.369 168.55 321.064 167.166 320.142 165.385C319.23 163.594 318.774 161.496 318.774 159.091C318.774 156.716 319.23 154.623 320.142 152.811C321.064 151 322.348 149.586 323.995 148.57C325.652 147.553 327.589 147.045 329.806 147.045C331.152 147.045 332.457 147.262 333.721 147.694C334.985 148.127 336.119 148.806 337.124 149.732C338.129 150.658 338.921 151.86 339.501 153.34C340.081 154.809 340.371 156.595 340.371 158.698V160.298H321.4V156.917H335.819C335.819 155.73 335.57 154.678 335.073 153.762C334.576 152.836 333.877 152.107 332.975 151.574C332.085 151.04 331.038 150.774 329.837 150.774C328.532 150.774 327.392 151.086 326.419 151.709C325.455 152.323 324.71 153.128 324.181 154.125C323.663 155.111 323.404 156.182 323.404 157.34V159.981C323.404 161.531 323.684 162.849 324.243 163.936C324.813 165.023 325.606 165.853 326.621 166.426C327.636 166.99 328.822 167.272 330.179 167.272C331.059 167.272 331.862 167.151 332.587 166.909C333.312 166.658 333.939 166.286 334.467 165.792C334.995 165.299 335.399 164.691 335.679 163.966L340.076 164.736C339.724 165.994 339.092 167.096 338.18 168.042C337.279 168.977 336.145 169.707 334.778 170.23C333.421 170.743 331.872 171 330.132 171Z" fill="#2C023B"/>
+      <path d="M348.588 170.532V147.347H353.078V151.03H353.327C353.762 149.782 354.529 148.801 355.627 148.087C356.735 147.362 357.988 147 359.387 147C359.677 147 360.018 147.01 360.412 147.03C360.816 147.05 361.132 147.075 361.36 147.106V151.423C361.173 151.372 360.842 151.317 360.365 151.257C359.889 151.186 359.412 151.151 358.936 151.151C357.838 151.151 356.859 151.377 355.999 151.83C355.15 152.273 354.477 152.892 353.98 153.687C353.482 154.472 353.234 155.367 353.234 156.374V170.532H348.588Z" fill="#2C023B"/>
+      <path d="M377.641 171C375.331 171 373.342 170.492 371.674 169.475C370.017 168.449 368.743 167.035 367.852 165.234C366.961 163.433 366.516 161.37 366.516 159.045C366.516 156.691 366.972 154.613 367.883 152.811C368.795 151 370.079 149.586 371.737 148.57C373.394 147.553 375.346 147.045 377.594 147.045C379.407 147.045 381.023 147.372 382.442 148.026C383.861 148.67 385.005 149.576 385.875 150.743C386.756 151.911 387.279 153.274 387.445 154.834H382.923C382.675 153.747 382.105 152.811 381.214 152.026C380.334 151.242 379.153 150.849 377.672 150.849C376.377 150.849 375.243 151.181 374.269 151.845C373.306 152.499 372.555 153.435 372.016 154.653C371.478 155.86 371.208 157.289 371.208 158.94C371.208 160.63 371.472 162.089 372.001 163.317C372.529 164.545 373.275 165.496 374.238 166.17C375.212 166.844 376.356 167.181 377.672 167.181C378.552 167.181 379.35 167.025 380.065 166.713C380.79 166.391 381.396 165.933 381.882 165.34C382.38 164.746 382.727 164.031 382.923 163.196H387.445C387.279 164.696 386.777 166.034 385.938 167.211C385.099 168.389 383.975 169.314 382.566 169.989C381.168 170.663 379.526 171 377.641 171Z" fill="#2C023B"/>
+      <path d="M405.761 171C403.41 171 401.385 170.512 399.686 169.536C397.998 168.55 396.692 167.166 395.771 165.385C394.859 163.594 394.403 161.496 394.403 159.091C394.403 156.716 394.859 154.623 395.771 152.811C396.692 151 397.977 149.586 399.624 148.57C401.281 147.553 403.218 147.045 405.435 147.045C406.781 147.045 408.086 147.262 409.35 147.694C410.614 148.127 411.748 148.806 412.753 149.732C413.757 150.658 414.55 151.86 415.13 153.34C415.71 154.809 416 156.595 416 158.698V160.298H397.029V156.917H411.448C411.448 155.73 411.199 154.678 410.702 153.762C410.205 152.836 409.505 152.107 408.604 151.574C407.714 151.04 406.667 150.774 405.466 150.774C404.161 150.774 403.021 151.086 402.048 151.709C401.084 152.323 400.339 153.128 399.81 154.125C399.292 155.111 399.033 156.182 399.033 157.34V159.981C399.033 161.531 399.313 162.849 399.872 163.936C400.442 165.023 401.234 165.853 402.25 166.426C403.265 166.99 404.451 167.272 405.808 167.272C406.688 167.272 407.491 167.151 408.216 166.909C408.941 166.658 409.568 166.286 410.096 165.792C410.624 165.299 411.028 164.691 411.308 163.966L415.705 164.736C415.353 165.994 414.721 167.096 413.809 168.042C412.908 168.977 411.774 169.707 410.407 170.23C409.05 170.743 407.501 171 405.761 171Z" fill="#2C023B"/>
+    </svg>
+    <h1 style="font-size:20px;font-weight:900;color:#2C023B;line-height:1.2;letter-spacing:-0.02em;">Delivery Readiness<br>Scorecard</h1>
+  </header>
+  <p class="app-subtitle">5 questions. Find out if your store qualifies to earn on DoorDash, Uber Eats &amp; Grubhub.</p>
+
+  <div class="card">
+  <!-- ══ QUESTION SCREEN ══ -->
+  <div id="screen-q" class="fade-in">
+    <div class="progress" id="progress-text">1 of 5</div>
+    <h2 class="q-text" id="q-text"></h2>
+    <div id="q-opts"></div>
+    <button class="btn-back" id="btn-back" onclick="goBack()">&#8592; Back</button>
+  </div>
+
+  <!-- ══ LEAD CAPTURE SCREEN ══ -->
+  <div id="screen-lead" hidden>
+    <p class="lead-title">Want your results sent to your phone?</p>
+    <p class="lead-sub">Optional — skip this and see your results immediately.</p>
+    <div class="field">
+      <label>Phone (optional)</label>
+      <input type="tel" id="inp-phone" placeholder="+1 (555) 000-0000" inputmode="tel">
+    </div>
+    <div class="field">
+      <label>Email (optional)</label>
+      <input type="email" id="inp-email" placeholder="you@yourbusiness.com">
+    </div>
+    <button class="btn-cta" onclick="showResult()">See My Results &#8594;</button>
+    <a href="#" class="skip-link" onclick="showResult();return false;">Skip — just show my results</a>
+  </div>
+
+  <!-- ══ RESULT SCREEN ══ -->
+  <div id="screen-result" hidden>
+    <div id="result-content"></div>
+  </div>
+  </div>
+
+</div>
+<script>
+// ── Reference data ──────────────────────────────────────────────────────────
+
+var CTA_ICP_URL      = 'https://onboarding.lulacommerce.com/gen?utm_source=scorecard&utm_medium=wedge';
+var CTA_GUIDE_URL    = 'https://bradbishop1978.github.io/lulacommerce_independent-store_Program/?utm_source=scorecard&utm_medium=wedge&utm_campaign=yellow';
+var CTA_TYPEFORM_URL = 'https://form.typeform.com/to/XXXXXXXXX'; // replace with live Typeform URL
+
+var QUESTIONS = [
+  {
+    key: 'locations',
+    text: 'How many store locations do you operate?',
+    options: [
+      { text: '1 location',           value: '1',      pts: 1 },
+      { text: '2–5 locations',   value: '2-5',    pts: 2 },
+      { text: '6–10 locations',  value: '6-10',   pts: 3 },
+      { text: 'More than 10 locations', value: '10plus', pts: 3 }
+    ]
+  },
+  {
+    key: 'brand',
+    text: 'Which food program does your store carry?',
+    options: [
+      { text: 'Krispy Krunchy Chicken',     value: 'kkc',      pts: 0 },
+      { text: "Chester’s Chicken",     value: 'chesters', pts: 0 },
+      { text: 'Hunt Brothers Pizza',        value: 'hunt',     pts: 0 },
+      { text: 'Champs Chicken',             value: 'champs',   pts: 0 },
+      { text: 'Genuine Broaster Chicken',   value: 'broaster', pts: 0 },
+      { text: "We don’t carry a food program", value: 'none', pts: 0 }
+    ]
+  },
+  {
+    key: 'pos',
+    text: 'Can your store pull a sales report from your point-of-sale system?',
+    options: [
+      { text: 'Yes — we use SSCS, PDI, or similar', value: 'yes',    pts: 3 },
+      { text: 'We have a POS but unsure what it exports', value: 'maybe',  pts: 2 },
+      { text: 'Mostly manual or cash-based',              value: 'manual', pts: 1 },
+      { text: 'Not sure',                                  value: 'unsure', pts: 1 }
+    ]
+  },
+  {
+    key: 'staff',
+    text: 'When your store gets busy, how does your team handle it?',
+    options: [
+      { text: 'We have a dedicated person for food prep',        value: 'dedicated', pts: 3 },
+      { text: 'Same staff handles everything but we manage',     value: 'managed',   pts: 2 },
+      { text: 'Small team — it gets tight during rush',     value: 'tight',     pts: 1 }
+    ]
+  },
+  {
+    key: 'location',
+    text: "How would you describe your store’s location?",
+    options: [
+      { text: 'Urban / City',        value: 'urban',    pts: 3 },
+      { text: 'Suburban',            value: 'suburban', pts: 2 },
+      { text: 'Rural / Small Town',  value: 'rural',    pts: 1 }
+    ]
+  }
+];
+
+var KEYS = QUESTIONS.map(function(q) { return q.key; });
+
+var BRAND_LABELS = {
+  kkc:      'Krispy Krunchy Chicken',
+  chesters: "Chester’s Chicken",
+  hunt:     'Hunt Brothers Pizza',
+  champs:   'Champs Chicken',
+  broaster: 'Genuine Broaster Chicken',
+  none:     ''
+};
+
+// Brand revenue multipliers
+var BRAND_MULT = {
+  kkc: 1.3, chesters: 1.3, hunt: 1.4, champs: 1.2, broaster: 1.15, none: 1.0
+};
+
+// Base monthly ranges per location (conservative single-store actuals)
+var REV_BASE = {
+  urban:    [800,  1200],
+  suburban: [600,  950],
+  rural:    [300,  500]
+};
+
+// Representative location counts for projection (conservative end of each range)
+var LOC_REP = { '1': 1, '2-5': 3, '6-10': 7, '10plus': 10 };
+
+// ── State ────────────────────────────────────────────────────────────────────
+
+var answers = { locations: null, brand: null, pos: null, staff: null, location: null };
+var currentQ = 0;
+
+// ── URL param pre-fill ────────────────────────────────────────────────────────
+
+(function() {
+  try {
+    var p = new URLSearchParams(window.location.search);
+    var VALID = {
+      locations: { '1':'1','2-5':'2-5','6-10':'6-10','10plus':'10plus' },
+      brand:     { kkc:'kkc',chesters:'chesters',hunt:'hunt',champs:'champs',broaster:'broaster',none:'none' },
+      pos:       { yes:'yes',maybe:'maybe',manual:'manual',unsure:'unsure' },
+      staff:     { dedicated:'dedicated',managed:'managed',tight:'tight' },
+      location:  { urban:'urban',suburban:'suburban',rural:'rural' }
+    };
+    var filled = 0;
+    KEYS.forEach(function(k) {
+      var v = p.get(k);
+      if (v && VALID[k][v]) { answers[k] = VALID[k][v]; filled++; }
+    });
+    if (filled === 5 && p.get('auto') === '1') {
+      document.getElementById('screen-q').hidden = true;
+      setTimeout(showResult, 0);
+      return;
+    }
+    // Advance to first unanswered
+    for (var i = 0; i < KEYS.length; i++) {
+      if (!answers[KEYS[i]]) { currentQ = i; break; }
+    }
+  } catch(e) {}
+  renderQuestion(currentQ);
+}());
+
+// ── Question rendering ────────────────────────────────────────────────────────
+
+function renderQuestion(idx) {
+  currentQ = idx;
+  var q = QUESTIONS[idx];
+
+  document.getElementById('progress-text').textContent = (idx + 1) + ' of 5';
+  document.getElementById('q-text').textContent = q.text;
+
+  var wrap = document.getElementById('q-opts');
+  wrap.innerHTML = '';
+  q.options.forEach(function(opt) {
+    var btn = document.createElement('button');
+    btn.className = 'opt-btn' + (answers[q.key] === opt.value ? ' selected' : '');
+    btn.textContent = opt.text;
+    btn.addEventListener('click', function() { selectOption(q.key, opt.value, btn); });
+    wrap.appendChild(btn);
+  });
+
+  document.getElementById('btn-back').hidden = (idx === 0);
+
+  var screen = document.getElementById('screen-q');
+  screen.hidden = false;
+  screen.classList.remove('fade-in');
+  void screen.offsetWidth;
+  screen.classList.add('fade-in');
+}
+
+function selectOption(key, val, btn) {
+  document.querySelectorAll('#q-opts .opt-btn').forEach(function(b) {
+    b.classList.remove('selected');
+  });
+  btn.classList.add('selected');
+  answers[key] = val;
+
+  setTimeout(function() {
+    if (currentQ < 4) {
+      renderQuestion(currentQ + 1);
+    } else {
+      document.getElementById('screen-q').hidden = true;
+      document.getElementById('screen-lead').hidden = false;
+    }
+  }, 260);
+}
+
+function goBack() {
+  if (currentQ > 0) renderQuestion(currentQ - 1);
+}
+
+// ── ICP evaluation ────────────────────────────────────────────────────────────
+
+function evaluateICP() {
+  var noFoodBrand  = answers.brand === 'none';
+  var isSingle     = answers.locations === '1';
+  var isRural      = answers.location  === 'rural';
+  var isMulti      = !isSingle;
+
+  if (noFoodBrand)               return { icp: false, reason: 'no-brand' };
+  if (isSingle && isRural)       return { icp: false, reason: 'rural-single' };
+  return { icp: true, ruralCaveat: isMulti && isRural };
+}
+
+// ── Scoring ───────────────────────────────────────────────────────────────────
+
+function calcScore() {
+  var total = 0;
+  QUESTIONS.forEach(function(q) {
+    var val = answers[q.key];
+    q.options.forEach(function(opt) {
+      if (opt.value === val) total += opt.pts;
+    });
+  });
+  return total;
+}
+
+function getOptPts(qIdx, val) {
+  var opts = QUESTIONS[qIdx].options;
+  for (var i = 0; i < opts.length; i++) {
+    if (opts[i].value === val) return opts[i].pts;
+  }
+  return 0;
+}
+
+function getBand(score) {
+  if (score >= 10) return 'green';
+  if (score >= 7)  return 'yellow';
+  return 'orange';
+}
+
+// ── Dynamic yellow copy ───────────────────────────────────────────────────────
+
+function getYellowSentence() {
+  var q3 = getOptPts(2, answers.pos);
+  var q4 = getOptPts(3, answers.staff);
+  var issues = [];
+  if (q3 <= 1) issues.push('no full POS data');
+  if (q4 <= 1) issues.push('limited staff during rush');
+
+  if (issues.length === 2)
+    return 'A couple of things you flagged — ' + issues[0] + ' and ' + issues[1] + ' — are managed by Lula on your behalf.';
+  if (issues.length === 1)
+    return 'Something you flagged — ' + issues[0] + ' — is managed by Lula on your behalf.';
+
+  if (q3 <= q4)
+    return 'Your POS setup is something Lula handles directly — no data exports needed.';
+  return 'Your staffing situation is something Lula works around — orders flow like any walk-in.';
+}
+
+// ── Revenue ───────────────────────────────────────────────────────────────────
+
+function rnd50(n) { return Math.round(n / 50) * 50; }
+function fmt(n)   { return '$' + Math.abs(n).toLocaleString(); }
+
+function calcRevenue() {
+  var locType  = answers.location  || 'suburban';
+  var brandKey = answers.brand     || 'kkc';
+  var locsKey  = answers.locations || '1';
+
+  var base  = REV_BASE[locType];
+  var mult  = BRAND_MULT[brandKey] || 1.0;
+  var count = LOC_REP[locsKey]     || 1;
+
+  var perLo    = rnd50(base[0] * mult);
+  var perHi    = rnd50(base[1] * mult);
+  var totalLo  = perLo * count;
+  var totalHi  = perHi * count;
+  var netLo    = Math.round(perLo * 0.9 - 19);
+  var netHi    = Math.round(perHi * 0.9 - 19);
+  var netTotLo = Math.round(totalLo * 0.9 - 19 * count);
+  var netTotHi = Math.round(totalHi * 0.9 - 19 * count);
+
+  return { perLo: perLo, perHi: perHi,
+           totalLo: totalLo, totalHi: totalHi,
+           count: count, netLo: netLo, netHi: netHi,
+           netTotLo: netTotLo, netTotHi: netTotHi };
+}
+
+// ── Result rendering ──────────────────────────────────────────────────────────
+
+function showResult() {
+  document.getElementById('screen-q').hidden    = true;
+  document.getElementById('screen-lead').hidden = true;
+  document.getElementById('screen-result').hidden = false;
+
+  var icp     = evaluateICP();
+  var content = document.getElementById('result-content');
+  content.className = 'fade-in';
+
+  if (!icp.icp) {
+    renderNonICP(content, icp.reason);
+  } else {
+    renderICP(content, icp.ruralCaveat);
+  }
+
+  window.scrollTo(0, 0);
+}
+
+function renderICP(el, ruralCaveat) {
+  var score      = calcScore();
+  var band       = getBand(score);
+  var rev        = calcRevenue();
+  var brandLabel = BRAND_LABELS[answers.brand] || 'your brand';
+  var locLabel   = answers.location || 'your';
+  var isMulti    = answers.locations !== '1';
+  var q3pts      = getOptPts(2, answers.pos);
+  var q4pts      = getOptPts(3, answers.staff);
+
+  var BAND_CFG = {
+    green:  { chipCls: 'band-green',  label: 'Launch-Ready',  color: '#10b981' },
+    yellow: { chipCls: 'band-yellow', label: 'Almost There',  color: '#f59e0b' },
+    orange: { chipCls: 'band-orange', label: 'Good Candidate',color: '#f97316' }
+  };
+  var bc = BAND_CFG[band];
+
+  var headline, body, ctaText;
+
+  var ctaUrl;
+  if (band === 'green') {
+    headline = 'Your ' + brandLabel + ' location is ready to launch.';
+    body     = 'Stores with your profile in ' + locLabel + ' markets typically see ' +
+               fmt(rev.perLo) + '–' + fmt(rev.perHi) + ' in monthly delivery funds within 60–90 days on Lula. ' +
+               'Setup, menu, orders, and support — all handled. Your team fulfills orders, nothing else changes.';
+    ctaText  = 'List My Location — No Cost for 90 Days →';
+    ctaUrl   = CTA_ICP_URL;
+  } else if (band === 'yellow') {
+    headline = 'Your store is a strong candidate.';
+    body     = getYellowSentence() + ' Stores like yours in ' + locLabel + ' markets see ' +
+               fmt(rev.perLo) + '–' + fmt(rev.perHi) + '/mo once ramped. First 90 days: no platform cost.';
+    ctaText  = 'See How It Works →';
+    ctaUrl   = CTA_GUIDE_URL;
+  } else {
+    headline = 'Good news — Lula was built for stores in your situation.';
+    body     = 'No full POS data needed. No extra staff. No hardware changes. Your ' + brandLabel + ' menu is pre-built and ready. ' +
+               'In your area, stores typically see ' + fmt(rev.perLo) + '–' + fmt(rev.perHi) + '/mo after the ramp period. ' +
+               'The first 90 days are on us.';
+    ctaText  = 'Get Started — First 90 Days No Cost →';
+    ctaUrl   = CTA_GUIDE_URL;
+  }
+
+  var h = '';
+
+  // Band + score
+  h += '<span class="band-chip ' + bc.chipCls + '">' + bc.label + '</span>';
+  h += '<div class="score-wrap">';
+  h += '<span class="score-num" style="color:' + bc.color + ';">' + score + '</span>';
+  h += '<span class="score-denom">/ 12</span>';
+  h += '</div>';
+
+  // Headline + body
+  h += '<h2 class="result-headline">' + headline + '</h2>';
+  h += '<p class="result-body">' + body + '</p>';
+
+  // Revenue projection (before ROI breakdown per spec)
+  h += '<div class="rev-block">';
+  h += '<div class="rev-eyebrow">Estimated Monthly Delivery Funds</div>';
+  h += '<div class="rev-number">' + fmt(rev.perLo) + ' – ' + fmt(rev.perHi) + '</div>';
+  h += '<div class="rev-period">per location &nbsp;·&nbsp; within 60–90 days</div>';
+  if (isMulti) {
+    h += '<div class="rev-total">' + fmt(rev.totalLo) + ' – ' + fmt(rev.totalHi) +
+         ' across ~' + rev.count + ' stores</div>';
+  }
+  h += '</div>';
+
+  // Primary CTA (full-width, above ROI detail per spec)
+  h += '<a href="' + ctaUrl + '" target="_self" class="btn-cta">' + ctaText + '</a>';
+
+  h += '<hr class="divider">';
+
+  // ROI breakdown
+  h += '<div class="roi-block">';
+  h += '<div class="roi-eyebrow">After the 90-Day No-Cost Period</div>';
+
+  if (isMulti) {
+    var totalFee = 19 * rev.count;
+    h += '<div class="roi-row"><span class="roi-label">Gross funds (' + rev.count + ' stores)</span><span class="roi-val">' + fmt(rev.totalLo) + '–' + fmt(rev.totalHi) + '/mo</span></div>';
+    h += '<div class="roi-row"><span class="roi-label">Platform fee</span><span class="roi-val">–' + fmt(totalFee) + '/mo</span></div>';
+    h += '<div class="roi-row"><span class="roi-label">10% revenue share</span><span class="roi-val">–' + fmt(Math.round(rev.totalLo * 0.1)) + '–' + fmt(Math.round(rev.totalHi * 0.1)) + '/mo</span></div>';
+    h += '<div class="roi-row net"><span class="roi-label">Net funds</span><span class="roi-val">' + fmt(rev.netTotLo) + '–' + fmt(rev.netTotHi) + '/mo</span></div>';
+  } else {
+    h += '<div class="roi-row"><span class="roi-label">Gross funds</span><span class="roi-val">' + fmt(rev.perLo) + '–' + fmt(rev.perHi) + '/mo</span></div>';
+    h += '<div class="roi-row"><span class="roi-label">Platform fee</span><span class="roi-val">–$19/mo</span></div>';
+    h += '<div class="roi-row"><span class="roi-label">10% revenue share</span><span class="roi-val">–' + fmt(Math.round(rev.perLo * 0.1)) + '–' + fmt(Math.round(rev.perHi * 0.1)) + '/mo</span></div>';
+    h += '<div class="roi-row net"><span class="roi-label">Net funds</span><span class="roi-val">' + fmt(rev.netLo) + '–' + fmt(rev.netHi) + '/mo</span></div>';
+  }
+  h += '</div>';
+
+  // Rural caveat for multi-location rural ICP
+  if (ruralCaveat) {
+    h += '<div class="caveat">Note: Rural markets ramp slower — expect 90–120 days to full delivery volume. The no-cost period is designed to cover this window so you see real performance before committing to anything.</div>';
+  }
+
+  // Low-score notes
+  if (q3pts <= 1) {
+    h += '<div class="low-note">No sales data? Lula uses a pre-built ' + brandLabel + ' menu to get you live immediately while your data catches up.</div>';
+  }
+  if (q4pts <= 1) {
+    h += '<div class="low-note">Lula orders work exactly like walk-in orders — staff bags it, Dasher picks it up. No new role, no new workflow needed.</div>';
+  }
+
+  h += '<div class="footnote">Revenue ranges modeled from industry benchmarks. Actual results vary based on menu quality, store hours, and local platform coverage.</div>';
+
+  el.innerHTML = h;
+}
+
+function renderNonICP(el, reason) {
+  var h = '';
+
+  if (reason === 'no-brand') {
+    h += '<h2 class="result-headline">You may be a fit for a different Lula program.</h2>';
+    h += "<p class=\"result-body\">Our current delivery program is built around stores carrying specific food brands. If that changes — or if you're considering adding one — we'd love to stay in touch.</p>";
+    h += '<a href="' + CTA_TYPEFORM_URL + '" target="_blank" class="btn-cta">Stay in Touch →</a>';
+  } else {
+    h += '<h2 class="result-headline">Delivery economics are tough in your area right now.</h2>';
+    h += "<p class=\"result-body\">Rural markets have limited Dasher availability, which affects how reliably orders get fulfilled. We don't want to set you up for a frustrating experience. As Lula expands into more rural markets, your store is exactly the kind of location we want to bring on. Stay connected:</p>";
+    h += '<a href="' + CTA_TYPEFORM_URL + '" target="_blank" class="btn-cta">Stay in Touch →</a>';
+  }
+
+  h += '<div class="footnote" style="margin-top:24px;">Questions? <a href="' + CTA_TYPEFORM_URL + '" target="_blank" style="color:rgba(255,255,255,0.35);text-decoration:underline;">Reach out to our team.</a></div>';
+
+  el.innerHTML = h;
+}
+</script>
+</body>
+</html>

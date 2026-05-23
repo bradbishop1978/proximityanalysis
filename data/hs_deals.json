@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-05-22T21:17:24.200703Z",
+  "fetchedAt": "2026-05-23T03:52:59.836055Z",
   "deals": [
     {
       "id": "4014966213",
@@ -27823,12 +27823,12 @@
     {
       "id": "52931684958",
       "date": "2025-12-31",
-      "close_date": "2026-05-15",
+      "close_date": "2026-05-22",
       "brand": "Unknown",
       "stores": 18,
       "dealname": "Inconvenience-primary",
       "owner": "Steve Siegel",
-      "stage": "6. Sent Final Agmnt",
+      "stage": "8. Closed Won",
       "pipeline": "Sales Pipeline"
     },
     {

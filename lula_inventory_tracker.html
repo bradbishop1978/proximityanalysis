@@ -504,10 +504,14 @@
         border-right:1px solid var(--border); overflow:hidden;
       }
       .sidebar-head {
-        padding:20px 20px 16px;
+        padding:18px 18px 14px;
         border-bottom:1px solid var(--border); flex-shrink:0;
       }
-      .sidebar-head a { text-decoration:none; display:block; }
+      .sidebar-head a {
+        text-decoration:none; display:flex;
+        align-items:center; justify-content:space-between; gap:10px;
+      }
+      .sidebar-head-text { min-width:0; }
       .sidebar-brand-name {
         display:block; font-family:'Gabarito',sans-serif;
         font-size:19px; font-weight:900; color:var(--purple-deep); line-height:1;
@@ -616,8 +620,26 @@
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-head">
       <a href="https://www.lulacommerce.com/" target="_blank" rel="noopener">
-        <span class="sidebar-brand-name">Stock Pulse</span>
-        <span class="sidebar-brand-sub">by Lula Commerce</span>
+        <div class="sidebar-head-text">
+          <span class="sidebar-brand-name">Stock Pulse</span>
+          <span class="sidebar-brand-sub">by Lula Commerce</span>
+        </div>
+        <svg viewBox="0 0 175 195" fill="none" xmlns="http://www.w3.org/2000/svg" style="height:38px;width:auto;flex-shrink:0" aria-hidden="true">
+          <path d="M58.9392 78.4133C55.3128 75.3648 50.4233 74.236 45.805 75.3801L24 79.7648L30.2533 104.452L59.3809 98.2017L58.668 121.837C58.3193 133.317 65.3706 143.745 76.2189 147.792C78.559 148.667 81.1704 147.523 82.1002 145.219L89.9342 125.753C93.7544 116.255 91.0268 105.404 83.1618 98.793L58.9392 78.4133Z" fill="url(#slg0)"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M53.5459 75.526C55.4986 76.0942 57.3428 77.0618 58.9313 78.3979L83.1617 98.7853C91.0267 105.397 93.7542 116.255 89.9341 125.746L82.9912 145.311C82.0923 147.845 79.2098 149.082 76.7302 147.999L76.2963 147.815C65.4092 143.753 58.3269 133.279 58.6756 121.753L59.3575 99.2076C59.3575 99.1308 59.3575 99.0617 59.3342 98.9926C59.8611 95.8442 59.8999 92.5577 59.3807 89.2328C58.5748 84.0726 56.5059 79.4192 53.5459 75.5183V75.526Z" fill="url(#slg1)"/>
+          <path d="M132.928 68.1253C137.328 66.4151 140.618 62.6773 141.765 58.0865L148.1 36.8813L123.325 30.4983L115.21 59.0128L94.6181 47.0322C84.6181 41.2142 72.0855 42.3782 63.4293 49.9317C61.5647 51.5628 61.3476 54.3981 62.9513 56.3208L76.5078 72.5276C83.119 80.4338 94.0037 83.2689 103.543 79.5559L132.926 68.136L132.928 68.1253Z" fill="url(#slg2)"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M138.006 64.7866C136.59 66.223 134.871 67.3732 132.938 68.1187L103.543 79.5463C94.0004 83.2526 83.1204 80.4243 76.5096 72.5185L62.4436 57.0361C60.6286 55.0346 60.878 51.9155 62.9999 50.2624L63.3639 49.9744C72.0655 42.393 84.6489 41.2246 94.6818 47.0672L114.315 58.4912C114.381 58.5238 114.446 58.5563 114.509 58.5717C117.048 60.5457 119.94 62.1563 123.121 63.2981C128.061 65.0657 133.15 65.4954 137.991 64.7775L138.006 64.7866Z" fill="url(#slg3)"/>
+          <path d="M102.13 135.69C101.277 140.328 102.734 145.089 106.043 148.475L120.781 165L139.223 147.293L119.192 125.416L140.207 114.204C150.412 108.76 155.999 97.4952 154.108 86.1689C153.698 83.727 151.396 82.0531 148.917 82.4063L127.995 85.4164C117.79 86.8831 109.661 94.6464 107.817 104.706L102.122 135.682L102.13 135.69Z" fill="url(#slg4)"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M102.308 141.764C101.828 139.806 101.75 137.74 102.13 135.705L107.826 104.713C109.677 94.654 117.798 86.8907 128.003 85.424L148.576 81.5999C151.234 81.1085 153.76 82.9591 154.055 85.6313L154.109 86.0921C156 97.4721 150.389 108.783 140.146 114.243L120.107 124.932C120.045 124.97 119.983 125.009 119.937 125.055C116.923 126.176 114.032 127.788 111.39 129.892C107.291 133.163 104.253 137.264 102.324 141.756L102.308 141.764Z" fill="url(#slg5)"/>
+          <defs>
+            <linearGradient id="slg0" x1="94.5" y1="115.7" x2="28.3" y2="72.7" gradientUnits="userSpaceOnUse"><stop stop-color="#FFF1EE"/><stop offset="1" stop-color="#EB92BD"/></linearGradient>
+            <linearGradient id="slg1" x1="59.3" y1="108.7" x2="85.9" y2="98.2" gradientUnits="userSpaceOnUse"><stop stop-color="#DE4990"/><stop offset="1" stop-color="#E19898"/></linearGradient>
+            <linearGradient id="slg2" x1="75.6" y1="88.2" x2="150.6" y2="40.8" gradientUnits="userSpaceOnUse"><stop stop-color="#FFF1EE"/><stop offset="1" stop-color="#EB92BD"/></linearGradient>
+            <linearGradient id="slg3" x1="115.2" y1="59.7" x2="111.4" y2="84.1" gradientUnits="userSpaceOnUse"><stop stop-color="#DE4990"/><stop offset="1" stop-color="#E19898"/></linearGradient>
+            <linearGradient id="slg4" x1="115.1" y1="76.4" x2="116.0" y2="165.1" gradientUnits="userSpaceOnUse"><stop stop-color="#FFF1EE"/><stop offset="1" stop-color="#EB92BD"/></linearGradient>
+            <linearGradient id="slg5" x1="118.6" y1="125.1" x2="99.8" y2="109.0" gradientUnits="userSpaceOnUse"><stop stop-color="#DE4990"/><stop offset="1" stop-color="#E19898"/></linearGradient>
+          </defs>
+        </svg>
       </a>
     </div>
     <nav class="sidebar-nav">

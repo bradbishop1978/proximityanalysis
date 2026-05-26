@@ -71,22 +71,26 @@
       z-index: 20;
     }
 
-    .topbar-logo img { height: 26px; display: block; }
-    .topbar-logo .logo-fb {
-      display: none;
-      font-family: 'Gabarito', sans-serif;
-      font-size: 20px;
-      font-weight: 900;
-      color: var(--purple-primary);
-    }
+    .topbar-logo svg { height: 34px; width: auto; display: block; }
 
-    .topbar-center { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-    .topbar-store  { font-size: 13px; font-weight: 700; }
+    .topbar-center { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+    .topbar-store  { font-size: 13px; font-weight: 700; line-height: 1.2; }
+    .topbar-meta   { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; justify-content: center; }
     .topbar-count  {
       font-size: 10px; font-weight: 600; color: var(--purple-medium);
       background: var(--purple-pale); border: 1px solid var(--border);
       border-radius: 20px; padding: 1px 9px; letter-spacing: .02em;
     }
+    .franchise-chip {
+      display: inline-flex; align-items: center; gap: 3px;
+      font-size: 10px; font-weight: 700; color: var(--orange);
+      background: var(--orange-light); border: 1px solid #FED7AA;
+      border-radius: 20px; padding: 1px 8px; white-space: nowrap;
+    }
+    .franchise-chip.kkc     { background:#FEF9C3; color:#92400E; border-color:#FDE68A; }
+    .franchise-chip.chesters{ background:#FEE2E2; color:#991B1B; border-color:#FECACA; }
+    .franchise-chip.champs  { background:#DBEAFE; color:#1E40AF; border-color:#BFDBFE; }
+    .franchise-chip.broasters{ background:#D1FAE5; color:#065F46; border-color:#A7F3D0; }
 
     .topbar-btn {
       width: 34px; height: 34px; border-radius: 10px;
@@ -473,13 +477,33 @@
   <!-- Top Bar -->
   <div class="topbar">
     <div class="topbar-logo">
-      <img src="../Brand - Lula Commerce/Logo/PNG/Primary Logo.png" alt="Lula Commerce"
-           onerror="this.style.display='none';document.querySelector('.logo-fb').style.display='block'">
-      <span class="logo-fb">Lula</span>
+      <svg viewBox="0 0 460 195" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Lula Commerce">
+        <path d="M58.9392 78.4133C55.3128 75.3648 50.4233 74.236 45.805 75.3801L24 79.7648L30.2533 104.452L59.3809 98.2017L58.668 121.837C58.3193 133.317 65.3706 143.745 76.2189 147.792C78.559 148.667 81.1704 147.523 82.1002 145.219L89.9342 125.753C93.7544 116.255 91.0268 105.404 83.1618 98.793L58.9392 78.4133Z" fill="url(#lg0)"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M53.5459 75.526C55.4986 76.0942 57.3428 77.0618 58.9313 78.3979L83.1617 98.7853C91.0267 105.397 93.7542 116.255 89.9341 125.746L82.9912 145.311C82.0923 147.845 79.2098 149.082 76.7302 147.999L76.2963 147.815C65.4092 143.753 58.3269 133.279 58.6756 121.753L59.3575 99.2076C59.3575 99.1308 59.3575 99.0617 59.3342 98.9926C59.8611 95.8442 59.8999 92.5577 59.3807 89.2328C58.5748 84.0726 56.5059 79.4192 53.5459 75.5183V75.526Z" fill="url(#lg1)"/>
+        <path d="M132.928 68.1253C137.328 66.4151 140.618 62.6773 141.765 58.0865L148.1 36.8813L123.325 30.4983L115.21 59.0128L94.6181 47.0322C84.6181 41.2142 72.0855 42.3782 63.4293 49.9317C61.5647 51.5628 61.3476 54.3981 62.9513 56.3208L76.5078 72.5276C83.119 80.4338 94.0037 83.2689 103.543 79.5559L132.926 68.136L132.928 68.1253Z" fill="url(#lg2)"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M138.006 64.7866C136.59 66.223 134.871 67.3732 132.938 68.1187L103.543 79.5463C94.0004 83.2526 83.1204 80.4243 76.5096 72.5185L62.4436 57.0361C60.6286 55.0346 60.878 51.9155 62.9999 50.2624L63.3639 49.9744C72.0655 42.393 84.6489 41.2246 94.6818 47.0672L114.315 58.4912C114.381 58.5238 114.446 58.5563 114.509 58.5717C117.048 60.5457 119.94 62.1563 123.121 63.2981C128.061 65.0657 133.15 65.4954 137.991 64.7775L138.006 64.7866Z" fill="url(#lg3)"/>
+        <path d="M102.13 135.69C101.277 140.328 102.734 145.089 106.043 148.475L120.781 165L139.223 147.293L119.192 125.416L140.207 114.204C150.412 108.76 155.999 97.4952 154.108 86.1689C153.698 83.727 151.396 82.0531 148.917 82.4063L127.995 85.4164C117.79 86.8831 109.661 94.6464 107.817 104.706L102.122 135.682L102.13 135.69Z" fill="url(#lg4)"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M102.308 141.764C101.828 139.806 101.75 137.74 102.13 135.705L107.826 104.713C109.677 94.654 117.798 86.8907 128.003 85.424L148.576 81.5999C151.234 81.1085 153.76 82.9591 154.055 85.6313L154.109 86.0921C156 97.4721 150.389 108.783 140.146 114.243L120.107 124.932C120.045 124.97 119.983 125.009 119.937 125.055C116.923 126.176 114.032 127.788 111.39 129.892C107.291 133.163 104.253 137.264 102.324 141.756L102.308 141.764Z" fill="url(#lg5)"/>
+        <path d="M201.99 127C194.447 127 188.541 124.937 184.27 120.812C180.09 116.595 178 110.681 178 103.072V24H195.038V101.834C195.038 109.169 198.446 112.836 205.261 112.836C207.533 112.836 209.577 112.377 211.395 111.461L212.213 125.212C209.032 126.404 205.625 127 201.99 127Z" fill="#2C023B"/>
+        <path d="M289.534 52.6035V126.037H273.313V116.686C270.587 119.987 267.18 122.554 263.091 124.387C259.001 126.129 254.594 127 249.869 127C240.146 127 232.467 124.296 226.833 118.887C221.29 113.386 217.519 105.272 217.519 94.5461V52.6035H235.557V92.2083C235.557 98.8091 237.011 103.76 239.919 107.06C242.917 110.269 247.143 111.873 252.595 111.873C258.683 111.873 263.499 109.994 267.043 106.235C270.678 102.385 272.496 96.8838 272.496 89.733V52.6035H289.534Z" fill="#2C023B"/>
+        <path d="M327.106 127C319.563 127 313.657 124.937 309.386 120.812C305.206 116.595 303.116 110.681 303.116 103.072V24H320.154V101.834C320.154 109.169 323.562 112.836 330.377 112.836C332.649 112.836 334.693 112.377 336.511 111.461L337.328 125.212C334.148 126.404 330.74 127 327.106 127Z" fill="#2C023B"/>
+        <path d="M416 52.6035V127H400V116C397.183 119.484 393.464 122.645 389.284 124.387C385.195 126.129 380.652 127 375.654 127C368.566 127 362.205 125.441 356.571 122.324C351.028 119.207 346.666 114.807 343.486 109.123C340.396 103.439 338.851 96.838 338.851 89.3204C338.851 81.8028 340.396 75.2479 343.486 69.6555C346.666 63.9715 351.028 59.571 356.571 56.4539C362.205 53.3369 368.566 51.7784 375.654 51.7784C380.379 51.7784 384.695 52.6035 388.603 54.2537C392.601 55.9039 396.054 58.3333 398.962 61.5421V52.6035H416ZM377.562 112.286C383.832 112.286 389.012 110.177 393.101 105.96C397.19 101.743 399.234 96.1963 399.234 89.3204C399.234 82.4446 397.19 76.8981 393.101 72.6809C389.012 68.4637 383.832 66.3551 377.562 66.3551C371.292 66.3551 366.112 68.4637 362.023 72.6809C358.025 76.8981 356.026 82.4446 356.026 89.3204C356.026 96.1963 358.025 101.743 362.023 105.96C366.112 110.177 371.292 112.286 377.562 112.286Z" fill="#2C023B"/>
+        <defs>
+          <linearGradient id="lg0" x1="94.5" y1="115.7" x2="28.3" y2="72.7" gradientUnits="userSpaceOnUse"><stop stop-color="#FFF1EE"/><stop offset="1" stop-color="#EB92BD"/></linearGradient>
+          <linearGradient id="lg1" x1="59.3" y1="108.7" x2="85.9" y2="98.2" gradientUnits="userSpaceOnUse"><stop stop-color="#DE4990"/><stop offset="1" stop-color="#E19898"/></linearGradient>
+          <linearGradient id="lg2" x1="75.6" y1="88.2" x2="150.6" y2="40.8" gradientUnits="userSpaceOnUse"><stop stop-color="#FFF1EE"/><stop offset="1" stop-color="#EB92BD"/></linearGradient>
+          <linearGradient id="lg3" x1="115.2" y1="59.7" x2="111.4" y2="84.1" gradientUnits="userSpaceOnUse"><stop stop-color="#DE4990"/><stop offset="1" stop-color="#E19898"/></linearGradient>
+          <linearGradient id="lg4" x1="115.1" y1="76.4" x2="116.0" y2="165.1" gradientUnits="userSpaceOnUse"><stop stop-color="#FFF1EE"/><stop offset="1" stop-color="#EB92BD"/></linearGradient>
+          <linearGradient id="lg5" x1="118.6" y1="125.1" x2="99.8" y2="109.0" gradientUnits="userSpaceOnUse"><stop stop-color="#DE4990"/><stop offset="1" stop-color="#E19898"/></linearGradient>
+        </defs>
+      </svg>
     </div>
     <div class="topbar-center">
       <span class="topbar-store" id="topStore">My Store</span>
-      <span class="topbar-count" id="topCount">0 / 50 items</span>
+      <div class="topbar-meta">
+        <span id="topFranchise" style="display:none"></span>
+        <span class="topbar-count" id="topCount">0 / 50 items</span>
+      </div>
     </div>
     <button class="topbar-btn" onclick="openStoreModal()" title="Store settings">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -876,6 +900,17 @@
           <label>Store Name</label>
           <input type="text" id="storeInput" placeholder="e.g. Sunrise Corner Store" maxlength="40">
         </div>
+        <div class="field">
+          <label>Food Franchise Program</label>
+          <select id="franchiseInput">
+            <option value="">No food franchise</option>
+            <option value="kkc">Krispy Krunchy Chicken</option>
+            <option value="chesters">Chester's Chicken</option>
+            <option value="champs">Champs Chicken</option>
+            <option value="broasters">Genuine Broasters</option>
+          </select>
+          <div class="field-hint">Adds a franchise label to your dashboard and unlocks kitchen-optimized revenue estimates</div>
+        </div>
         <button class="btn-primary" onclick="saveStore()">Save Store</button>
         <button class="btn-ghost" onclick="closeStoreModal()">Cancel</button>
       </div>
@@ -932,6 +967,14 @@ const GUIDE_URL  = 'CTA_LULA_GUIDE_URL';
 const MAX        = 50;
 const KEY_ITEMS  = 'lsp_items_v2';
 const KEY_STORE  = 'lsp_store';
+const KEY_FRAN   = 'lsp_franchise';
+
+const BRANDS = {
+  kkc:       { label:'Krispy Krunchy Chicken', short:'KKC',       cls:'kkc',       aov:19, emoji:'🍗' },
+  chesters:  { label:"Chester's Chicken",      short:"Chester's", cls:'chesters',  aov:18, emoji:'🍗' },
+  champs:    { label:'Champs Chicken',          short:'Champs',    cls:'champs',    aov:18, emoji:'🍗' },
+  broasters: { label:'Genuine Broasters',       short:'Broasters', cls:'broasters', aov:20, emoji:'🍗' },
+};
 
 const CATEGORIES = [
   'Automotive','Beer','Candy','Grocery','Health','Household',
@@ -946,7 +989,7 @@ const CSV_HEADERS = ['name','category','menu_program','current_stock','par_level
 /* ═══════════════════════════════════════════════
    State
 ═══════════════════════════════════════════════ */
-let S = { items:[], store:'My Store', isDemo:true };
+let S = { items:[], store:'My Store', franchise:'kkc', isDemo:true };
 let fmChart = null, scanner = null;
 let shownPrompts = new Set();
 let pendingImport = [];
@@ -955,16 +998,18 @@ let pendingImport = [];
    Demo Data
 ═══════════════════════════════════════════════ */
 const DEMO = [
-  { id:'d01', name:'Red Bull Energy 8.4oz',    cat:'Soda',             program:'Convenience',  stock:3,  par:24, sales:9,   price:3.49, unit:'Cans'   },
-  { id:'d02', name:'Marlboro Red Soft Pack',    cat:'Tobacco',          program:'Tobacco',       stock:5,  par:20, sales:6,   price:9.99, unit:'Packs'  },
-  { id:'d03', name:'Modelo Especial 12pk',      cat:'Beer',             program:'Beer & Wine',   stock:10, par:12, sales:4.5, price:15.99,unit:'Cases'  },
-  { id:'d04', name:"Lay's Classic 1.5oz",       cat:'Snacks',           program:'Convenience',  stock:19, par:24, sales:5,   price:1.29, unit:'Units'  },
-  { id:'d05', name:'Breakfast Burrito',         cat:'Kitchen / Hot Food',program:'Kitchen',      stock:8,  par:12, sales:6,   price:4.99, unit:'Portions'},
-  { id:'d06', name:'Monster Energy 16oz',       cat:'Soda',             program:'Convenience',  stock:2,  par:18, sales:3.5, price:3.79, unit:'Cans'   },
-  { id:'d07', name:'Gatorade Fruit Punch 32oz', cat:'Soda',             program:'Convenience',  stock:26, par:24, sales:4,   price:2.99, unit:'Bottles'},
-  { id:'d08', name:'Hot Dog (Roller)',          cat:'Kitchen / Hot Food',program:'Kitchen',      stock:14, par:20, sales:8,   price:1.99, unit:'Units'  },
-  { id:'d09', name:'Newport Menthol 100s',      cat:'Tobacco',          program:'Tobacco',       stock:4,  par:15, sales:5.5, price:10.49,unit:'Packs'  },
-  { id:'d10', name:'Doritos Nacho Cheese 2oz',  cat:'Snacks',           program:'Convenience',  stock:15, par:20, sales:3,   price:1.49, unit:'Units'  },
+  // ── KKC Kitchen Program ──
+  { id:'d01', name:'KKC 3pc Chicken Combo',     cat:'Kitchen / Hot Food', program:'Kitchen',      stock:6,  par:12, sales:11, price:8.99, unit:'Portions'},
+  { id:'d02', name:'KKC Chicken Sandwich',       cat:'Kitchen / Hot Food', program:'Kitchen',      stock:9,  par:15, sales:8,  price:5.99, unit:'Units'   },
+  { id:'d03', name:'KKC 6pc Wings',              cat:'Kitchen / Hot Food', program:'Kitchen',      stock:4,  par:10, sales:6,  price:7.99, unit:'Portions'},
+  { id:'d04', name:'KKC 2pc Tenders Box',        cat:'Kitchen / Hot Food', program:'Kitchen',      stock:12, par:18, sales:7,  price:4.99, unit:'Portions'},
+  { id:'d05', name:'KKC Family Box 8pc',         cat:'Kitchen / Hot Food', program:'Kitchen',      stock:3,  par:8,  sales:3,  price:19.99,unit:'Portions'},
+  // ── C-Store Items ──
+  { id:'d06', name:'Red Bull Energy 8.4oz',      cat:'Soda',               program:'Convenience',  stock:3,  par:24, sales:9,  price:3.49, unit:'Cans'    },
+  { id:'d07', name:'Marlboro Red Soft Pack',      cat:'Tobacco',            program:'Tobacco',       stock:5,  par:20, sales:6,  price:9.99, unit:'Packs'   },
+  { id:'d08', name:'Modelo Especial 12pk',        cat:'Beer',               program:'Beer & Wine',   stock:10, par:12, sales:4,  price:15.99,unit:'Cases'   },
+  { id:'d09', name:"Lay's Classic 1.5oz",         cat:'Snacks',             program:'Convenience',  stock:19, par:24, sales:5,  price:1.29, unit:'Units'   },
+  { id:'d10', name:'Gatorade Fruit Punch 32oz',   cat:'Soda',               program:'Convenience',  stock:2,  par:24, sales:4,  price:2.99, unit:'Bottles' },
 ];
 
 /* ═══════════════════════════════════════════════
@@ -973,18 +1018,21 @@ const DEMO = [
 function boot() {
   const raw  = localStorage.getItem(KEY_ITEMS);
   const name = localStorage.getItem(KEY_STORE);
+  const fran = localStorage.getItem(KEY_FRAN);
 
   if (raw) {
     try { S.items = JSON.parse(raw); } catch(e) {}
     S.isDemo = false;
   }
   if (name) { S.store = name; S.isDemo = false; }
+  if (fran !== null) S.franchise = fran;
 
   if (S.isDemo) {
-    S.items = DEMO;
+    S.items     = DEMO;
+    S.franchise = 'kkc';
     document.getElementById('demoBanner').classList.add('visible');
-    setTimeout(() => toast('💰',
-      'This demo store moves <strong>~51 units/day</strong> including a kitchen program. See what your store looks like.',
+    setTimeout(() => toast('🍗',
+      'Demo: <strong>Sunrise Corner + KKC</strong> — 5 chicken items + 5 c-store items, ~58 units/day. Tap "Use my store" to set up yours.',
       null, 7000), 7000);
   } else {
     document.getElementById('demoBanner').classList.remove('visible');
@@ -1026,7 +1074,7 @@ function persist() {
    Demo Flow
 ═══════════════════════════════════════════════ */
 function startMyStore() {
-  S.isDemo = false; S.items = [];
+  S.isDemo = false; S.items = []; S.franchise = '';
   document.getElementById('demoBanner').classList.remove('visible');
   persist(); renderAll();
   setTimeout(openStoreModal, 200);
@@ -1064,6 +1112,16 @@ function updateTopbar() {
   document.getElementById('topStore').textContent   = S.store;
   document.getElementById('topCount').textContent   = `${S.items.length} / ${MAX} items`;
   document.getElementById('itemsBadge').textContent = `${S.items.length} / ${MAX}`;
+
+  const franEl = document.getElementById('topFranchise');
+  const brand  = S.franchise ? BRANDS[S.franchise] : null;
+  if (brand) {
+    franEl.className     = `franchise-chip ${brand.cls}`;
+    franEl.textContent   = `${brand.emoji} ${brand.short}`;
+    franEl.style.display = 'inline-flex';
+  } else {
+    franEl.style.display = 'none';
+  }
 }
 
 /* ═══════════════════════════════════════════════
@@ -1085,11 +1143,21 @@ function renderDash() {
   badge.textContent   = alertCount;
   badge.style.display = alertCount > 0 ? 'flex' : 'none';
 
-  // Food program banner
+  // Food program banner — personalized to franchise if set
   const hasKitchen = items.some(i => i.program === 'Kitchen');
-  const fb = document.getElementById('foodBanner');
-  if (hasKitchen && !shownPrompts.has('foodBannerDismissed')) {
+  const fb    = document.getElementById('foodBanner');
+  const brand = S.franchise ? BRANDS[S.franchise] : null;
+  if (hasKitchen) {
     fb.classList.add('visible');
+    const fbH4 = fb.querySelector('h4');
+    const fbP  = fb.querySelector('p');
+    if (brand) {
+      fbH4.textContent = `${brand.emoji} ${brand.label} Program Active`;
+      fbP.textContent  = `${brand.label} on Lula delivery averages $${brand.aov}/order. Hot food items convert at 2× the rate of packaged goods — enable delivery to put your kitchen online.`;
+    } else {
+      fbH4.textContent = '🍳 You have a Kitchen / Food Program';
+      fbP.textContent  = 'Hot food items on Lula delivery can generate 2–3× the margin of packaged goods. Enable delivery to put your kitchen online.';
+    }
   } else {
     fb.classList.remove('visible');
   }
@@ -1172,12 +1240,17 @@ function renderRevGap() {
   const kitchenSales = kitchenItems.reduce((s, i) => s + (i.sales || 0), 0);
   const otherSales   = totalSales - kitchenSales;
 
-  // Kitchen items get 25% delivery rate, others 15%; avg $8 delivery margin
-  const monthly = Math.round((kitchenSales * 0.25 + otherSales * 0.15) * 30 * 8);
+  // Use franchise AOV if set, otherwise default $8 margin
+  const brand       = S.franchise ? BRANDS[S.franchise] : null;
+  const aov         = brand ? brand.aov : 12;
+  const kitchenRate = 0.25;
+  const otherRate   = 0.15;
+  const monthly = Math.round((kitchenSales * kitchenRate + otherSales * otherRate) * 30 * aov * 0.65);
   const fastCt  = S.items.filter(i => (i.sales || 0) >= 3).length;
 
+  const brandLabel = brand ? brand.label : 'kitchen';
   const detail = kitchenSales > 0
-    ? `${fastCt} fast-moving items including <strong>${kitchenItems.length} kitchen item${kitchenItems.length>1?'s':''}</strong>. Kitchen delivery converts at 2× the rate of packaged goods.`
+    ? `${fastCt} fast movers including <strong>${kitchenItems.length} ${brandLabel} item${kitchenItems.length>1?'s':''}</strong> at $${aov} avg order. Kitchen delivery converts at 2× packaged goods.`
     : `Your ${fastCt} fast-moving items move ~${Math.round(totalSales)} units/day. A 15% delivery conversion could unlock this revenue.`;
 
   document.getElementById('revGapAmt').textContent  = `$${monthly.toLocaleString()}`;
@@ -1442,7 +1515,8 @@ function onProgramChange(sel) {
    Store Modal
 ═══════════════════════════════════════════════ */
 function openStoreModal() {
-  document.getElementById('storeInput').value = S.store === 'My Store' ? '' : S.store;
+  document.getElementById('storeInput').value    = S.store === 'My Store' ? '' : S.store;
+  document.getElementById('franchiseInput').value = S.franchise || '';
   document.getElementById('storeModal').classList.add('open');
   setTimeout(() => document.getElementById('storeInput').focus(), 350);
 }
@@ -1451,13 +1525,30 @@ function closeStoreModal(e) {
   document.getElementById('storeModal').classList.remove('open');
 }
 function saveStore() {
-  const val = document.getElementById('storeInput').value.trim();
+  const val  = document.getElementById('storeInput').value.trim();
+  const fran = document.getElementById('franchiseInput').value;
   if (!val) return;
-  S.store = val;
+
+  S.store     = val;
+  S.franchise = fran;
   localStorage.setItem(KEY_STORE, val);
+  localStorage.setItem(KEY_FRAN, fran);
   closeStoreModal();
   updateTopbar();
-  toast('🏪', `Store set to <strong>${val}</strong>. Your dashboard is ready.`, null, 3000);
+  renderDash();
+
+  const brand = fran ? BRANDS[fran] : null;
+  const msg = brand
+    ? `<strong>${val}</strong> + ${brand.emoji} ${brand.label} — your dashboard is ready.`
+    : `Store set to <strong>${val}</strong>. Your dashboard is ready.`;
+  toast('🏪', msg, null, 3500);
+
+  if (brand && !shownPrompts.has('franchiseSet')) {
+    shownPrompts.add('franchiseSet');
+    setTimeout(() => toast(brand.emoji,
+      `${brand.label} on Lula delivery typically generates <strong>$${brand.aov} avg order value</strong>. Your kitchen program is a real delivery advantage.`,
+      GUIDE_URL, 6000), 1500);
+  }
 }
 
 /* ═══════════════════════════════════════════════

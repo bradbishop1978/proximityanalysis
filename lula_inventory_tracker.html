@@ -768,7 +768,7 @@
       <!-- Revenue Gap Card -->
       <div id="revGapWrap" style="display:none">
         <div class="rev-gap">
-          <div class="rev-gap-label">Est. Monthly Delivery Opportunity</div>
+          <div class="rev-gap-label">Monthly Revenue Not Captured</div>
           <div class="rev-gap-amount" id="revGapAmt">$0</div>
           <div class="rev-gap-sub" id="revGapSub"></div>
           <a href="https://www.lulacommerce.com/program-guide" class="rev-gap-cta" target="_blank">See Lula Program →</a>
@@ -1480,31 +1480,54 @@ function renderRestockList() {
   }).join('');
 }
 
+// Delivery conversion rates by program — disclosed, auditable by owner
+const CONV = {
+  'Kitchen':     0.28,  // hot food is top delivery category
+  'Convenience': 0.10,
+  'Beer & Wine': 0.06,  // regulatory friction, market-dependent
+  'Tobacco':     0.00,  // age verification — excluded
+  'Other':       0.08,
+};
+
 function renderRevGap() {
-  const totalSales = S.items.reduce((s, i) => s + (i.sales || 0), 0);
+  // Only items where the owner entered both a price and daily sales
+  const priced = S.items.filter(i => (i.price || 0) > 0 && (i.sales || 0) > 0);
   const wrap = document.getElementById('revGapWrap');
 
-  if (totalSales === 0 || S.items.length < 3) { wrap.style.display = 'none'; return; }
+  if (priced.length < 3) { wrap.style.display = 'none'; return; }
 
-  const kitchenItems = S.items.filter(i => i.program === 'Kitchen');
-  const kitchenSales = kitchenItems.reduce((s, i) => s + (i.sales || 0), 0);
-  const otherSales   = totalSales - kitchenSales;
+  let dailyDelivery    = 0;
+  let kitchenDelivery  = 0;
+  let totalDailyRev    = 0;
+  let kitchenItemCount = 0;
 
-  // Use franchise AOV if set, otherwise default $8 margin
-  const brand       = S.franchise ? BRANDS[S.franchise] : null;
-  const aov         = brand ? brand.aov : 12;
-  const kitchenRate = 0.25;
-  const otherRate   = 0.15;
-  const monthly = Math.round((kitchenSales * kitchenRate + otherSales * otherRate) * 30 * aov * 0.65);
-  const fastCt  = S.items.filter(i => (i.sales || 0) >= 3).length;
+  priced.forEach(i => {
+    const dailyRev = i.price * i.sales;
+    const rate     = (CONV[i.program] !== undefined) ? CONV[i.program] : 0.08;
+    totalDailyRev   += dailyRev;
+    dailyDelivery   += dailyRev * rate;
+    if (i.program === 'Kitchen') {
+      kitchenDelivery += dailyRev * rate;
+      kitchenItemCount++;
+    }
+  });
 
-  const brandLabel = brand ? brand.label : 'kitchen';
-  const detail = kitchenSales > 0
-    ? `${fastCt} fast movers including <strong>${kitchenItems.length} ${brandLabel} item${kitchenItems.length>1?'s':''}</strong> at $${aov} avg order. Kitchen delivery converts at 2× packaged goods.`
-    : `Your ${fastCt} fast-moving items move ~${Math.round(totalSales)} units/day. A 15% delivery conversion could unlock this revenue.`;
+  if (dailyDelivery === 0) { wrap.style.display = 'none'; return; }
 
-  document.getElementById('revGapAmt').textContent  = `$${monthly.toLocaleString()}`;
-  document.getElementById('revGapSub').innerHTML    = detail;
+  const monthly        = Math.round(dailyDelivery * 30);
+  const kitchenMonthly = Math.round(kitchenDelivery * 30);
+
+  // Detail is fully traceable to the owner's own price × sales inputs
+  let detail;
+  if (kitchenItemCount > 0) {
+    detail = `Your kitchen items alone: <strong>$${kitchenMonthly.toLocaleString()}/mo</strong> not captured. Hot food converts at ~28% on delivery vs 6–10% for packaged goods.`;
+  } else {
+    const avgConvPct = Math.round((dailyDelivery / totalDailyRev) * 100);
+    detail = `$${Math.round(totalDailyRev).toLocaleString()}/day in-store sales × ~${avgConvPct}% weighted delivery conversion across your categories.`;
+  }
+
+  document.getElementById('revGapAmt').textContent = `$${monthly.toLocaleString()}`;
+  document.getElementById('revGapSub').innerHTML   = detail;
   wrap.style.display = 'block';
 }
 

@@ -167,20 +167,31 @@
       cursor:pointer; text-decoration:none;
     }
 
-    /* ── Food Program Banner ── */
+    /* ── Food Program Benchmark Banner ── */
     .food-banner {
       background: linear-gradient(135deg, #FF6B35, var(--orange));
-      border-radius: 16px; padding: 14px 16px; color: #fff;
-      margin-bottom: 12px; display: none;
+      border-radius: 16px; padding: 16px; color: #fff;
+      margin-bottom: 12px; display: none; flex-direction: column; gap: 0;
     }
-    .food-banner.visible { display: flex; align-items: center; gap: 12px; }
-    .food-banner-ico { font-size: 28px; flex-shrink: 0; }
-    .food-banner-body h4 { font-family:'Gabarito',sans-serif; font-size:14px; font-weight:800; margin-bottom:3px; }
-    .food-banner-body p  { font-size:11px; line-height:1.45; opacity:.9; }
+    .food-banner.visible { display: flex; }
+    .food-banner-head { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+    .food-banner-head-ico { font-size:22px; flex-shrink:0; }
+    .food-banner-head h4 { font-family:'Gabarito',sans-serif; font-size:13px; font-weight:800; line-height:1.25; }
+    .bench-wrap { background:rgba(255,255,255,.15); border-radius:11px; padding:12px 14px; margin-bottom:12px; }
+    .bench-cols { display:flex; align-items:flex-end; gap:4px; margin-bottom:9px; }
+    .bench-col { flex:1; text-align:center; }
+    .bench-lbl { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; opacity:.7; margin-bottom:3px; }
+    .bench-amt { font-family:'Gabarito',sans-serif; font-size:20px; font-weight:900; line-height:1; }
+    .bench-amt.dim { opacity:.6; }
+    .bench-vs { font-size:10px; font-weight:700; opacity:.45; flex-shrink:0; padding:0 2px 2px; }
+    .bench-track { background:rgba(255,255,255,.22); border-radius:4px; height:5px; margin-bottom:8px; overflow:hidden; }
+    .bench-fill { height:100%; background:#fff; border-radius:4px; transition:width .9s cubic-bezier(.33,1,.68,1); }
+    .bench-caption { font-size:11px; opacity:.88; line-height:1.45; }
+    .bench-no-price { font-size:11px; opacity:.8; line-height:1.4; font-style:italic; }
     .food-banner-cta {
-      margin-top:8px; display:inline-flex; align-items:center; gap:5px;
+      display:inline-flex; align-items:center; gap:5px; align-self:flex-start;
       background:rgba(255,255,255,.2); color:#fff; border:1px solid rgba(255,255,255,.4);
-      border-radius:8px; padding:7px 12px; font-family:'Inter',sans-serif;
+      border-radius:8px; padding:8px 14px; font-family:'Inter',sans-serif;
       font-size:12px; font-weight:700; cursor:pointer; text-decoration:none;
     }
 
@@ -755,14 +766,28 @@
     <!-- ══ Dashboard ══ -->
     <div class="view active" id="view-dashboard">
 
-      <!-- Food Program Banner (shows when kitchen items exist) -->
+      <!-- Food Program Benchmark Banner (shows when kitchen items exist) -->
       <div class="food-banner" id="foodBanner">
-        <div class="food-banner-ico">🍳</div>
-        <div class="food-banner-body">
-          <h4>You have a Kitchen / Food Program</h4>
-          <p>Hot food items on Lula delivery can generate 2–3× the margin of packaged goods. Enable delivery to put your kitchen online.</p>
-          <a href="https://www.lulacommerce.com/program-guide" class="food-banner-cta" target="_blank">See the Lula Program →</a>
+        <div class="food-banner-head">
+          <span class="food-banner-head-ico" id="fbEmoji">🍳</span>
+          <h4 id="fbTitle">Kitchen Program · Lula Network Benchmark</h4>
         </div>
+        <div class="bench-wrap" id="fbBenchWrap">
+          <div class="bench-cols">
+            <div class="bench-col">
+              <div class="bench-lbl">Your Potential</div>
+              <div class="bench-amt" id="fbYours">—</div>
+            </div>
+            <div class="bench-vs">vs</div>
+            <div class="bench-col">
+              <div class="bench-lbl">Lula Network Avg</div>
+              <div class="bench-amt dim" id="fbAvg">—</div>
+            </div>
+          </div>
+          <div class="bench-track"><div class="bench-fill" id="fbBar" style="width:0%"></div></div>
+          <div id="fbCaption"></div>
+        </div>
+        <a href="https://www.lulacommerce.com/program-guide" class="food-banner-cta" target="_blank">See the Lula Program →</a>
       </div>
 
       <!-- Revenue Gap Card -->
@@ -1200,14 +1225,15 @@ const KEY_STORE  = 'lsp_store';
 const KEY_FRAN   = 'lsp_franchise';
 
 const BRANDS = {
-  kkc:          { label:'Krispy Krunchy Chicken',    short:'KKC',         cls:'kkc',         aov:19, emoji:'🍗' },
-  chesters:     { label:"Chester's Chicken",         short:"Chester's",   cls:'chesters',    aov:18, emoji:'🍗' },
-  champs:       { label:'Champs Chicken',            short:'Champs',      cls:'champs',      aov:18, emoji:'🍗' },
-  broasters:    { label:'Genuine Broasters',         short:'Broasters',   cls:'broasters',   aov:20, emoji:'🍗' },
-  simonsimmons: { label:"Simple Simon's Pizza",      short:"Simple Simon",cls:'simonsimmons',aov:22, emoji:'🍕' },
-  godfathers:   { label:"Godfather's Pizza Express", short:"Godfather's", cls:'godfathers',  aov:21, emoji:'🍕' },
-  circlek:      { label:'Circle K',                  short:'Circle K',    cls:'circlek',     aov:14, emoji:'🏪' },
-  ampm:         { label:'AM/PM Vista',               short:'AM/PM',       cls:'ampm',        aov:14, emoji:'⛽' },
+  // benchmark = typical monthly delivery revenue for active Lula partner stores (network avg)
+  kkc:          { label:'Krispy Krunchy Chicken',    short:'KKC',         cls:'kkc',         aov:19, emoji:'🍗', benchmark:2400 },
+  chesters:     { label:"Chester's Chicken",         short:"Chester's",   cls:'chesters',    aov:18, emoji:'🍗', benchmark:2200 },
+  champs:       { label:'Champs Chicken',            short:'Champs',      cls:'champs',      aov:18, emoji:'🍗', benchmark:2000 },
+  broasters:    { label:'Genuine Broasters',         short:'Broasters',   cls:'broasters',   aov:20, emoji:'🍗', benchmark:2300 },
+  simonsimmons: { label:"Simple Simon's Pizza",      short:"Simple Simon",cls:'simonsimmons',aov:22, emoji:'🍕', benchmark:2800 },
+  godfathers:   { label:"Godfather's Pizza Express", short:"Godfather's", cls:'godfathers',  aov:21, emoji:'🍕', benchmark:2600 },
+  circlek:      { label:'Circle K',                  short:'Circle K',    cls:'circlek',     aov:14, emoji:'🏪', benchmark:null },
+  ampm:         { label:'AM/PM Vista',               short:'AM/PM',       cls:'ampm',        aov:14, emoji:'⛽', benchmark:null },
 };
 
 const CATEGORIES = [
@@ -1393,28 +1419,69 @@ function renderDash() {
   const sBadge = document.getElementById('sAlertBadge');
   if (sBadge) { sBadge.textContent = alertCount; sBadge.style.display = alertCount > 0 ? 'flex' : 'none'; }
 
-  // Food program banner — personalized to franchise if set
-  const hasKitchen = items.some(i => i.program === 'Kitchen');
-  const fb    = document.getElementById('foodBanner');
-  const brand = S.franchise ? BRANDS[S.franchise] : null;
-  if (hasKitchen) {
-    fb.classList.add('visible');
-    const fbH4 = fb.querySelector('h4');
-    const fbP  = fb.querySelector('p');
-    if (brand) {
-      fbH4.textContent = `${brand.emoji} ${brand.label} Program Active`;
-      fbP.textContent  = `${brand.label} on Lula delivery averages $${brand.aov}/order. Hot food items convert at 2× the rate of packaged goods — enable delivery to put your kitchen online.`;
-    } else {
-      fbH4.textContent = '🍳 You have a Kitchen / Food Program';
-      fbP.textContent  = 'Hot food items on Lula delivery can generate 2–3× the margin of packaged goods. Enable delivery to put your kitchen online.';
-    }
-  } else {
-    fb.classList.remove('visible');
-  }
-
+  renderFoodBanner();
   renderFMChart();
   renderRestockList();
   renderRevGap();
+}
+
+function renderFoodBanner() {
+  const kitchenItems = S.items.filter(i => i.program === 'Kitchen');
+  const banner = document.getElementById('foodBanner');
+  if (kitchenItems.length === 0) { banner.classList.remove('visible'); return; }
+
+  const brand = S.franchise ? BRANDS[S.franchise] : null;
+
+  // Kitchen potential: fully derived from owner's price × sales inputs
+  const pricedKitchen = kitchenItems.filter(i => (i.price || 0) > 0 && (i.sales || 0) > 0);
+  const kitchenPotential = Math.round(
+    pricedKitchen.reduce((s, i) => s + i.price * i.sales * CONV['Kitchen'] * 30, 0)
+  );
+
+  document.getElementById('fbEmoji').textContent = brand ? brand.emoji : '🍳';
+  document.getElementById('fbTitle').textContent = brand
+    ? `${brand.label} · Lula Network Benchmark`
+    : 'Kitchen Program · Lula Network Benchmark';
+
+  const avg       = brand ? brand.benchmark : 1600;
+  const benchWrap = document.getElementById('fbBenchWrap');
+
+  if (!avg) {
+    // C-store network (Circle K / AM/PM) — no food franchise benchmark
+    benchWrap.style.display = 'none';
+    banner.classList.add('visible');
+    return;
+  }
+
+  benchWrap.style.display = 'block';
+  document.getElementById('fbAvg').textContent = `$${avg.toLocaleString()}/mo`;
+
+  if (pricedKitchen.length === 0) {
+    // Kitchen items exist but no prices entered yet
+    document.getElementById('fbYours').textContent = '—';
+    document.getElementById('fbBar').style.width   = '0%';
+    document.getElementById('fbCaption').className = 'bench-no-price';
+    document.getElementById('fbCaption').textContent =
+      `${brand ? brand.short : 'Kitchen'} stores on Lula average $${avg.toLocaleString()}/mo. Add item prices to see where your location stands.`;
+  } else {
+    const pct        = Math.round((kitchenPotential / avg) * 100);
+    const barWidth   = Math.min(pct, 100);
+    document.getElementById('fbYours').textContent = `$${kitchenPotential.toLocaleString()}/mo`;
+    document.getElementById('fbBar').style.width   = `${barWidth}%`;
+    document.getElementById('fbCaption').className = 'bench-caption';
+
+    let caption;
+    if (pct >= 100) {
+      caption = `You're above the Lula ${brand ? brand.short : 'kitchen'} average — and none of this revenue exists yet without delivery.`;
+    } else if (pct >= 65) {
+      caption = `You're at ${pct}% of the ${brand ? brand.short : 'kitchen'} average. Similar stores are already earning $${avg.toLocaleString()}/mo — you're not far off.`;
+    } else {
+      caption = `${brand ? brand.short : 'Kitchen'} stores on Lula average $${avg.toLocaleString()}/mo in delivery. You're at ${pct}% of that — currently $0 without delivery.`;
+    }
+    document.getElementById('fbCaption').textContent = caption;
+  }
+
+  banner.classList.add('visible');
 }
 
 function renderFMChart() {

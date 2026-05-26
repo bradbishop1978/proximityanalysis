@@ -177,17 +177,23 @@
     .food-banner-head { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
     .food-banner-head-ico { font-size:22px; flex-shrink:0; }
     .food-banner-head h4 { font-family:'Gabarito',sans-serif; font-size:13px; font-weight:800; line-height:1.25; }
-    .bench-wrap { background:rgba(255,255,255,.15); border-radius:11px; padding:12px 14px; margin-bottom:12px; }
-    .bench-cols { display:flex; align-items:flex-end; gap:4px; margin-bottom:9px; }
-    .bench-col { flex:1; text-align:center; }
-    .bench-lbl { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; opacity:.7; margin-bottom:3px; }
-    .bench-amt { font-family:'Gabarito',sans-serif; font-size:20px; font-weight:900; line-height:1; }
-    .bench-amt.dim { opacity:.6; }
-    .bench-vs { font-size:10px; font-weight:700; opacity:.45; flex-shrink:0; padding:0 2px 2px; }
-    .bench-track { background:rgba(255,255,255,.22); border-radius:4px; height:5px; margin-bottom:8px; overflow:hidden; }
-    .bench-fill { height:100%; background:#fff; border-radius:4px; transition:width .9s cubic-bezier(.33,1,.68,1); }
-    .bench-caption { font-size:11px; opacity:.88; line-height:1.45; }
-    .bench-no-price { font-size:11px; opacity:.8; line-height:1.4; font-style:italic; }
+    .fb-body { background:rgba(255,255,255,.15); border-radius:11px; padding:12px 14px; margin-bottom:12px; }
+    .fb-rows { display:flex; flex-direction:column; gap:6px; }
+    .fb-row { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+    .fb-row-label { font-size:11px; font-weight:600; opacity:.88; }
+    .fb-row-val { font-size:12px; font-weight:700; text-align:right; flex-shrink:0; }
+    .fb-divider { height:1px; background:rgba(255,255,255,.3); margin:8px 0; }
+    .fb-delivery-row { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+    .fb-delivery-val { font-family:'Gabarito',sans-serif; font-size:18px; font-weight:900; }
+    .fb-note { font-size:10px; opacity:.72; line-height:1.4; margin-top:6px; font-style:italic; }
+    .fb-no-price { font-size:11px; opacity:.8; line-height:1.4; font-style:italic; }
+    .fb-cta-row { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+    .food-banner-cta-sec {
+      display:inline-flex; align-items:center;
+      background:transparent; color:rgba(255,255,255,.75); border:1px solid rgba(255,255,255,.3);
+      border-radius:8px; padding:8px 14px; font-family:'Inter',sans-serif;
+      font-size:12px; font-weight:600; cursor:pointer; text-decoration:none;
+    }
     .food-banner-cta {
       display:inline-flex; align-items:center; gap:5px; align-self:flex-start;
       background:rgba(255,255,255,.2); color:#fff; border:1px solid rgba(255,255,255,.4);
@@ -766,28 +772,19 @@
     <!-- ══ Dashboard ══ -->
     <div class="view active" id="view-dashboard">
 
-      <!-- Food Program Benchmark Banner (shows when kitchen items exist) -->
+      <!-- Revenue Snapshot Banner (shows when kitchen items exist) -->
       <div class="food-banner" id="foodBanner">
         <div class="food-banner-head">
           <span class="food-banner-head-ico" id="fbEmoji">🍳</span>
-          <h4 id="fbTitle">Kitchen Program · Lula Network Benchmark</h4>
+          <h4 id="fbTitle">Your Store · Right Now</h4>
         </div>
-        <div class="bench-wrap" id="fbBenchWrap">
-          <div class="bench-cols">
-            <div class="bench-col">
-              <div class="bench-lbl">Your Potential</div>
-              <div class="bench-amt" id="fbYours">—</div>
-            </div>
-            <div class="bench-vs">vs</div>
-            <div class="bench-col">
-              <div class="bench-lbl">Lula Network Avg</div>
-              <div class="bench-amt dim" id="fbAvg">—</div>
-            </div>
-          </div>
-          <div class="bench-track"><div class="bench-fill" id="fbBar" style="width:0%"></div></div>
-          <div id="fbCaption"></div>
+        <div class="fb-body" id="fbBody">
+          <!-- rendered by renderFoodBanner() -->
         </div>
-        <a href="https://www.lulacommerce.com/program-guide" class="food-banner-cta" target="_blank">See the Lula Program →</a>
+        <div class="fb-cta-row" id="fbCtaRow" style="display:none">
+          <a href="#" id="fbEstimatorLink" class="food-banner-cta" target="_blank" rel="noopener">Get Full Estimate →</a>
+          <a href="https://www.lulacommerce.com/program-guide" class="food-banner-cta-sec" target="_blank" rel="noopener">See Lula Program →</a>
+        </div>
       </div>
 
       <!-- Revenue Gap Card -->
@@ -1225,15 +1222,14 @@ const KEY_STORE  = 'lsp_store';
 const KEY_FRAN   = 'lsp_franchise';
 
 const BRANDS = {
-  // benchmark = typical monthly delivery revenue for active Lula partner stores (network avg)
-  kkc:          { label:'Krispy Krunchy Chicken',    short:'KKC',         cls:'kkc',         aov:19, emoji:'🍗', benchmark:2400 },
-  chesters:     { label:"Chester's Chicken",         short:"Chester's",   cls:'chesters',    aov:18, emoji:'🍗', benchmark:2200 },
-  champs:       { label:'Champs Chicken',            short:'Champs',      cls:'champs',      aov:18, emoji:'🍗', benchmark:2000 },
-  broasters:    { label:'Genuine Broasters',         short:'Broasters',   cls:'broasters',   aov:20, emoji:'🍗', benchmark:2300 },
-  simonsimmons: { label:"Simple Simon's Pizza",      short:"Simple Simon",cls:'simonsimmons',aov:22, emoji:'🍕', benchmark:2800 },
-  godfathers:   { label:"Godfather's Pizza Express", short:"Godfather's", cls:'godfathers',  aov:21, emoji:'🍕', benchmark:2600 },
-  circlek:      { label:'Circle K',                  short:'Circle K',    cls:'circlek',     aov:14, emoji:'🏪', benchmark:null },
-  ampm:         { label:'AM/PM Vista',               short:'AM/PM',       cls:'ampm',        aov:14, emoji:'⛽', benchmark:null },
+  kkc:          { label:'Krispy Krunchy Chicken',    short:'KKC',         cls:'kkc',         aov:19, emoji:'🍗' },
+  chesters:     { label:"Chester's Chicken",         short:"Chester's",   cls:'chesters',    aov:18, emoji:'🍗' },
+  champs:       { label:'Champs Chicken',            short:'Champs',      cls:'champs',      aov:18, emoji:'🍗' },
+  broasters:    { label:'Genuine Broasters',         short:'Broasters',   cls:'broasters',   aov:20, emoji:'🍗' },
+  simonsimmons: { label:"Simple Simon's Pizza",      short:"Simple Simon",cls:'simonsimmons',aov:22, emoji:'🍕' },
+  godfathers:   { label:"Godfather's Pizza Express", short:"Godfather's", cls:'godfathers',  aov:21, emoji:'🍕' },
+  circlek:      { label:'Circle K',                  short:'Circle K',    cls:'circlek',     aov:14, emoji:'🏪' },
+  ampm:         { label:'AM/PM Vista',               short:'AM/PM',       cls:'ampm',        aov:14, emoji:'⛽' },
 };
 
 const CATEGORIES = [
@@ -1426,60 +1422,73 @@ function renderDash() {
 }
 
 function renderFoodBanner() {
-  const kitchenItems = S.items.filter(i => i.program === 'Kitchen');
   const banner = document.getElementById('foodBanner');
-  if (kitchenItems.length === 0) { banner.classList.remove('visible'); return; }
+
+  // Only show when the store has kitchen items
+  const hasKitchen = S.items.some(i => i.program === 'Kitchen');
+  if (!hasKitchen) { banner.classList.remove('visible'); return; }
 
   const brand = S.franchise ? BRANDS[S.franchise] : null;
 
-  // Kitchen potential: fully derived from owner's price × sales inputs
-  const pricedKitchen = kitchenItems.filter(i => (i.price || 0) > 0 && (i.sales || 0) > 0);
-  const kitchenPotential = Math.round(
-    pricedKitchen.reduce((s, i) => s + i.price * i.sales * CONV['Kitchen'] * 30, 0)
-  );
-
+  // Header reflects the actual store and franchise
   document.getElementById('fbEmoji').textContent = brand ? brand.emoji : '🍳';
-  document.getElementById('fbTitle').textContent = brand
-    ? `${brand.label} · Lula Network Benchmark`
-    : 'Kitchen Program · Lula Network Benchmark';
+  document.getElementById('fbTitle').textContent  = `${S.store} · Right Now`;
 
-  const avg       = brand ? brand.benchmark : 1600;
-  const benchWrap = document.getElementById('fbBenchWrap');
+  const body   = document.getElementById('fbBody');
+  const ctaRow = document.getElementById('fbCtaRow');
 
-  if (!avg) {
-    // C-store network (Circle K / AM/PM) — no food franchise benchmark
-    benchWrap.style.display = 'none';
+  // Tally monthly in-store revenue and delivery estimate per program (from owner's price × sales)
+  const priced = S.items.filter(i => (i.price || 0) > 0 && (i.sales || 0) > 0);
+
+  if (priced.length === 0) {
+    body.innerHTML       = `<div class="fb-no-price">Add item prices to see your in-store revenue breakdown and estimated delivery addition.</div>`;
+    ctaRow.style.display = 'none';
     banner.classList.add('visible');
     return;
   }
 
-  benchWrap.style.display = 'block';
-  document.getElementById('fbAvg').textContent = `$${avg.toLocaleString()}/mo`;
+  const PROG_ICON       = { 'Kitchen':'🍳', 'Convenience':'🛒', 'Beer & Wine':'🍺', 'Other':'📦' };
+  const progMonthly     = {};
+  const progDelivery    = {};
+  let   totalDelivery   = 0;
 
-  if (pricedKitchen.length === 0) {
-    // Kitchen items exist but no prices entered yet
-    document.getElementById('fbYours').textContent = '—';
-    document.getElementById('fbBar').style.width   = '0%';
-    document.getElementById('fbCaption').className = 'bench-no-price';
-    document.getElementById('fbCaption').textContent =
-      `${brand ? brand.short : 'Kitchen'} stores on Lula average $${avg.toLocaleString()}/mo. Add item prices to see where your location stands.`;
-  } else {
-    const pct        = Math.round((kitchenPotential / avg) * 100);
-    const barWidth   = Math.min(pct, 100);
-    document.getElementById('fbYours').textContent = `$${kitchenPotential.toLocaleString()}/mo`;
-    document.getElementById('fbBar').style.width   = `${barWidth}%`;
-    document.getElementById('fbCaption').className = 'bench-caption';
+  priced.forEach(i => {
+    const prog  = i.program || 'Other';
+    const rate  = (CONV[prog] !== undefined) ? CONV[prog] : 0.06;
+    const mo    = i.price * i.sales * 30;
+    const deliv = mo * rate;
+    progMonthly[prog]  = (progMonthly[prog]  || 0) + mo;
+    progDelivery[prog] = (progDelivery[prog] || 0) + deliv;
+    totalDelivery += deliv;
+  });
 
-    let caption;
-    if (pct >= 100) {
-      caption = `You're above the Lula ${brand ? brand.short : 'kitchen'} average — and none of this revenue exists yet without delivery.`;
-    } else if (pct >= 65) {
-      caption = `You're at ${pct}% of the ${brand ? brand.short : 'kitchen'} average. Similar stores are already earning $${avg.toLocaleString()}/mo — you're not far off.`;
-    } else {
-      caption = `${brand ? brand.short : 'Kitchen'} stores on Lula average $${avg.toLocaleString()}/mo in delivery. You're at ${pct}% of that — currently $0 without delivery.`;
-    }
-    document.getElementById('fbCaption').textContent = caption;
-  }
+  // Program rows — sorted by in-store revenue descending
+  const rows = Object.entries(progMonthly)
+    .sort((a, b) => b[1] - a[1])
+    .map(([prog, mo]) => {
+      const icon = PROG_ICON[prog] || '📦';
+      return `<div class="fb-row">
+        <div class="fb-row-label">${icon} ${prog}</div>
+        <div class="fb-row-val">$${Math.round(mo).toLocaleString()}/mo in-store</div>
+      </div>`;
+    }).join('');
+
+  // Delivery addition — clearly labeled as industry estimate
+  const deliverySection = totalDelivery > 0 ? `
+    <div class="fb-divider"></div>
+    <div class="fb-delivery-row">
+      <div class="fb-row-label">+ Add Delivery</div>
+      <div class="fb-delivery-val">+$${Math.round(totalDelivery).toLocaleString()}/mo</div>
+    </div>
+    <div class="fb-note">Industry estimate based on your own prices &amp; sales — 18% kitchen · 8% convenience · 5% beer &amp; wine. Actual results vary by market and platform.</div>` : '';
+
+  body.innerHTML = `<div class="fb-rows">${rows}${deliverySection}</div>`;
+
+  // Wire estimator CTA to the right brand
+  const base         = 'https://bradbishop1978.github.io/lulacommerce_independent-store_Program/estimator.html';
+  const estimatorUrl = S.franchise ? `${base}?brand=${S.franchise}` : base;
+  document.getElementById('fbEstimatorLink').href = estimatorUrl;
+  ctaRow.style.display = totalDelivery > 0 ? 'flex' : 'none';
 
   banner.classList.add('visible');
 }
@@ -1547,51 +1556,49 @@ function renderRestockList() {
   }).join('');
 }
 
-// Delivery conversion rates by program — disclosed, auditable by owner
+// Delivery conversion rates by program — industry estimates, clearly disclosed in UI
+// Hot food higher because it's the primary reason customers order from convenience stores on delivery apps
 const CONV = {
-  'Kitchen':     0.28,  // hot food is top delivery category
-  'Convenience': 0.10,
-  'Beer & Wine': 0.06,  // regulatory friction, market-dependent
-  'Tobacco':     0.00,  // age verification — excluded
-  'Other':       0.08,
+  'Kitchen':     0.18,  // 3PD industry avg for c-store hot food programs
+  'Convenience': 0.08,
+  'Beer & Wine': 0.05,  // regulatory friction, market-dependent
+  'Tobacco':     0.00,  // age verification — excluded from delivery
+  'Other':       0.06,
 };
 
 function renderRevGap() {
-  // Only items where the owner entered both a price and daily sales
   const priced = S.items.filter(i => (i.price || 0) > 0 && (i.sales || 0) > 0);
   const wrap = document.getElementById('revGapWrap');
 
   if (priced.length < 3) { wrap.style.display = 'none'; return; }
 
-  let dailyDelivery    = 0;
-  let kitchenDelivery  = 0;
-  let totalDailyRev    = 0;
-  let kitchenItemCount = 0;
+  // Tally monthly delivery estimate per program — fully traceable to owner's price × sales
+  const progTotals = {};
+  let totalDelivery = 0;
 
   priced.forEach(i => {
-    const dailyRev = i.price * i.sales;
-    const rate     = (CONV[i.program] !== undefined) ? CONV[i.program] : 0.08;
-    totalDailyRev   += dailyRev;
-    dailyDelivery   += dailyRev * rate;
-    if (i.program === 'Kitchen') {
-      kitchenDelivery += dailyRev * rate;
-      kitchenItemCount++;
-    }
+    const prog = i.program || 'Other';
+    const rate = (CONV[prog] !== undefined) ? CONV[prog] : 0.06;
+    const monthlyDelivery = i.price * i.sales * rate * 30;
+    progTotals[prog] = (progTotals[prog] || 0) + monthlyDelivery;
+    totalDelivery += monthlyDelivery;
   });
 
-  if (dailyDelivery === 0) { wrap.style.display = 'none'; return; }
+  if (totalDelivery === 0) { wrap.style.display = 'none'; return; }
 
-  const monthly        = Math.round(dailyDelivery * 30);
-  const kitchenMonthly = Math.round(kitchenDelivery * 30);
+  const monthly = Math.round(totalDelivery);
 
-  // Detail is fully traceable to the owner's own price × sales inputs
-  let detail;
-  if (kitchenItemCount > 0) {
-    detail = `Your kitchen items alone: <strong>$${kitchenMonthly.toLocaleString()}/mo</strong> not captured. Hot food converts at ~28% on delivery vs 6–10% for packaged goods.`;
-  } else {
-    const avgConvPct = Math.round((dailyDelivery / totalDailyRev) * 100);
-    detail = `$${Math.round(totalDailyRev).toLocaleString()}/day in-store sales × ~${avgConvPct}% weighted delivery conversion across your categories.`;
-  }
+  // Build per-program breakdown lines so total and detail always match
+  const progConvLabel = { 'Kitchen':'18%', 'Convenience':'8%', 'Beer & Wine':'5%', 'Other':'6%' };
+  const parts = Object.entries(progTotals)
+    .filter(([, v]) => v > 0)
+    .sort((a, b) => b[1] - a[1])
+    .map(([prog, val]) => {
+      const conv = progConvLabel[prog] || '6%';
+      return `${prog}: <strong>$${Math.round(val).toLocaleString()}/mo</strong> (${conv} delivery est.)`;
+    });
+
+  const detail = parts.join(' · ') + ' — industry estimate, actual results vary.';
 
   document.getElementById('revGapAmt').textContent = `$${monthly.toLocaleString()}`;
   document.getElementById('revGapSub').innerHTML   = detail;

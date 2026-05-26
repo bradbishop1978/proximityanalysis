@@ -87,10 +87,14 @@
       background: var(--orange-light); border: 1px solid #FED7AA;
       border-radius: 20px; padding: 1px 8px; white-space: nowrap;
     }
-    .franchise-chip.kkc     { background:#FEF9C3; color:#92400E; border-color:#FDE68A; }
-    .franchise-chip.chesters{ background:#FEE2E2; color:#991B1B; border-color:#FECACA; }
-    .franchise-chip.champs  { background:#DBEAFE; color:#1E40AF; border-color:#BFDBFE; }
-    .franchise-chip.broasters{ background:#D1FAE5; color:#065F46; border-color:#A7F3D0; }
+    .franchise-chip.kkc        { background:#FEF9C3; color:#92400E; border-color:#FDE68A; }
+    .franchise-chip.chesters   { background:#FEE2E2; color:#991B1B; border-color:#FECACA; }
+    .franchise-chip.champs     { background:#DBEAFE; color:#1E40AF; border-color:#BFDBFE; }
+    .franchise-chip.broasters  { background:#D1FAE5; color:#065F46; border-color:#A7F3D0; }
+    .franchise-chip.simonsimmons{ background:#FEE2E2; color:#7F1D1D; border-color:#FCA5A5; }
+    .franchise-chip.godfathers  { background:#FFF7ED; color:#9A3412; border-color:#FED7AA; }
+    .franchise-chip.circlek     { background:#EFF6FF; color:#1E3A8A; border-color:#BFDBFE; }
+    .franchise-chip.ampm        { background:#FEF3C7; color:#78350F; border-color:#FDE68A; }
 
     .topbar-btn {
       width: 34px; height: 34px; border-radius: 10px;
@@ -477,6 +481,7 @@
   <!-- Top Bar -->
   <div class="topbar">
     <div class="topbar-logo">
+      <a href="https://www.lulacommerce.com/" target="_blank" rel="noopener" style="display:block;line-height:0">
       <svg viewBox="0 0 460 195" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Lula Commerce">
         <path d="M58.9392 78.4133C55.3128 75.3648 50.4233 74.236 45.805 75.3801L24 79.7648L30.2533 104.452L59.3809 98.2017L58.668 121.837C58.3193 133.317 65.3706 143.745 76.2189 147.792C78.559 148.667 81.1704 147.523 82.1002 145.219L89.9342 125.753C93.7544 116.255 91.0268 105.404 83.1618 98.793L58.9392 78.4133Z" fill="url(#lg0)"/>
         <path fill-rule="evenodd" clip-rule="evenodd" d="M53.5459 75.526C55.4986 76.0942 57.3428 77.0618 58.9313 78.3979L83.1617 98.7853C91.0267 105.397 93.7542 116.255 89.9341 125.746L82.9912 145.311C82.0923 147.845 79.2098 149.082 76.7302 147.999L76.2963 147.815C65.4092 143.753 58.3269 133.279 58.6756 121.753L59.3575 99.2076C59.3575 99.1308 59.3575 99.0617 59.3342 98.9926C59.8611 95.8442 59.8999 92.5577 59.3807 89.2328C58.5748 84.0726 56.5059 79.4192 53.5459 75.5183V75.526Z" fill="url(#lg1)"/>
@@ -497,6 +502,7 @@
           <linearGradient id="lg5" x1="118.6" y1="125.1" x2="99.8" y2="109.0" gradientUnits="userSpaceOnUse"><stop stop-color="#DE4990"/><stop offset="1" stop-color="#E19898"/></linearGradient>
         </defs>
       </svg>
+      </a>
     </div>
     <div class="topbar-center">
       <span class="topbar-store" id="topStore">My Store</span>
@@ -533,7 +539,7 @@
         <div class="food-banner-body">
           <h4>You have a Kitchen / Food Program</h4>
           <p>Hot food items on Lula delivery can generate 2–3× the margin of packaged goods. Enable delivery to put your kitchen online.</p>
-          <a href="CTA_LULA_GUIDE_URL" class="food-banner-cta" target="_blank">See the Lula Program →</a>
+          <a href="https://www.lulacommerce.com/program-guide" class="food-banner-cta" target="_blank">See the Lula Program →</a>
         </div>
       </div>
 
@@ -543,7 +549,7 @@
           <div class="rev-gap-label">Est. Monthly Delivery Opportunity</div>
           <div class="rev-gap-amount" id="revGapAmt">$0</div>
           <div class="rev-gap-sub" id="revGapSub"></div>
-          <a href="CTA_LULA_GUIDE_URL" class="rev-gap-cta" target="_blank">See Lula Program →</a>
+          <a href="https://www.lulacommerce.com/program-guide" class="rev-gap-cta" target="_blank">See Lula Program →</a>
         </div>
       </div>
 
@@ -703,7 +709,7 @@
           <div class="lock-ico">🔓</div>
           <div class="lock-title">Unlock Advanced Insights</div>
           <div class="lock-sub">30-day trends, category analysis, and delivery revenue breakdown are included when you join the Lula program.</div>
-          <a href="CTA_LULA_GUIDE_URL" class="lock-cta" target="_blank">See Lula Program →</a>
+          <a href="https://www.lulacommerce.com/program-guide" class="lock-cta" target="_blank">See Lula Program →</a>
         </div>
       </div>
     </div>
@@ -904,10 +910,20 @@
           <label>Food Franchise Program</label>
           <select id="franchiseInput">
             <option value="">No food franchise</option>
-            <option value="kkc">Krispy Krunchy Chicken</option>
-            <option value="chesters">Chester's Chicken</option>
-            <option value="champs">Champs Chicken</option>
-            <option value="broasters">Genuine Broasters</option>
+            <optgroup label="Chicken Programs">
+              <option value="kkc">Krispy Krunchy Chicken</option>
+              <option value="chesters">Chester's Chicken</option>
+              <option value="champs">Champs Chicken</option>
+              <option value="broasters">Genuine Broasters</option>
+            </optgroup>
+            <optgroup label="Pizza Programs">
+              <option value="simonsimmons">Simple Simon's Pizza</option>
+              <option value="godfathers">Godfather's Pizza Express</option>
+            </optgroup>
+            <optgroup label="C-Store Networks">
+              <option value="circlek">Circle K</option>
+              <option value="ampm">AM/PM Vista</option>
+            </optgroup>
           </select>
           <div class="field-hint">Adds a franchise label to your dashboard and unlocks kitchen-optimized revenue estimates</div>
         </div>
@@ -963,17 +979,21 @@
 /* ═══════════════════════════════════════════════
    Config
 ═══════════════════════════════════════════════ */
-const GUIDE_URL  = 'CTA_LULA_GUIDE_URL';
+const GUIDE_URL  = 'https://www.lulacommerce.com/program-guide';
 const MAX        = 50;
 const KEY_ITEMS  = 'lsp_items_v2';
 const KEY_STORE  = 'lsp_store';
 const KEY_FRAN   = 'lsp_franchise';
 
 const BRANDS = {
-  kkc:       { label:'Krispy Krunchy Chicken', short:'KKC',       cls:'kkc',       aov:19, emoji:'🍗' },
-  chesters:  { label:"Chester's Chicken",      short:"Chester's", cls:'chesters',  aov:18, emoji:'🍗' },
-  champs:    { label:'Champs Chicken',          short:'Champs',    cls:'champs',    aov:18, emoji:'🍗' },
-  broasters: { label:'Genuine Broasters',       short:'Broasters', cls:'broasters', aov:20, emoji:'🍗' },
+  kkc:          { label:'Krispy Krunchy Chicken',    short:'KKC',         cls:'kkc',         aov:19, emoji:'🍗' },
+  chesters:     { label:"Chester's Chicken",         short:"Chester's",   cls:'chesters',    aov:18, emoji:'🍗' },
+  champs:       { label:'Champs Chicken',            short:'Champs',      cls:'champs',      aov:18, emoji:'🍗' },
+  broasters:    { label:'Genuine Broasters',         short:'Broasters',   cls:'broasters',   aov:20, emoji:'🍗' },
+  simonsimmons: { label:"Simple Simon's Pizza",      short:"Simple Simon",cls:'simonsimmons',aov:22, emoji:'🍕' },
+  godfathers:   { label:"Godfather's Pizza Express", short:"Godfather's", cls:'godfathers',  aov:21, emoji:'🍕' },
+  circlek:      { label:'Circle K',                  short:'Circle K',    cls:'circlek',     aov:14, emoji:'🏪' },
+  ampm:         { label:'AM/PM Vista',               short:'AM/PM',       cls:'ampm',        aov:14, emoji:'⛽' },
 };
 
 const CATEGORIES = [

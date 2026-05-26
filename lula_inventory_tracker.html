@@ -1,0 +1,1782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Stock Pulse — Inventory Tracker by Lula Commerce</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <style>
+    /* ── Brand Tokens ── */
+    :root {
+      --purple-deep:    #2C023B;
+      --purple-primary: #A576FF;
+      --purple-medium:  #7C5D8A;
+      --purple-light:   #D9C5FF;
+      --purple-pale:    #F8F4FB;
+      --pink:           #DE4990;
+      --pink-light:     #FFF0F7;
+      --border:         #E8DDF0;
+      --input-bg:       #FAF7FC;
+      --green:          #22C55E;
+      --green-light:    #F0FDF4;
+      --green-border:   #BBF7D0;
+      --amber:          #F59E0B;
+      --amber-light:    #FFFBEB;
+      --amber-border:   #FDE68A;
+      --red:            #EF4444;
+      --red-light:      #FEF2F2;
+      --red-border:     #FECACA;
+      --orange:         #F97316;
+      --orange-light:   #FFF7ED;
+      --nav-h:          64px;
+      --topbar-h:       56px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--purple-pale);
+      color: var(--purple-deep);
+      overscroll-behavior: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #app {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      background: var(--purple-pale);
+    }
+
+    /* ── Top Bar ── */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      height: var(--topbar-h);
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .topbar-logo img { height: 26px; display: block; }
+    .topbar-logo .logo-fb {
+      display: none;
+      font-family: 'Gabarito', sans-serif;
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--purple-primary);
+    }
+
+    .topbar-center { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .topbar-store  { font-size: 13px; font-weight: 700; }
+    .topbar-count  {
+      font-size: 10px; font-weight: 600; color: var(--purple-medium);
+      background: var(--purple-pale); border: 1px solid var(--border);
+      border-radius: 20px; padding: 1px 9px; letter-spacing: .02em;
+    }
+
+    .topbar-btn {
+      width: 34px; height: 34px; border-radius: 10px;
+      border: 1.5px solid var(--border); background: #fff;
+      color: var(--purple-medium); display: flex;
+      align-items: center; justify-content: center;
+      cursor: pointer; transition: background .12s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .topbar-btn:active { background: var(--input-bg); }
+
+    /* ── Demo Banner ── */
+    .demo-banner {
+      display: none; align-items: center; gap: 10px;
+      padding: 9px 14px; flex-shrink: 0;
+      background: linear-gradient(90deg,rgba(165,118,255,.12),rgba(222,73,144,.08));
+      border-bottom: 1px solid var(--purple-light);
+      font-size: 12px; color: var(--purple-deep);
+    }
+    .demo-banner.visible { display: flex; }
+    .demo-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--purple-primary); flex-shrink: 0;
+      animation: blink 2s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+    .demo-banner span { flex: 1; }
+    .demo-cta { font-weight: 700; color: var(--purple-primary); cursor: pointer; white-space: nowrap; }
+    .demo-x   { background: none; border: none; color: var(--purple-medium); cursor: pointer; font-size: 18px; line-height: 1; padding: 0 0 0 2px; }
+
+    /* ── Scroll ── */
+    .scroll-area {
+      flex: 1; overflow-y: auto; overflow-x: hidden;
+      padding-bottom: calc(var(--nav-h) + 80px);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* ── Views ── */
+    .view { display: none; padding: 14px 14px 0; }
+    .view.active { display: block; }
+
+    /* ── Section Header ── */
+    .sec-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .sec-title { font-family: 'Gabarito', sans-serif; font-size: 18px; font-weight: 800; }
+    .sec-link  { font-size: 12px; font-weight: 600; color: var(--purple-primary); cursor: pointer; }
+
+    /* ── Revenue Gap Card ── */
+    .rev-gap {
+      background: linear-gradient(135deg, var(--purple-deep) 0%, #4A0A6B 100%);
+      border-radius: 20px; padding: 18px 16px 16px; color: #fff;
+      margin-bottom: 12px; position: relative; overflow: hidden;
+    }
+    .rev-gap::before {
+      content:''; position:absolute; top:-24px; right:-24px;
+      width:120px; height:120px; background:var(--purple-primary);
+      opacity:.18; border-radius:50%;
+    }
+    .rev-gap::after {
+      content:''; position:absolute; bottom:-32px; right:60px;
+      width:80px; height:80px; background:var(--pink); opacity:.1; border-radius:50%;
+    }
+    .rev-gap-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; opacity:.65; margin-bottom:2px; }
+    .rev-gap-amount { font-family:'Gabarito',sans-serif; font-size:40px; font-weight:900; line-height:1; margin-bottom:6px; }
+    .rev-gap-sub    { font-size:12px; line-height:1.5; opacity:.78; margin-bottom:14px; }
+    .rev-gap-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--pink); color: #fff; border: none;
+      border-radius: 10px; padding: 10px 16px;
+      font-family:'Inter',sans-serif; font-size:13px; font-weight:700;
+      cursor:pointer; text-decoration:none;
+    }
+
+    /* ── Food Program Banner ── */
+    .food-banner {
+      background: linear-gradient(135deg, #FF6B35, var(--orange));
+      border-radius: 16px; padding: 14px 16px; color: #fff;
+      margin-bottom: 12px; display: none;
+    }
+    .food-banner.visible { display: flex; align-items: center; gap: 12px; }
+    .food-banner-ico { font-size: 28px; flex-shrink: 0; }
+    .food-banner-body h4 { font-family:'Gabarito',sans-serif; font-size:14px; font-weight:800; margin-bottom:3px; }
+    .food-banner-body p  { font-size:11px; line-height:1.45; opacity:.9; }
+    .food-banner-cta {
+      margin-top:8px; display:inline-flex; align-items:center; gap:5px;
+      background:rgba(255,255,255,.2); color:#fff; border:1px solid rgba(255,255,255,.4);
+      border-radius:8px; padding:7px 12px; font-family:'Inter',sans-serif;
+      font-size:12px; font-weight:700; cursor:pointer; text-decoration:none;
+    }
+
+    /* ── Stats Grid ── */
+    .stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
+    .stat { background:#fff; border:1.5px solid var(--border); border-radius:16px; padding:13px 14px; }
+    .stat.s-crit { border-color:var(--red-border);   background:var(--red-light); }
+    .stat.s-low  { border-color:var(--amber-border);  background:var(--amber-light); }
+    .stat.s-good { border-color:var(--green-border);  background:var(--green-light); }
+    .stat-lbl { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--purple-medium); margin-bottom:3px; }
+    .stat.s-crit .stat-lbl { color:var(--red); }
+    .stat.s-low  .stat-lbl { color:var(--amber); }
+    .stat.s-good .stat-lbl { color:#16A34A; }
+    .stat-val { font-family:'Gabarito',sans-serif; font-size:30px; font-weight:900; line-height:1; color:var(--purple-deep); }
+    .stat.s-crit .stat-val { color:var(--red); }
+    .stat.s-low  .stat-val { color:var(--amber); }
+    .stat.s-good .stat-val { color:#16A34A; }
+    .stat-sub { font-size:10px; color:var(--purple-medium); margin-top:2px; }
+
+    /* ── Chart Card ── */
+    .chart-card { background:#fff; border:1.5px solid var(--border); border-radius:18px; padding:16px; margin-bottom:12px; }
+    .chart-head { display:flex; align-items:center; gap:7px; font-family:'Gabarito',sans-serif; font-size:14px; font-weight:700; margin-bottom:12px; }
+    .chart-wrap { position:relative; height:190px; }
+    .chart-empty { height:190px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; font-size:12px; color:var(--purple-medium); text-align:center; }
+
+    /* ── Restock Row ── */
+    .restock-row {
+      display:flex; align-items:center; gap:10px; background:#fff;
+      border:1.5px solid var(--border); border-radius:14px;
+      padding:11px 13px; margin-bottom:8px;
+    }
+    .restock-badge { width:24px; height:24px; border-radius:7px; font-size:11px; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .rb-crit { background:var(--red-light);  color:var(--red); }
+    .rb-low  { background:var(--amber-light); color:var(--amber); }
+    .restock-info { flex:1; min-width:0; }
+    .restock-name { font-size:13px; font-weight:600; }
+    .restock-meta { font-size:11px; color:var(--purple-medium); margin-top:1px; }
+    .btn-restock { background:var(--purple-primary); color:#fff; border:none; border-radius:8px; padding:7px 12px; font-family:'Inter',sans-serif; font-size:11px; font-weight:700; cursor:pointer; flex-shrink:0; }
+
+    /* ── Item Cards ── */
+    .item-list { display:flex; flex-direction:column; gap:8px; }
+    .item-card {
+      display:flex; align-items:center; gap:11px; background:#fff;
+      border:1.5px solid var(--border); border-radius:16px;
+      padding:13px 14px; cursor:pointer; transition:transform .1s;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .item-card:active { transform:scale(.98); }
+
+    .status-pip { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+    .pip-good { background:var(--green); }
+    .pip-low  { background:var(--amber); }
+    .pip-crit { background:var(--red); }
+
+    .item-body { flex:1; min-width:0; }
+    .item-name { font-size:14px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .item-meta { font-size:11px; color:var(--purple-medium); margin-top:2px; display:flex; align-items:center; gap:5px; flex-wrap:wrap; }
+
+    .prog-badge {
+      display:inline-flex; align-items:center; gap:3px;
+      padding:1px 6px; border-radius:20px; font-size:9px; font-weight:700;
+      text-transform:uppercase; letter-spacing:.05em;
+    }
+    .prog-conv    { background:#EDE9FE; color:#6D28D9; }
+    .prog-kitchen { background:var(--orange-light); color:var(--orange); }
+    .prog-beer    { background:#FEF9C3; color:#92400E; }
+    .prog-tobacco { background:#F3F4F6; color:#374151; }
+    .prog-other   { background:var(--purple-pale); color:var(--purple-medium); }
+
+    .stock-bar-wrap { height:3px; background:var(--border); border-radius:2px; margin-top:6px; overflow:hidden; }
+    .stock-bar { height:100%; border-radius:2px; transition:width .4s ease; }
+    .bar-good { background:var(--green); }
+    .bar-low  { background:var(--amber); }
+    .bar-crit { background:var(--red); }
+
+    .item-right { display:flex; flex-direction:column; align-items:flex-end; gap:2px; flex-shrink:0; }
+    .item-stock { font-family:'Gabarito',sans-serif; font-size:22px; font-weight:900; line-height:1; }
+    .stock-good { color:var(--green); }
+    .stock-low  { color:var(--amber); }
+    .stock-crit { color:var(--red); }
+    .item-par   { font-size:10px; color:var(--purple-medium); }
+
+    /* ── CSV Toolbar (desktop-first, accessible on mobile too) ── */
+    .csv-toolbar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .csv-btn {
+      display: flex; align-items: center; gap: 6px;
+      padding: 9px 14px; border-radius: 10px;
+      border: 1.5px solid var(--border); background: #fff;
+      font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
+      color: var(--purple-deep); cursor: pointer;
+      transition: background .12s, border-color .12s;
+      white-space: nowrap;
+    }
+    .csv-btn:hover   { background: var(--input-bg); border-color: var(--purple-primary); }
+    .csv-btn:active  { background: var(--purple-pale); }
+    .csv-btn.primary { background: var(--purple-primary); color: #fff; border-color: var(--purple-primary); }
+    .csv-btn.primary:hover { background: #8B4FF8; }
+
+    .csv-btn svg { flex-shrink: 0; }
+
+    /* ── Search Bar ── */
+    .search-row { display:flex; gap:8px; margin-bottom:12px; }
+    .search-wrap { flex:1; position:relative; }
+    .search-wrap svg { position:absolute; left:11px; top:50%; transform:translateY(-50%); color:var(--purple-medium); pointer-events:none; }
+    .search-input { width:100%; padding:10px 12px 10px 33px; background:#fff; border:1.5px solid var(--border); border-radius:12px; font-family:'Inter',sans-serif; font-size:14px; color:var(--purple-deep); }
+    .search-input:focus { outline:none; border-color:var(--purple-primary); }
+
+    .filter-select { padding:10px 11px; background:#fff; border:1.5px solid var(--border); border-radius:12px; font-family:'Inter',sans-serif; font-size:12px; color:var(--purple-deep); appearance:none; cursor:pointer; flex-shrink:0; }
+    .filter-select:focus { outline:none; border-color:var(--purple-primary); }
+
+    /* ── Empty State ── */
+    .empty { text-align:center; padding:48px 20px; }
+    .empty-ico   { font-size:48px; margin-bottom:14px; }
+    .empty-title { font-family:'Gabarito',sans-serif; font-size:20px; font-weight:800; margin-bottom:8px; }
+    .empty-sub   { font-size:13px; color:var(--purple-medium); line-height:1.6; max-width:260px; margin:0 auto 20px; }
+
+    /* ── Alert Groups ── */
+    .alert-group-lbl { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--purple-medium); margin:14px 0 7px; }
+    .alert-group-lbl:first-child { margin-top:0; }
+
+    /* ── Insights ── */
+    .insight-card { background:#fff; border:1.5px solid var(--border); border-radius:16px; padding:15px; margin-bottom:10px; }
+    .insight-card h3 { font-family:'Gabarito',sans-serif; font-size:14px; font-weight:700; margin-bottom:10px; }
+
+    /* ── Locked Section ── */
+    .locked-wrap { position:relative; border-radius:18px; overflow:hidden; margin-top:4px; }
+    .locked-content { filter:blur(3px); pointer-events:none; user-select:none; opacity:.65; }
+    .lock-overlay {
+      position:absolute; inset:0; background:rgba(248,244,251,.88); backdrop-filter:blur(2px);
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      border-radius:18px; border:1.5px solid var(--purple-light); padding:24px; text-align:center;
+    }
+    .lock-ico   { font-size:30px; margin-bottom:10px; }
+    .lock-title { font-family:'Gabarito',sans-serif; font-size:16px; font-weight:800; margin-bottom:6px; }
+    .lock-sub   { font-size:12px; color:var(--purple-medium); line-height:1.55; margin-bottom:16px; max-width:240px; }
+    .lock-cta   {
+      display:inline-flex; align-items:center; gap:6px;
+      background:linear-gradient(135deg,var(--purple-primary),#8B4FF8); color:#fff;
+      border:none; border-radius:10px; padding:11px 20px;
+      font-family:'Inter',sans-serif; font-size:13px; font-weight:700;
+      cursor:pointer; text-decoration:none; box-shadow:0 4px 16px rgba(165,118,255,.4);
+    }
+
+    /* ── Podium ── */
+    .podium-row { display:flex; align-items:center; gap:10px; padding:10px 0; }
+    .podium-row + .podium-row { border-top:1px solid var(--border); }
+    .podium-medal { font-size:20px; }
+    .podium-info  { flex:1; }
+    .podium-name  { font-size:13px; font-weight:600; }
+    .podium-cat   { font-size:11px; color:var(--purple-medium); }
+    .podium-val   { font-family:'Gabarito',sans-serif; font-size:20px; font-weight:900; color:var(--purple-primary); }
+    .podium-unit  { font-size:10px; color:var(--purple-medium); text-align:right; }
+
+    /* ── FAB ── */
+    .fab-wrap {
+      position:fixed; bottom:calc(var(--nav-h) + 10px); left:50%; transform:translateX(-50%);
+      width:calc(100% - 28px); max-width:452px; display:flex; gap:8px; z-index:25; pointer-events:none;
+    }
+    .fab-wrap > * { pointer-events:all; }
+    .fab {
+      flex:1; display:flex; align-items:center; justify-content:center; gap:7px;
+      height:50px; border:none; border-radius:16px;
+      font-family:'Inter',sans-serif; font-size:14px; font-weight:700;
+      cursor:pointer; transition:transform .1s, box-shadow .1s;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .fab:active { transform:scale(.97); }
+    .fab-add  { background:var(--purple-primary); color:#fff; box-shadow:0 4px 20px rgba(165,118,255,.5); }
+    .fab-scan { background:var(--purple-deep); color:#fff; box-shadow:0 4px 16px rgba(44,2,59,.35); display:none; flex:0 0 50px; border-radius:16px; }
+    @media (pointer:coarse) { .fab-scan { display:flex; } }
+
+    /* ── Bottom Nav ── */
+    .bottom-nav {
+      position:fixed; bottom:0; left:50%; transform:translateX(-50%);
+      width:100%; max-width:480px; height:var(--nav-h); background:#fff;
+      border-top:1px solid var(--border); display:flex; align-items:stretch; z-index:30;
+      padding-bottom:env(safe-area-inset-bottom,0px);
+    }
+    .nav-btn {
+      flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+      border:none; background:none; font-family:'Inter',sans-serif; font-size:9px; font-weight:600;
+      letter-spacing:.04em; text-transform:uppercase; color:var(--purple-medium);
+      cursor:pointer; -webkit-tap-highlight-color:transparent; transition:color .15s; position:relative;
+    }
+    .nav-btn.active { color:var(--purple-primary); }
+    .nav-ico { position:relative; display:flex; align-items:center; justify-content:center; }
+    .nav-badge {
+      position:absolute; top:-4px; right:-6px; min-width:14px; height:14px;
+      background:var(--red); color:#fff; border-radius:7px; font-size:8px; font-weight:800;
+      display:none; align-items:center; justify-content:center;
+      border:1.5px solid #fff; padding:0 2px;
+    }
+
+    /* ── Toast ── */
+    .toast-wrap {
+      position:fixed; bottom:calc(var(--nav-h) + 70px); left:50%; transform:translateX(-50%);
+      width:calc(100% - 28px); max-width:452px; z-index:40;
+      display:flex; flex-direction:column; gap:8px; pointer-events:none;
+    }
+    .toast {
+      background:var(--purple-deep); color:#fff; border-radius:16px;
+      padding:13px 14px; display:flex; align-items:flex-start; gap:10px;
+      pointer-events:all; box-shadow:0 8px 32px rgba(44,2,59,.4);
+      animation:slideUp .28s cubic-bezier(.33,1,.68,1);
+    }
+    @keyframes slideUp { from{transform:translateY(16px);opacity:0} to{transform:translateY(0);opacity:1} }
+    .toast-ico  { font-size:17px; flex-shrink:0; margin-top:1px; }
+    .toast-body { flex:1; font-size:13px; line-height:1.45; }
+    .toast-link { display:inline-block; margin-top:7px; font-size:12px; font-weight:700; color:var(--purple-light); text-decoration:underline; cursor:pointer; }
+    .toast-x    { background:none; border:none; color:rgba(255,255,255,.45); font-size:17px; cursor:pointer; line-height:1; flex-shrink:0; padding:0; }
+
+    /* ── Modal ── */
+    .modal-bg {
+      position:fixed; inset:0; background:rgba(44,2,59,.5);
+      backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
+      z-index:100; display:flex; align-items:flex-end; justify-content:center;
+      opacity:0; pointer-events:none; transition:opacity .2s;
+    }
+    .modal-bg.open { opacity:1; pointer-events:all; }
+    .modal-sheet {
+      width:100%; max-width:480px; background:#fff; border-radius:24px 24px 0 0;
+      max-height:92dvh; overflow-y:auto;
+      transform:translateY(100%); transition:transform .3s cubic-bezier(.32,0,.67,0);
+      padding-bottom:calc(16px + env(safe-area-inset-bottom,0px));
+    }
+    .modal-bg.open .modal-sheet { transform:translateY(0); transition:transform .3s cubic-bezier(.33,1,.68,1); }
+    .modal-handle { width:36px; height:4px; background:var(--border); border-radius:2px; margin:11px auto 0; }
+    .modal-head   { display:flex; align-items:center; justify-content:space-between; padding:14px 18px 10px; }
+    .modal-title  { font-family:'Gabarito',sans-serif; font-size:20px; font-weight:800; }
+    .modal-x      { width:30px; height:30px; border-radius:50%; background:var(--input-bg); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--purple-medium); font-size:18px; }
+    .modal-body   { padding:0 18px 4px; }
+
+    /* ── Form ── */
+    .field { margin-bottom:16px; }
+    .field label { display:block; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.09em; color:var(--purple-medium); margin-bottom:7px; }
+    .field input, .field select { width:100%; background:var(--input-bg); border:1.5px solid var(--border); border-radius:12px; color:var(--purple-deep); font-family:'Inter',sans-serif; font-size:15px; font-weight:500; padding:12px 14px; appearance:none; transition:border-color .15s; }
+    .field input:focus, .field select:focus { outline:none; border-color:var(--purple-primary); }
+    .field-row  { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .field-hint { font-size:11px; color:var(--purple-medium); margin-top:4px; line-height:1.4; }
+
+    /* Program select highlight */
+    .field select.prog-kitchen-active { border-color:var(--orange); background:var(--orange-light); }
+
+    /* ── Scan Button ── */
+    .scan-field { display:none; margin-bottom:16px; }
+    @media (pointer:coarse) { .scan-field { display:block; } }
+    .btn-scan {
+      width:100%; display:flex; align-items:center; justify-content:center; gap:9px;
+      background:var(--purple-pale); border:2px dashed var(--purple-primary);
+      border-radius:13px; padding:14px; font-family:'Inter',sans-serif;
+      font-size:14px; font-weight:700; color:var(--purple-primary);
+      cursor:pointer; -webkit-tap-highlight-color:transparent;
+    }
+    .btn-scan:active { background:var(--purple-light); }
+    #scanner-box { display:none; border-radius:13px; overflow:hidden; background:#000; margin-bottom:14px; }
+    #scanner-box.visible { display:block; }
+
+    /* ── Buttons ── */
+    .btn-primary { width:100%; background:linear-gradient(135deg,var(--purple-primary),#8B4FF8); color:#fff; border:none; border-radius:14px; padding:15px; font-family:'Inter',sans-serif; font-size:16px; font-weight:700; cursor:pointer; box-shadow:0 4px 16px rgba(165,118,255,.4); transition:transform .1s; }
+    .btn-primary:active { transform:scale(.98); }
+    .btn-ghost   { width:100%; background:#fff; color:var(--purple-deep); border:1.5px solid var(--border); border-radius:14px; padding:13px; font-family:'Inter',sans-serif; font-size:14px; font-weight:600; cursor:pointer; margin-top:8px; }
+    .btn-danger  { width:100%; background:var(--red-light); color:var(--red); border:1.5px solid var(--red-border); border-radius:14px; padding:13px; font-family:'Inter',sans-serif; font-size:14px; font-weight:600; cursor:pointer; margin-top:8px; }
+
+    /* ── Store Setup ── */
+    .setup-head { text-align:center; padding:4px 0 16px; }
+    .setup-emoji { font-size:42px; margin-bottom:10px; }
+    .setup-head h2 { font-family:'Gabarito',sans-serif; font-size:22px; font-weight:800; margin-bottom:6px; }
+    .setup-head p  { font-size:13px; color:var(--purple-medium); line-height:1.5; }
+
+    /* ── CSV Import Modal ── */
+    .csv-drop {
+      border: 2px dashed var(--border); border-radius: 14px;
+      padding: 28px; text-align: center; cursor: pointer;
+      transition: border-color .15s, background .15s; margin-bottom: 14px;
+    }
+    .csv-drop:hover  { border-color: var(--purple-primary); background: var(--input-bg); }
+    .csv-drop-ico    { font-size: 32px; margin-bottom: 8px; }
+    .csv-drop-label  { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .csv-drop-sub    { font-size: 12px; color: var(--purple-medium); }
+    .csv-preview {
+      background: var(--input-bg); border-radius: 10px; padding: 12px 14px;
+      font-size: 12px; color: var(--purple-medium); margin-bottom: 14px;
+      display: none;
+    }
+    .csv-preview.visible { display: block; }
+  </style>
+</head>
+
+<body>
+<div id="app">
+
+  <!-- Top Bar -->
+  <div class="topbar">
+    <div class="topbar-logo">
+      <img src="../Brand - Lula Commerce/Logo/PNG/Primary Logo.png" alt="Lula Commerce"
+           onerror="this.style.display='none';document.querySelector('.logo-fb').style.display='block'">
+      <span class="logo-fb">Lula</span>
+    </div>
+    <div class="topbar-center">
+      <span class="topbar-store" id="topStore">My Store</span>
+      <span class="topbar-count" id="topCount">0 / 50 items</span>
+    </div>
+    <button class="topbar-btn" onclick="openStoreModal()" title="Store settings">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Demo Banner -->
+  <div class="demo-banner" id="demoBanner">
+    <div class="demo-dot"></div>
+    <span>Viewing <strong>Sunrise Corner</strong> — demo store</span>
+    <span class="demo-cta" onclick="startMyStore()">Use my store →</span>
+    <button class="demo-x" onclick="hideDemoBanner()">×</button>
+  </div>
+
+  <!-- Scroll Area -->
+  <div class="scroll-area">
+
+    <!-- ══ Dashboard ══ -->
+    <div class="view active" id="view-dashboard">
+
+      <!-- Food Program Banner (shows when kitchen items exist) -->
+      <div class="food-banner" id="foodBanner">
+        <div class="food-banner-ico">🍳</div>
+        <div class="food-banner-body">
+          <h4>You have a Kitchen / Food Program</h4>
+          <p>Hot food items on Lula delivery can generate 2–3× the margin of packaged goods. Enable delivery to put your kitchen online.</p>
+          <a href="CTA_LULA_GUIDE_URL" class="food-banner-cta" target="_blank">See the Lula Program →</a>
+        </div>
+      </div>
+
+      <!-- Revenue Gap Card -->
+      <div id="revGapWrap" style="display:none">
+        <div class="rev-gap">
+          <div class="rev-gap-label">Est. Monthly Delivery Opportunity</div>
+          <div class="rev-gap-amount" id="revGapAmt">$0</div>
+          <div class="rev-gap-sub" id="revGapSub"></div>
+          <a href="CTA_LULA_GUIDE_URL" class="rev-gap-cta" target="_blank">See Lula Program →</a>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat">
+          <div class="stat-lbl">Tracked</div>
+          <div class="stat-val" id="sTotal">0</div>
+          <div class="stat-sub">of 50 items</div>
+        </div>
+        <div class="stat s-crit">
+          <div class="stat-lbl">Critical</div>
+          <div class="stat-val" id="sCrit">0</div>
+          <div class="stat-sub">&lt; 25% par</div>
+        </div>
+        <div class="stat s-low">
+          <div class="stat-lbl">Low Stock</div>
+          <div class="stat-val" id="sLow">0</div>
+          <div class="stat-sub">below par level</div>
+        </div>
+        <div class="stat s-good">
+          <div class="stat-lbl">Healthy</div>
+          <div class="stat-val" id="sGood">0</div>
+          <div class="stat-sub">at or above par</div>
+        </div>
+      </div>
+
+      <!-- Fast Movers Chart -->
+      <div class="chart-card">
+        <div class="chart-head">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--purple-primary)" stroke-width="2.5">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+            <polyline points="17 6 23 6 23 12"/>
+          </svg>
+          Fast Movers
+        </div>
+        <div class="chart-wrap" id="chartWrap"><canvas id="fmChart"></canvas></div>
+        <div class="chart-empty" id="chartEmpty" style="display:none">
+          <span style="font-size:28px">📊</span>
+          Add daily sales when entering items to see fast movers
+        </div>
+      </div>
+
+      <!-- Restock Priority -->
+      <div class="sec-head">
+        <span class="sec-title">Restock Priority</span>
+        <span class="sec-link" onclick="go('alerts')">See all →</span>
+      </div>
+      <div id="restockList"></div>
+    </div>
+
+    <!-- ══ My Items ══ -->
+    <div class="view" id="view-items">
+      <div class="sec-head">
+        <span class="sec-title">My Items</span>
+        <span class="topbar-count" id="itemsBadge">0 / 50</span>
+      </div>
+
+      <!-- CSV Toolbar -->
+      <div class="csv-toolbar">
+        <button class="csv-btn" onclick="downloadTemplate()" title="Download blank CSV template to fill in and import">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Template
+        </button>
+        <button class="csv-btn" onclick="openImportModal()" title="Import items from CSV file">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          Import CSV
+        </button>
+        <button class="csv-btn primary" onclick="exportCSV()" title="Export your items as CSV">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Export
+        </button>
+      </div>
+
+      <!-- Search + Filter -->
+      <div class="search-row">
+        <div class="search-wrap">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input class="search-input" type="text" id="searchInput" placeholder="Search items…" oninput="renderItems()">
+        </div>
+        <select class="filter-select" id="catFilter" onchange="renderItems()">
+          <option value="">All</option>
+          <option>Automotive</option>
+          <option>Beer</option>
+          <option>Candy</option>
+          <option>Grocery</option>
+          <option>Health</option>
+          <option>Household</option>
+          <option>Ice Cream</option>
+          <option>Kitchen / Hot Food</option>
+          <option>Milk</option>
+          <option>Personal Care</option>
+          <option>Snacks</option>
+          <option>Soda</option>
+          <option>Tobacco</option>
+          <option>Wine</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div id="itemsList"></div>
+    </div>
+
+    <!-- ══ Alerts ══ -->
+    <div class="view" id="view-alerts">
+      <div class="sec-head"><span class="sec-title">Stock Alerts</span></div>
+      <div id="alertsList"></div>
+    </div>
+
+    <!-- ══ Insights ══ -->
+    <div class="view" id="view-insights">
+      <div class="sec-head"><span class="sec-title">Insights</span></div>
+
+      <div class="insight-card">
+        <h3>Your Store at a Glance</h3>
+        <div id="insightGlance" style="font-size:13px;line-height:1.75;color:var(--purple-medium)">
+          Add items to see your store insights.
+        </div>
+      </div>
+
+      <div class="insight-card">
+        <h3>🏆 Top 3 Fast Movers</h3>
+        <div id="insightTop3"><div style="font-size:13px;color:var(--purple-medium)">No items with daily sales yet.</div></div>
+      </div>
+
+      <!-- Locked -->
+      <div class="locked-wrap">
+        <div class="locked-content">
+          <div class="insight-card" style="margin-bottom:8px">
+            <h3>📈 30-Day Velocity Trend</h3>
+            <div style="height:80px;background:linear-gradient(135deg,var(--purple-pale),var(--purple-light));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--purple-medium)">Trend chart</div>
+          </div>
+          <div class="insight-card" style="margin-bottom:8px">
+            <h3>📦 Category Breakdown</h3>
+            <div style="height:70px;background:var(--purple-pale);border-radius:10px"></div>
+          </div>
+          <div class="insight-card">
+            <h3>🔄 Restock Frequency Analysis</h3>
+            <div style="font-size:12px;color:var(--purple-medium);line-height:1.5">Auto-generate supplier reorder lists based on your velocity data…</div>
+          </div>
+        </div>
+        <div class="lock-overlay">
+          <div class="lock-ico">🔓</div>
+          <div class="lock-title">Unlock Advanced Insights</div>
+          <div class="lock-sub">30-day trends, category analysis, and delivery revenue breakdown are included when you join the Lula program.</div>
+          <a href="CTA_LULA_GUIDE_URL" class="lock-cta" target="_blank">See Lula Program →</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /scroll-area -->
+
+  <!-- FABs -->
+  <div class="fab-wrap" id="fabWrap">
+    <button class="fab fab-scan" onclick="openScanFAB()" title="Scan barcode">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <rect x="3" y="3" width="5" height="5" rx="1"/>
+        <rect x="16" y="3" width="5" height="5" rx="1"/>
+        <rect x="3" y="16" width="5" height="5" rx="1"/>
+        <path d="M21 16h-3v3m0 2v-2m-3 2h2m-3-11h2m-2 4h2v2m0 0v2m-9-2h2m-2 4v-2"/>
+      </svg>
+    </button>
+    <button class="fab fab-add" onclick="openAdd()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+      </svg>
+      Add Item
+    </button>
+  </div>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" id="nb-dashboard" onclick="go('dashboard')">
+      <div class="nav-ico">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>
+        </svg>
+      </div>
+      Dashboard
+    </button>
+    <button class="nav-btn" id="nb-items" onclick="go('items')">
+      <div class="nav-ico">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="9" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="9" y1="18" x2="21" y2="18"/>
+          <circle cx="4" cy="6" r="1.5" fill="currentColor"/>
+          <circle cx="4" cy="12" r="1.5" fill="currentColor"/>
+          <circle cx="4" cy="18" r="1.5" fill="currentColor"/>
+        </svg>
+      </div>
+      My Items
+    </button>
+    <button class="nav-btn" id="nb-alerts" onclick="go('alerts')">
+      <div class="nav-ico">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+        <span class="nav-badge" id="alertBadge">0</span>
+      </div>
+      Alerts
+    </button>
+    <button class="nav-btn" id="nb-insights" onclick="go('insights')">
+      <div class="nav-ico">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+      </div>
+      Insights
+    </button>
+  </nav>
+
+  <!-- Toast Container -->
+  <div class="toast-wrap" id="toasts"></div>
+
+  <!-- ══ Add / Edit Item Modal ══ -->
+  <div class="modal-bg" id="itemModal" onclick="closeItemModal(event)">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-head">
+        <span class="modal-title" id="itemModalTitle">Add Item</span>
+        <button class="modal-x" onclick="closeItemModal()">×</button>
+      </div>
+      <div class="modal-body">
+
+        <!-- Scan button (mobile only) -->
+        <div class="scan-field">
+          <button class="btn-scan" id="scanBtn" onclick="startScan()">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <rect x="3" y="3" width="5" height="5" rx="1"/><rect x="16" y="3" width="5" height="5" rx="1"/>
+              <rect x="3" y="16" width="5" height="5" rx="1"/>
+              <path d="M21 16h-3v3m0 2v-2m-3 2h2m-3-11h2m-2 4h2v2m0 0v2m-9-2h2m-2 4v-2"/>
+            </svg>
+            Scan Barcode to Auto-fill
+          </button>
+        </div>
+
+        <div id="scanner-box"></div>
+        <input type="hidden" id="editId">
+
+        <div class="field">
+          <label>Item Name</label>
+          <input type="text" id="fName" placeholder="e.g. Red Bull Energy 8.4oz" autocomplete="off" autocorrect="off">
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Category</label>
+            <select id="fCat">
+              <option>Automotive</option>
+              <option>Beer</option>
+              <option>Candy</option>
+              <option>Grocery</option>
+              <option>Health</option>
+              <option>Household</option>
+              <option>Ice Cream</option>
+              <option>Kitchen / Hot Food</option>
+              <option>Milk</option>
+              <option>Personal Care</option>
+              <option>Snacks</option>
+              <option selected>Soda</option>
+              <option>Tobacco</option>
+              <option>Wine</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Menu / Program</label>
+            <select id="fProgram" onchange="onProgramChange(this)">
+              <option value="Convenience">Convenience</option>
+              <option value="Kitchen">🍳 Kitchen / Hot Food</option>
+              <option value="Beer &amp; Wine">🍺 Beer &amp; Wine</option>
+              <option value="Tobacco">🚬 Tobacco</option>
+              <option value="Other">Other</option>
+            </select>
+            <div class="field-hint">Which Lula menu this belongs to</div>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Current Stock</label>
+            <input type="number" id="fStock" placeholder="24" min="0" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label>Par Level</label>
+            <input type="number" id="fPar" placeholder="12" min="1" inputmode="numeric">
+            <div class="field-hint">Restock trigger</div>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Daily Sales</label>
+            <input type="number" id="fSales" placeholder="8" min="0" step="0.5" inputmode="decimal">
+            <div class="field-hint">Units/day avg</div>
+          </div>
+          <div class="field">
+            <label>Price ($)</label>
+            <input type="number" id="fPrice" placeholder="3.99" min="0" step="0.01" inputmode="decimal">
+            <div class="field-hint">Sell price</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Unit</label>
+          <select id="fUnit">
+            <option>Units</option>
+            <option>Cases</option>
+            <option>Packs</option>
+            <option>Bottles</option>
+            <option>Cans</option>
+            <option>Bags</option>
+            <option>Portions</option>
+          </select>
+        </div>
+
+        <button class="btn-primary" onclick="saveItem()">Save Item</button>
+        <button class="btn-danger" id="deleteBtn" onclick="deleteItem()" style="display:none">Delete Item</button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Store Modal ══ -->
+  <div class="modal-bg" id="storeModal" onclick="closeStoreModal(event)">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-head">
+        <span class="modal-title">Store Settings</span>
+        <button class="modal-x" onclick="closeStoreModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="setup-head">
+          <div class="setup-emoji">🏪</div>
+          <h2>What's your store called?</h2>
+          <p>We'll show your store name on the dashboard.</p>
+        </div>
+        <div class="field">
+          <label>Store Name</label>
+          <input type="text" id="storeInput" placeholder="e.g. Sunrise Corner Store" maxlength="40">
+        </div>
+        <button class="btn-primary" onclick="saveStore()">Save Store</button>
+        <button class="btn-ghost" onclick="closeStoreModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CSV Import Modal ══ -->
+  <div class="modal-bg" id="csvModal" onclick="closeCsvModal(event)">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-head">
+        <span class="modal-title">Import from CSV</span>
+        <button class="modal-x" onclick="closeCsvModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div style="font-size:13px;color:var(--purple-medium);line-height:1.6;margin-bottom:14px">
+          Download the <strong>Template</strong> first, fill it in Excel or Google Sheets, then import it here.
+          Each row becomes an item. Existing items with the same name will be updated.
+        </div>
+
+        <button class="csv-btn" onclick="downloadTemplate()" style="width:100%;justify-content:center;margin-bottom:14px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Download CSV Template
+        </button>
+
+        <div class="csv-drop" onclick="document.getElementById('csvFileInput').click()">
+          <div class="csv-drop-ico">📂</div>
+          <div class="csv-drop-label">Tap to select your CSV file</div>
+          <div class="csv-drop-sub">Must match the template columns</div>
+          <input type="file" id="csvFileInput" accept=".csv,text/csv" style="display:none" onchange="handleCsvFile(event)">
+        </div>
+
+        <div class="csv-preview" id="csvPreview"></div>
+
+        <button class="btn-primary" id="csvImportBtn" onclick="doImport()" style="display:none">
+          Import Items
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+</div><!-- /app -->
+
+<script>
+/* ═══════════════════════════════════════════════
+   Config
+═══════════════════════════════════════════════ */
+const GUIDE_URL  = 'CTA_LULA_GUIDE_URL';
+const MAX        = 50;
+const KEY_ITEMS  = 'lsp_items_v2';
+const KEY_STORE  = 'lsp_store';
+
+const CATEGORIES = [
+  'Automotive','Beer','Candy','Grocery','Health','Household',
+  'Ice Cream','Kitchen / Hot Food','Milk','Personal Care',
+  'Snacks','Soda','Tobacco','Wine','Other'
+];
+
+const PROGRAMS = ['Convenience','Kitchen','Beer & Wine','Tobacco','Other'];
+
+const CSV_HEADERS = ['name','category','menu_program','current_stock','par_level','daily_sales_per_day','price','unit'];
+
+/* ═══════════════════════════════════════════════
+   State
+═══════════════════════════════════════════════ */
+let S = { items:[], store:'My Store', isDemo:true };
+let fmChart = null, scanner = null;
+let shownPrompts = new Set();
+let pendingImport = [];
+
+/* ═══════════════════════════════════════════════
+   Demo Data
+═══════════════════════════════════════════════ */
+const DEMO = [
+  { id:'d01', name:'Red Bull Energy 8.4oz',    cat:'Soda',             program:'Convenience',  stock:3,  par:24, sales:9,   price:3.49, unit:'Cans'   },
+  { id:'d02', name:'Marlboro Red Soft Pack',    cat:'Tobacco',          program:'Tobacco',       stock:5,  par:20, sales:6,   price:9.99, unit:'Packs'  },
+  { id:'d03', name:'Modelo Especial 12pk',      cat:'Beer',             program:'Beer & Wine',   stock:10, par:12, sales:4.5, price:15.99,unit:'Cases'  },
+  { id:'d04', name:"Lay's Classic 1.5oz",       cat:'Snacks',           program:'Convenience',  stock:19, par:24, sales:5,   price:1.29, unit:'Units'  },
+  { id:'d05', name:'Breakfast Burrito',         cat:'Kitchen / Hot Food',program:'Kitchen',      stock:8,  par:12, sales:6,   price:4.99, unit:'Portions'},
+  { id:'d06', name:'Monster Energy 16oz',       cat:'Soda',             program:'Convenience',  stock:2,  par:18, sales:3.5, price:3.79, unit:'Cans'   },
+  { id:'d07', name:'Gatorade Fruit Punch 32oz', cat:'Soda',             program:'Convenience',  stock:26, par:24, sales:4,   price:2.99, unit:'Bottles'},
+  { id:'d08', name:'Hot Dog (Roller)',          cat:'Kitchen / Hot Food',program:'Kitchen',      stock:14, par:20, sales:8,   price:1.99, unit:'Units'  },
+  { id:'d09', name:'Newport Menthol 100s',      cat:'Tobacco',          program:'Tobacco',       stock:4,  par:15, sales:5.5, price:10.49,unit:'Packs'  },
+  { id:'d10', name:'Doritos Nacho Cheese 2oz',  cat:'Snacks',           program:'Convenience',  stock:15, par:20, sales:3,   price:1.49, unit:'Units'  },
+];
+
+/* ═══════════════════════════════════════════════
+   Boot
+═══════════════════════════════════════════════ */
+function boot() {
+  const raw  = localStorage.getItem(KEY_ITEMS);
+  const name = localStorage.getItem(KEY_STORE);
+
+  if (raw) {
+    try { S.items = JSON.parse(raw); } catch(e) {}
+    S.isDemo = false;
+  }
+  if (name) { S.store = name; S.isDemo = false; }
+
+  if (S.isDemo) {
+    S.items = DEMO;
+    document.getElementById('demoBanner').classList.add('visible');
+    setTimeout(() => toast('💰',
+      'This demo store moves <strong>~51 units/day</strong> including a kitchen program. See what your store looks like.',
+      null, 7000), 7000);
+  } else {
+    document.getElementById('demoBanner').classList.remove('visible');
+  }
+
+  updateTopbar();
+  renderAll();
+  if (!S.isDemo && !name) setTimeout(openStoreModal, 600);
+}
+
+/* ═══════════════════════════════════════════════
+   Helpers
+═══════════════════════════════════════════════ */
+function uid()    { return Date.now().toString(36) + Math.random().toString(36).slice(2,5); }
+function pct(i)   { return i.par ? i.stock / i.par : 1; }
+function status(i){ const r = pct(i); return r < 0.25 ? 'crit' : r < 1 ? 'low' : 'good'; }
+function daysLeft(i) {
+  if (!i.sales || i.sales <= 0) return null;
+  return Math.max(0, Math.floor(i.stock / i.sales));
+}
+
+function progBadge(program) {
+  const map = {
+    'Kitchen':     ['prog-kitchen', '🍳 Kitchen'],
+    'Beer & Wine': ['prog-beer',    '🍺 Beer & Wine'],
+    'Tobacco':     ['prog-tobacco', '🚬 Tobacco'],
+    'Convenience': ['prog-conv',    'Convenience'],
+    'Other':       ['prog-other',   'Other'],
+  };
+  const [cls, label] = map[program] || map['Other'];
+  return `<span class="prog-badge ${cls}">${label}</span>`;
+}
+
+function persist() {
+  if (!S.isDemo) localStorage.setItem(KEY_ITEMS, JSON.stringify(S.items));
+}
+
+/* ═══════════════════════════════════════════════
+   Demo Flow
+═══════════════════════════════════════════════ */
+function startMyStore() {
+  S.isDemo = false; S.items = [];
+  document.getElementById('demoBanner').classList.remove('visible');
+  persist(); renderAll();
+  setTimeout(openStoreModal, 200);
+}
+function hideDemoBanner() {
+  document.getElementById('demoBanner').classList.remove('visible');
+}
+
+/* ═══════════════════════════════════════════════
+   Navigation
+═══════════════════════════════════════════════ */
+function go(tab) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('view-' + tab).classList.add('active');
+  document.getElementById('nb-' + tab).classList.add('active');
+
+  const showFab = tab === 'dashboard' || tab === 'items';
+  document.getElementById('fabWrap').style.display = showFab ? 'flex' : 'none';
+
+  if (tab === 'dashboard') renderDash();
+  if (tab === 'items')     renderItems();
+  if (tab === 'alerts')    renderAlerts();
+  if (tab === 'insights')  { renderInsights(); triggerInsightsPrompt(); }
+}
+
+/* ═══════════════════════════════════════════════
+   Render All
+═══════════════════════════════════════════════ */
+function renderAll() {
+  renderDash(); renderItems(); renderAlerts(); renderInsights(); updateTopbar();
+}
+
+function updateTopbar() {
+  document.getElementById('topStore').textContent   = S.store;
+  document.getElementById('topCount').textContent   = `${S.items.length} / ${MAX} items`;
+  document.getElementById('itemsBadge').textContent = `${S.items.length} / ${MAX}`;
+}
+
+/* ═══════════════════════════════════════════════
+   Dashboard
+═══════════════════════════════════════════════ */
+function renderDash() {
+  const items = S.items;
+  const crit  = items.filter(i => status(i) === 'crit');
+  const low   = items.filter(i => status(i) === 'low');
+  const good  = items.filter(i => status(i) === 'good');
+
+  document.getElementById('sTotal').textContent = items.length;
+  document.getElementById('sCrit').textContent  = crit.length;
+  document.getElementById('sLow').textContent   = low.length;
+  document.getElementById('sGood').textContent  = good.length;
+
+  const alertCount = crit.length + low.length;
+  const badge = document.getElementById('alertBadge');
+  badge.textContent   = alertCount;
+  badge.style.display = alertCount > 0 ? 'flex' : 'none';
+
+  // Food program banner
+  const hasKitchen = items.some(i => i.program === 'Kitchen');
+  const fb = document.getElementById('foodBanner');
+  if (hasKitchen && !shownPrompts.has('foodBannerDismissed')) {
+    fb.classList.add('visible');
+  } else {
+    fb.classList.remove('visible');
+  }
+
+  renderFMChart();
+  renderRestockList();
+  renderRevGap();
+}
+
+function renderFMChart() {
+  const canvas = document.getElementById('fmChart');
+  const empty  = document.getElementById('chartEmpty');
+  const wrap   = document.getElementById('chartWrap');
+
+  const movers = [...S.items].filter(i => i.sales > 0).sort((a,b) => b.sales - a.sales).slice(0, 8);
+
+  if (movers.length === 0) {
+    wrap.style.display = 'none'; empty.style.display = 'flex';
+    if (fmChart) { fmChart.destroy(); fmChart = null; }
+    return;
+  }
+  wrap.style.display = 'block'; empty.style.display = 'none';
+
+  const labels = movers.map(i => i.name.length > 17 ? i.name.slice(0,16) + '…' : i.name);
+  const data   = movers.map(i => i.sales);
+  const colors = movers.map((item, k) => {
+    if (item.program === 'Kitchen') return `rgba(249,115,22,${(1 - k * 0.06).toFixed(2)})`;
+    return `rgba(165,118,255,${(1 - k * 0.07).toFixed(2)})`;
+  });
+
+  if (fmChart) fmChart.destroy();
+
+  fmChart = new Chart(canvas, {
+    type: 'bar',
+    data: { labels, datasets: [{ data, backgroundColor: colors, borderRadius: 7, borderSkipped: false }] },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.raw} units/day` } }
+      },
+      scales: {
+        x: { grid: { color: 'rgba(232,221,240,.4)' }, ticks: { font: { family:'Inter', size:10 }, color:'#7C5D8A' } },
+        y: { grid: { display: false }, ticks: { font: { family:'Inter', size:11 }, color:'#2C023B' } }
+      }
+    }
+  });
+}
+
+function renderRestockList() {
+  const needs = [...S.items].filter(i => status(i) !== 'good').sort((a,b) => pct(a)-pct(b)).slice(0,4);
+  const el = document.getElementById('restockList');
+
+  if (needs.length === 0) {
+    el.innerHTML = `<div style="background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:18px;text-align:center;font-size:13px;color:var(--purple-medium)">✅ All items at healthy stock levels</div>`;
+    return;
+  }
+  el.innerHTML = needs.map(item => {
+    const st  = status(item);
+    const days = daysLeft(item);
+    const sub  = days !== null ? `~${days}d left · par ${item.par}` : `${item.stock} ${item.unit} · par ${item.par}`;
+    return `<div class="restock-row">
+      <div class="restock-badge ${st === 'crit' ? 'rb-crit' : 'rb-low'}">${st === 'crit' ? '!' : '↓'}</div>
+      <div class="restock-info">
+        <div class="restock-name">${item.name}</div>
+        <div class="restock-meta">${sub}</div>
+      </div>
+      <button class="btn-restock" onclick="quickRestock('${item.id}')">Restock</button>
+    </div>`;
+  }).join('');
+}
+
+function renderRevGap() {
+  const totalSales = S.items.reduce((s, i) => s + (i.sales || 0), 0);
+  const wrap = document.getElementById('revGapWrap');
+
+  if (totalSales === 0 || S.items.length < 3) { wrap.style.display = 'none'; return; }
+
+  const kitchenItems = S.items.filter(i => i.program === 'Kitchen');
+  const kitchenSales = kitchenItems.reduce((s, i) => s + (i.sales || 0), 0);
+  const otherSales   = totalSales - kitchenSales;
+
+  // Kitchen items get 25% delivery rate, others 15%; avg $8 delivery margin
+  const monthly = Math.round((kitchenSales * 0.25 + otherSales * 0.15) * 30 * 8);
+  const fastCt  = S.items.filter(i => (i.sales || 0) >= 3).length;
+
+  const detail = kitchenSales > 0
+    ? `${fastCt} fast-moving items including <strong>${kitchenItems.length} kitchen item${kitchenItems.length>1?'s':''}</strong>. Kitchen delivery converts at 2× the rate of packaged goods.`
+    : `Your ${fastCt} fast-moving items move ~${Math.round(totalSales)} units/day. A 15% delivery conversion could unlock this revenue.`;
+
+  document.getElementById('revGapAmt').textContent  = `$${monthly.toLocaleString()}`;
+  document.getElementById('revGapSub').innerHTML    = detail;
+  wrap.style.display = 'block';
+}
+
+/* ═══════════════════════════════════════════════
+   Items List
+═══════════════════════════════════════════════ */
+function renderItems() {
+  const q   = (document.getElementById('searchInput')?.value || '').toLowerCase();
+  const cat = document.getElementById('catFilter')?.value || '';
+
+  let items = [...S.items];
+  if (q)   items = items.filter(i => i.name.toLowerCase().includes(q));
+  if (cat) items = items.filter(i => i.cat === cat);
+
+  const ord = { crit:0, low:1, good:2 };
+  items.sort((a, b) => (ord[status(a)] - ord[status(b)]) || a.name.localeCompare(b.name));
+
+  const el = document.getElementById('itemsList');
+
+  if (S.items.length === 0) {
+    el.innerHTML = `<div class="empty">
+      <div class="empty-ico">📦</div>
+      <div class="empty-title">No items yet</div>
+      <div class="empty-sub">Add your top-selling items, or <strong>download the CSV template</strong> to bulk-import your catalog.</div>
+    </div>`;
+    return;
+  }
+  if (items.length === 0) {
+    el.innerHTML = `<div style="text-align:center;padding:32px;font-size:13px;color:var(--purple-medium)">No items match your filter.</div>`;
+    return;
+  }
+
+  const pipMap = { good:'pip-good', low:'pip-low', crit:'pip-crit' };
+  const barMap = { good:'bar-good', low:'bar-low', crit:'bar-crit' };
+  const valMap = { good:'stock-good', low:'stock-low', crit:'stock-crit' };
+
+  el.innerHTML = `<div class="item-list">${items.map(item => {
+    const st   = status(item);
+    const fill = Math.min(100, Math.round(pct(item) * 100));
+    const days = daysLeft(item);
+    const priceStr = item.price ? `$${parseFloat(item.price).toFixed(2)}` : '';
+    return `<div class="item-card" onclick="openEdit('${item.id}')">
+      <div class="status-pip ${pipMap[st]}"></div>
+      <div class="item-body">
+        <div class="item-name">${item.name}</div>
+        <div class="item-meta">
+          ${progBadge(item.program || 'Convenience')}
+          <span>${item.cat}${days !== null ? ` · ~${days}d` : ''}${priceStr ? ` · ${priceStr}` : ''}</span>
+        </div>
+        <div class="stock-bar-wrap">
+          <div class="stock-bar ${barMap[st]}" style="width:${fill}%"></div>
+        </div>
+      </div>
+      <div class="item-right">
+        <div class="item-stock ${valMap[st]}">${item.stock}</div>
+        <div class="item-par">par ${item.par}</div>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+/* ═══════════════════════════════════════════════
+   Alerts
+═══════════════════════════════════════════════ */
+function renderAlerts() {
+  const crit = S.items.filter(i => status(i) === 'crit').sort((a,b) => pct(a)-pct(b));
+  const low  = S.items.filter(i => status(i) === 'low').sort((a,b) => pct(a)-pct(b));
+  const el   = document.getElementById('alertsList');
+
+  if (crit.length === 0 && low.length === 0) {
+    el.innerHTML = `<div class="empty"><div class="empty-ico">✅</div><div class="empty-title">All clear</div><div class="empty-sub">No items below par level.</div></div>`;
+    return;
+  }
+
+  const alertCard = item => {
+    const days   = daysLeft(item);
+    const detail = days !== null
+      ? `Est. <strong>${days} day${days !== 1 ? 's' : ''}</strong> until stockout`
+      : `${item.stock} ${item.unit} remaining`;
+    return `<div class="restock-row">
+      <div class="restock-info">
+        <div class="restock-name">${item.name}</div>
+        <div class="restock-meta" style="margin-top:3px">${detail} · par ${item.par} ${item.unit}</div>
+      </div>
+      <button class="btn-restock" onclick="quickRestock('${item.id}')">Restock</button>
+    </div>`;
+  };
+
+  let html = '';
+  if (crit.length > 0) { html += `<div class="alert-group-lbl">🔴 Critical — Below 25% Par</div>`; html += crit.map(alertCard).join(''); }
+  if (low.length  > 0) { html += `<div class="alert-group-lbl">🟡 Low — Below Par Level</div>`;    html += low.map(alertCard).join(''); }
+  el.innerHTML = html;
+}
+
+/* ═══════════════════════════════════════════════
+   Insights
+═══════════════════════════════════════════════ */
+function renderInsights() {
+  const items = S.items;
+  if (items.length === 0) {
+    document.getElementById('insightGlance').textContent = 'Add items to see your store insights.';
+    document.getElementById('insightTop3').innerHTML = '<div style="font-size:13px;color:var(--purple-medium)">No items yet.</div>';
+    return;
+  }
+
+  const cats       = {};
+  const progs      = {};
+  items.forEach(i => {
+    cats[i.cat]   = (cats[i.cat]   || 0) + 1;
+    progs[i.program||'Convenience'] = (progs[i.program||'Convenience'] || 0) + 1;
+  });
+  const topCat     = Object.entries(cats).sort((a,b) => b[1]-a[1])[0];
+  const critCount  = items.filter(i => status(i) === 'crit').length;
+  const totalSales = items.reduce((s,i) => s + (i.sales || 0), 0);
+  const kitchenCt  = progs['Kitchen'] || 0;
+
+  document.getElementById('insightGlance').innerHTML = [
+    `Tracking <strong>${items.length} items</strong> across ${Object.keys(cats).length} categories.`,
+    `Top category: <strong>${topCat[0]}</strong> (${topCat[1]}).`,
+    kitchenCt > 0 ? `<span style="color:var(--orange)">🍳 <strong>${kitchenCt} kitchen item${kitchenCt>1?'s':''}</strong> — your food program is a delivery advantage.</span>` : '',
+    critCount > 0 ? `<span style="color:var(--red)"><strong>${critCount} item${critCount>1?'s':''}</strong> at critical stock.</span>` : '',
+    totalSales > 0 ? `~<strong>${Math.round(totalSales)} units/day</strong> across all tracked items.` : '',
+  ].filter(Boolean).join('<br>');
+
+  const top3    = [...items].filter(i => i.sales > 0).sort((a,b) => b.sales-a.sales).slice(0,3);
+  const medals  = ['🥇','🥈','🥉'];
+  document.getElementById('insightTop3').innerHTML = top3.length > 0
+    ? top3.map((item, k) => `<div class="podium-row">
+        <span class="podium-medal">${medals[k]}</span>
+        <div class="podium-info">
+          <div class="podium-name">${item.name}</div>
+          <div class="podium-cat">${item.cat} · ${progBadge(item.program||'Convenience')}</div>
+        </div>
+        <div>
+          <div class="podium-val">${item.sales}</div>
+          <div class="podium-unit">units/day</div>
+        </div>
+      </div>`).join('')
+    : '<div style="font-size:13px;color:var(--purple-medium)">Add daily sales to see top movers.</div>';
+}
+
+/* ═══════════════════════════════════════════════
+   CRUD
+═══════════════════════════════════════════════ */
+function openAdd() {
+  if (!S.isDemo && S.items.length >= MAX) {
+    toast('🔓', `You've reached ${MAX} items. Join the Lula program to manage your full catalog and enable delivery.`, GUIDE_URL, 5500);
+    return;
+  }
+  document.getElementById('itemModalTitle').textContent = 'Add Item';
+  document.getElementById('editId').value   = '';
+  document.getElementById('fName').value    = '';
+  document.getElementById('fCat').value     = 'Soda';
+  document.getElementById('fProgram').value = 'Convenience';
+  document.getElementById('fStock').value   = '';
+  document.getElementById('fPar').value     = '';
+  document.getElementById('fSales').value   = '';
+  document.getElementById('fPrice').value   = '';
+  document.getElementById('fUnit').value    = 'Units';
+  document.getElementById('deleteBtn').style.display = 'none';
+  stopScan();
+  document.getElementById('itemModal').classList.add('open');
+  setTimeout(() => document.getElementById('fName').focus(), 350);
+}
+
+function openEdit(id) {
+  const item = S.items.find(i => i.id === id);
+  if (!item) return;
+  document.getElementById('itemModalTitle').textContent = 'Edit Item';
+  document.getElementById('editId').value   = id;
+  document.getElementById('fName').value    = item.name;
+  document.getElementById('fCat').value     = item.cat;
+  document.getElementById('fProgram').value = item.program || 'Convenience';
+  document.getElementById('fStock').value   = item.stock;
+  document.getElementById('fPar').value     = item.par;
+  document.getElementById('fSales').value   = item.sales || '';
+  document.getElementById('fPrice').value   = item.price || '';
+  document.getElementById('fUnit').value    = item.unit;
+  document.getElementById('deleteBtn').style.display = 'block';
+  stopScan();
+  document.getElementById('itemModal').classList.add('open');
+}
+
+function closeItemModal(e) {
+  if (e && e.target !== document.getElementById('itemModal')) return;
+  stopScan();
+  document.getElementById('itemModal').classList.remove('open');
+}
+
+function saveItem() {
+  const name    = document.getElementById('fName').value.trim();
+  const cat     = document.getElementById('fCat').value;
+  const program = document.getElementById('fProgram').value;
+  const stock   = parseFloat(document.getElementById('fStock').value) || 0;
+  const par     = parseFloat(document.getElementById('fPar').value)   || 0;
+  const sales   = parseFloat(document.getElementById('fSales').value) || 0;
+  const price   = parseFloat(document.getElementById('fPrice').value) || 0;
+  const unit    = document.getElementById('fUnit').value;
+  const id      = document.getElementById('editId').value;
+
+  if (!name) { document.getElementById('fName').focus(); return; }
+  if (!par)  { document.getElementById('fPar').focus();  return; }
+
+  if (S.isDemo) { S.isDemo = false; S.items = []; document.getElementById('demoBanner').classList.remove('visible'); }
+
+  if (id) {
+    const idx = S.items.findIndex(i => i.id === id);
+    if (idx !== -1) S.items[idx] = { ...S.items[idx], name, cat, program, stock, par, sales, price, unit };
+  } else {
+    S.items.push({ id: uid(), name, cat, program, stock, par, sales, price, unit });
+    triggerMilestonePrompt(program);
+  }
+
+  persist();
+  document.getElementById('itemModal').classList.remove('open');
+  renderAll();
+}
+
+function deleteItem() {
+  const id = document.getElementById('editId').value;
+  if (!id) return;
+  S.items = S.items.filter(i => i.id !== id);
+  persist();
+  document.getElementById('itemModal').classList.remove('open');
+  renderAll();
+}
+
+function quickRestock(id) {
+  const item = S.items.find(i => i.id === id);
+  if (!item) return;
+  item.stock = item.par;
+  persist(); renderAll();
+  if (!shownPrompts.has('restock')) {
+    shownPrompts.add('restock');
+    setTimeout(() => toast('💡',
+      `<strong>${item.name}</strong> restocked! Fast movers like this could trigger online demand. Enable delivery to capture it.`,
+      GUIDE_URL, 5500), 400);
+  }
+}
+
+function onProgramChange(sel) {
+  if (sel.value === 'Kitchen') {
+    sel.style.borderColor = 'var(--orange)';
+    sel.style.background  = 'var(--orange-light)';
+    if (!shownPrompts.has('kitchenPick')) {
+      shownPrompts.add('kitchenPick');
+      setTimeout(() => toast('🍳',
+        `Kitchen items deliver at <strong>2× the rate</strong> of packaged goods. You're on the right track.`,
+        null, 4500), 300);
+    }
+  } else {
+    sel.style.borderColor = '';
+    sel.style.background  = '';
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   Store Modal
+═══════════════════════════════════════════════ */
+function openStoreModal() {
+  document.getElementById('storeInput').value = S.store === 'My Store' ? '' : S.store;
+  document.getElementById('storeModal').classList.add('open');
+  setTimeout(() => document.getElementById('storeInput').focus(), 350);
+}
+function closeStoreModal(e) {
+  if (e && e.target !== document.getElementById('storeModal')) return;
+  document.getElementById('storeModal').classList.remove('open');
+}
+function saveStore() {
+  const val = document.getElementById('storeInput').value.trim();
+  if (!val) return;
+  S.store = val;
+  localStorage.setItem(KEY_STORE, val);
+  closeStoreModal();
+  updateTopbar();
+  toast('🏪', `Store set to <strong>${val}</strong>. Your dashboard is ready.`, null, 3000);
+}
+
+/* ═══════════════════════════════════════════════
+   CSV — Template Download
+═══════════════════════════════════════════════ */
+function downloadTemplate() {
+  const header  = CSV_HEADERS.join(',');
+  const example = [
+    '"Red Bull Energy 8.4oz","Soda","Convenience","24","12","8","3.49","Cans"',
+    '"Breakfast Burrito","Kitchen / Hot Food","Kitchen","10","15","6","4.99","Portions"',
+    '"Marlboro Red Soft Pack","Tobacco","Tobacco","8","20","5","9.99","Packs"',
+    '"Modelo Especial 12pk","Beer","Beer & Wine","6","12","3","15.99","Cases"',
+  ].join('\n');
+  const csv  = header + '\n' + example;
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = 'lula_inventory_template.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('📄', 'Template downloaded. Fill it in, then use <strong>Import CSV</strong> to load your items.', null, 4000);
+}
+
+/* ═══════════════════════════════════════════════
+   CSV — Export Current Items
+═══════════════════════════════════════════════ */
+function exportCSV() {
+  if (S.items.length === 0) {
+    toast('⚠️', 'No items to export yet. Add some items first.', null, 3000);
+    return;
+  }
+  const rows = [CSV_HEADERS.join(',')];
+  S.items.forEach(item => {
+    rows.push([
+      `"${(item.name || '').replace(/"/g, '""')}"`,
+      `"${item.cat    || ''}"`,
+      `"${item.program|| 'Convenience'}"`,
+      item.stock  || 0,
+      item.par    || 0,
+      item.sales  || 0,
+      item.price  || '',
+      `"${item.unit   || 'Units'}"`,
+    ].join(','));
+  });
+  const csv  = rows.join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = `lula_inventory_${S.store.replace(/\s+/g,'_')}_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('✅', `Exported <strong>${S.items.length} items</strong> to CSV.`, null, 3000);
+}
+
+/* ═══════════════════════════════════════════════
+   CSV — Import Modal
+═══════════════════════════════════════════════ */
+function openImportModal() {
+  pendingImport = [];
+  document.getElementById('csvPreview').classList.remove('visible');
+  document.getElementById('csvImportBtn').style.display = 'none';
+  document.getElementById('csvFileInput').value = '';
+  document.getElementById('csvModal').classList.add('open');
+}
+function closeCsvModal(e) {
+  if (e && e.target !== document.getElementById('csvModal')) return;
+  document.getElementById('csvModal').classList.remove('open');
+}
+
+function handleCsvFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => parseCsvForImport(e.target.result);
+  reader.readAsText(file);
+}
+
+function parseCsvForImport(text) {
+  const lines  = text.trim().split(/\r?\n/);
+  if (lines.length < 2) {
+    toast('⚠️', 'CSV file appears empty or has no data rows.', null, 3500);
+    return;
+  }
+
+  const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g,'').toLowerCase());
+  const nameIdx = headers.findIndex(h => h === 'name');
+  const catIdx  = headers.findIndex(h => h.includes('category'));
+  const progIdx = headers.findIndex(h => h.includes('program') || h.includes('menu'));
+  const stockIdx= headers.findIndex(h => h.includes('stock') || h.includes('current'));
+  const parIdx  = headers.findIndex(h => h.includes('par') || h.includes('level'));
+  const salesIdx= headers.findIndex(h => h.includes('sales') || h.includes('daily'));
+  const priceIdx= headers.findIndex(h => h.includes('price'));
+  const unitIdx = headers.findIndex(h => h.includes('unit'));
+
+  if (nameIdx === -1) {
+    toast('⚠️', 'CSV must have a <strong>name</strong> column. Download the template to see the correct format.', null, 4500);
+    return;
+  }
+
+  const parsed = [];
+  for (let i = 1; i < lines.length; i++) {
+    const cols = splitCsvLine(lines[i]);
+    const name = (cols[nameIdx] || '').trim();
+    if (!name) continue;
+
+    const cat   = catIdx  >= 0 ? (cols[catIdx]  || '').trim() : 'Other';
+    const prog  = progIdx >= 0 ? (cols[progIdx] || '').trim() : 'Convenience';
+    const stock = stockIdx >= 0 ? parseFloat(cols[stockIdx]) || 0 : 0;
+    const par   = parIdx   >= 0 ? parseFloat(cols[parIdx])   || 0 : 0;
+    const sales = salesIdx >= 0 ? parseFloat(cols[salesIdx]) || 0 : 0;
+    const price = priceIdx >= 0 ? parseFloat(cols[priceIdx]) || 0 : 0;
+    const unit  = unitIdx  >= 0 ? (cols[unitIdx] || '').trim() : 'Units';
+
+    const resolvedCat  = CATEGORIES.find(c => c.toLowerCase() === cat.toLowerCase())   || 'Other';
+    const resolvedProg = PROGRAMS.find(p => p.toLowerCase() === prog.toLowerCase())    || 'Convenience';
+
+    parsed.push({ id: uid(), name, cat: resolvedCat, program: resolvedProg, stock, par, sales, price, unit });
+  }
+
+  if (parsed.length === 0) {
+    toast('⚠️', 'No valid rows found in the CSV.', null, 3500);
+    return;
+  }
+
+  pendingImport = parsed;
+  const preview = document.getElementById('csvPreview');
+  preview.innerHTML = `<strong>${parsed.length} items ready to import</strong><br>` +
+    parsed.slice(0,5).map(i => `${i.name} · ${i.cat}`).join('<br>') +
+    (parsed.length > 5 ? `<br>…and ${parsed.length - 5} more` : '');
+  preview.classList.add('visible');
+  document.getElementById('csvImportBtn').style.display = 'block';
+}
+
+function splitCsvLine(line) {
+  const result = [];
+  let cur = '', inQ = false;
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i];
+    if (c === '"') { inQ = !inQ; continue; }
+    if (c === ',' && !inQ) { result.push(cur); cur = ''; continue; }
+    cur += c;
+  }
+  result.push(cur);
+  return result;
+}
+
+function doImport() {
+  if (pendingImport.length === 0) return;
+
+  if (S.isDemo) { S.isDemo = false; S.items = []; document.getElementById('demoBanner').classList.remove('visible'); }
+
+  let added = 0, updated = 0;
+  pendingImport.forEach(item => {
+    const existing = S.items.find(i => i.name.toLowerCase() === item.name.toLowerCase());
+    if (existing) {
+      Object.assign(existing, { ...item, id: existing.id });
+      updated++;
+    } else if (S.items.length < MAX) {
+      S.items.push(item);
+      added++;
+    }
+  });
+
+  persist();
+  document.getElementById('csvModal').classList.remove('open');
+  renderAll();
+
+  const skipped = pendingImport.length - added - updated;
+  let msg = `Imported <strong>${added} new</strong> item${added!==1?'s':''}`;
+  if (updated > 0) msg += `, updated <strong>${updated}</strong>`;
+  if (skipped > 0) msg += `. ${skipped} skipped (50-item limit reached)`;
+  msg += '.';
+  toast('✅', msg, null, 5000);
+  pendingImport = [];
+
+  // Switch to items tab to show the result
+  go('items');
+}
+
+/* ═══════════════════════════════════════════════
+   Barcode Scanner
+═══════════════════════════════════════════════ */
+const QR_CDN = 'https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js';
+
+function loadQrLib(cb) {
+  if (window.Html5Qrcode) { cb(); return; }
+  const s = document.createElement('script'); s.src = QR_CDN; s.onload = cb;
+  document.head.appendChild(s);
+}
+
+function openScanFAB() { openAdd(); setTimeout(startScan, 450); }
+
+function startScan() {
+  const box = document.getElementById('scanner-box');
+  box.innerHTML = ''; box.classList.add('visible');
+  document.getElementById('scanBtn').style.display = 'none';
+
+  loadQrLib(() => {
+    scanner = new Html5Qrcode('scanner-box');
+    scanner.start(
+      { facingMode: 'environment' },
+      { fps: 10, qrbox: { width: 260, height: 100 } },
+      onBarcode, () => {}
+    ).catch(() => {
+      stopScan();
+      toast('📷', 'Allow camera access and try scanning again.', null, 3500);
+    });
+  });
+}
+
+function stopScan() {
+  if (scanner) { scanner.stop().catch(()=>{}); scanner = null; }
+  const box = document.getElementById('scanner-box');
+  box.classList.remove('visible'); box.innerHTML = '';
+  const btn = document.getElementById('scanBtn');
+  if (btn) btn.style.display = '';
+}
+
+async function onBarcode(code) {
+  stopScan();
+  const nameEl = document.getElementById('fName');
+  nameEl.value = 'Looking up product…'; nameEl.disabled = true;
+  try {
+    const res  = await fetch(`https://world.openfoodfacts.org/api/v0/product/${code}.json`);
+    const data = await res.json();
+    if (data.status === 1 && data.product) {
+      const p    = data.product;
+      const full = [p.brands, p.product_name_en || p.product_name, p.quantity].filter(Boolean).join(' ').trim().slice(0, 55);
+      const cats = (p.categories || '').toLowerCase();
+
+      let cat = 'Other', prog = 'Convenience';
+      if (/tobacco|cigarette/.test(cats))                                         { cat = 'Tobacco';    prog = 'Tobacco'; }
+      else if (/beer|ale|lager/.test(cats))                                        { cat = 'Beer';       prog = 'Beer & Wine'; }
+      else if (/wine|spirits/.test(cats))                                          { cat = 'Wine';       prog = 'Beer & Wine'; }
+      else if (/beverage|energy|soda|cola|water|juice|sport/.test(cats))           { cat = 'Soda'; }
+      else if (/snack|chip|cracker|candy|chocolate/.test(cats))                    { cat = 'Snacks'; }
+      else if (/dairy|milk|cheese|yogurt|ice cream/.test(cats))                    { cat = 'Milk'; }
+      else if (/frozen/.test(cats))                                                { cat = 'Ice Cream'; }
+      else if (/personal care|beauty|cosmetic|hygiene/.test(cats))                 { cat = 'Personal Care'; }
+      else if (/household|cleaning/.test(cats))                                    { cat = 'Household'; }
+      else if (/grocery|bread|cereal|canned/.test(cats))                           { cat = 'Grocery'; }
+
+      nameEl.value = full || code;
+      document.getElementById('fCat').value     = cat;
+      document.getElementById('fProgram').value = prog;
+      toast('✅', `Found: <strong>${full || code}</strong>. Fill in stock and par level.`, null, 3500);
+    } else {
+      nameEl.value = '';
+      toast('🔍', 'Product not in database. Enter the name manually.', null, 3500);
+    }
+  } catch {
+    nameEl.value = '';
+    toast('⚠️', 'Could not look up product. Enter name manually.', null, 3000);
+  }
+  nameEl.disabled = false; nameEl.focus();
+}
+
+/* ═══════════════════════════════════════════════
+   Contextual Prompts
+═══════════════════════════════════════════════ */
+function triggerMilestonePrompt(program) {
+  const n = S.items.length;
+  if (program === 'Kitchen' && !shownPrompts.has('firstKitchen')) {
+    shownPrompts.add('firstKitchen');
+    setTimeout(() => toast('🍳',
+      `Kitchen item added! Hot food on Lula delivery converts at <strong>2× the rate</strong> of packaged goods. Your food program is a real advantage.`,
+      GUIDE_URL, 6000), 400);
+    return;
+  }
+  if (n === 5 && !shownPrompts.has('m5')) {
+    shownPrompts.add('m5');
+    setTimeout(() => toast('📊', `5 items added! Add <strong>daily sales</strong> to each to see your fast mover chart.`, null, 4500), 400);
+  }
+  if (n === 15 && !shownPrompts.has('m15')) {
+    shownPrompts.add('m15');
+    setTimeout(() => toast('🚀',
+      `Nice catalog! These items could be ordered online. <strong>Lula enables delivery for c-stores like yours.</strong>`,
+      GUIDE_URL, 6000), 400);
+  }
+  if (n === 30 && !shownPrompts.has('m30')) {
+    shownPrompts.add('m30');
+    setTimeout(() => toast('🔓', `30 items tracked. Enable delivery to turn this into online revenue.`, GUIDE_URL, 5500), 400);
+  }
+}
+
+function triggerInsightsPrompt() {
+  if (S.items.length >= 3 && !shownPrompts.has('insights')) {
+    shownPrompts.add('insights');
+    setTimeout(() => toast('💡',
+      `Advanced trends and delivery revenue breakdown are inside the Lula program. Liking the tracker?`,
+      GUIDE_URL, 5500), 1200);
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   Toasts
+═══════════════════════════════════════════════ */
+function toast(ico, msg, ctaUrl, ms = 4000) {
+  const wrap = document.getElementById('toasts');
+  const id   = 't_' + Date.now();
+  const cta  = ctaUrl ? `<a href="${ctaUrl}" class="toast-link" target="_blank">See the Lula program →</a>` : '';
+  const el   = document.createElement('div');
+  el.className = 'toast'; el.id = id;
+  el.innerHTML = `<div class="toast-ico">${ico}</div><div class="toast-body">${msg}${cta}</div><button class="toast-x" onclick="document.getElementById('${id}')?.remove()">×</button>`;
+  wrap.appendChild(el);
+  setTimeout(() => document.getElementById(id)?.remove(), ms);
+}
+
+/* ═══════════════════════════════════════════════
+   Keyboard
+═══════════════════════════════════════════════ */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeItemModal(); closeStoreModal(); closeCsvModal(); stopScan(); }
+  if (e.key === 'Enter' && document.getElementById('storeModal').classList.contains('open')) saveStore();
+});
+
+document.addEventListener('DOMContentLoaded', boot);
+</script>
+</body>
+</html>

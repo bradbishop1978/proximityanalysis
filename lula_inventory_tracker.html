@@ -619,6 +619,24 @@
         transform:none; width:320px;
       }
     }
+
+    /* ── Sync Indicator ── */
+    .sync-indicator {
+      display:none; align-items:center; justify-content:center;
+      width:26px; height:26px; font-size:15px; cursor:default; line-height:1;
+    }
+    .sync-indicator.syncing    { color:var(--purple-medium); display:inline-flex; animation:spin-indicator 1.2s linear infinite; }
+    .sync-indicator.synced     { color:var(--purple-primary); display:inline-flex; }
+    .sync-indicator.sync-error { color:var(--amber);          display:inline-flex; }
+    @keyframes spin-indicator  { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+    /* ── Phone / OTP / Restore modal extra ── */
+    .otp-input-large {
+      font-size:28px; letter-spacing:.2em; text-align:center;
+      font-family:'Gabarito',sans-serif; font-weight:700;
+    }
+    .modal-note { font-size:12px; color:var(--purple-medium); line-height:1.55; margin-bottom:14px; }
+    .modal-error { font-size:12px; color:var(--red); margin-bottom:12px; display:none; text-align:center; }
   </style>
 </head>
 
@@ -741,6 +759,7 @@
         </svg>
         Add Item
       </button>
+      <span id="syncIndicator" class="sync-indicator" title=""></span>
       <button class="topbar-btn" onclick="openStoreModal()" title="Store settings">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <circle cx="12" cy="12" r="3"/>
@@ -754,7 +773,10 @@
   <div class="demo-banner" id="demoBanner">
     <div class="demo-dot"></div>
     <span>Viewing <strong>Sunrise Corner</strong> — demo store</span>
-    <span class="demo-cta" onclick="startMyStore()">Use my store →</span>
+    <span style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0">
+      <span class="demo-cta" onclick="startMyStore()">Set up mine →</span>
+      <span style="font-size:10px;color:var(--purple-medium);cursor:pointer;white-space:nowrap" onclick="openRestoreModal()">Restore existing →</span>
+    </span>
     <button class="demo-x" onclick="hideDemoBanner()">×</button>
   </div>
 
@@ -1150,6 +1172,10 @@
         </div>
         <button class="btn-primary" onclick="saveStore()">Save Store</button>
         <button class="btn-ghost" onclick="closeStoreModal()">Cancel</button>
+        <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border)">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--purple-medium);margin-bottom:8px">Cross-Device Access</div>
+          <div id="syncSectionContent"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -1194,6 +1220,83 @@
     </div>
   </div>
 
+  <!-- ══ Phone Capture Modal ══ -->
+  <div class="modal-bg" id="phoneModal" onclick="closePhoneModal(event)">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-head">
+        <span class="modal-title">Save across devices</span>
+        <button class="modal-x" onclick="closePhoneModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="setup-head">
+          <div class="setup-emoji">📱</div>
+          <h2>Access on any device</h2>
+          <p>Enter your mobile number to save your store to the cloud. Open on phone, tablet, or computer — your items stay in sync.</p>
+        </div>
+        <div class="field">
+          <label>Mobile Number</label>
+          <input type="tel" id="phoneInput" placeholder="+1 (555) 000-0000" inputmode="tel" autocomplete="tel">
+          <div class="field-hint">We'll send a one-time code to verify. No account needed.</div>
+        </div>
+        <div id="phoneSendError" class="modal-error"></div>
+        <button class="btn-primary" id="phoneSendBtn" onclick="submitPhone()">Send Code →</button>
+        <button class="btn-ghost" onclick="closePhoneModal()">Skip for now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ OTP Verify Modal ══ -->
+  <div class="modal-bg" id="otpModal" onclick="closeOtpModal(event)">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-head">
+        <span class="modal-title">Enter your code</span>
+        <button class="modal-x" onclick="closeOtpModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="setup-head">
+          <div class="setup-emoji">🔐</div>
+          <h2>Check your texts</h2>
+          <p id="otpHint">We sent a 6-digit code to your number.</p>
+        </div>
+        <div class="field">
+          <label>Verification Code</label>
+          <input type="tel" id="otpInput" class="otp-input-large" placeholder="000000" maxlength="6" inputmode="numeric" autocomplete="one-time-code">
+        </div>
+        <div id="otpError" class="modal-error"></div>
+        <button class="btn-primary" id="otpVerifyBtn" onclick="submitOtp()">Verify →</button>
+        <button class="btn-ghost" onclick="resendOtp()">Didn't get it? Resend →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Restore Modal ══ -->
+  <div class="modal-bg" id="restoreModal" onclick="closeRestoreModal(event)">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-head">
+        <span class="modal-title">Restore your store</span>
+        <button class="modal-x" onclick="closeRestoreModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="setup-head">
+          <div class="setup-emoji">🔄</div>
+          <h2>Access on this device</h2>
+          <p>Enter the mobile number you used to set up your store. We'll send a code to verify.</p>
+        </div>
+        <div class="field">
+          <label>Mobile Number</label>
+          <input type="tel" id="restorePhoneInput" placeholder="+1 (555) 000-0000" inputmode="tel" autocomplete="tel">
+          <div class="field-hint">Same number you used to create your store.</div>
+        </div>
+        <div id="restoreSendError" class="modal-error"></div>
+        <button class="btn-primary" id="restoreSendBtn" onclick="submitRestorePhone()">Send Code →</button>
+        <button class="btn-ghost" onclick="closeRestoreModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
 </div><!-- /app -->
 
 <script>
@@ -1205,6 +1308,8 @@ const MAX        = 50;
 const KEY_ITEMS  = 'lsp_items_v2';
 const KEY_STORE  = 'lsp_store';
 const KEY_FRAN   = 'lsp_franchise';
+const KEY_PHONE  = 'lsp_phone';
+const WORKER_URL = 'https://stock-pulse-sync.bernard-penoliar.workers.dev'; // ← update after deploy
 
 const DISCLAIMERS = {
   kkc:          'Krispy Krunchy Chicken®',
@@ -1241,7 +1346,7 @@ const CSV_HEADERS = ['name','category','menu_program','current_stock','par_level
 /* ═══════════════════════════════════════════════
    State
 ═══════════════════════════════════════════════ */
-let S = { items:[], store:'My Store', franchise:'kkc', isDemo:true };
+let S = { items:[], store:'My Store', franchise:'kkc', isDemo:true, phone:null, lastModified:0 };
 let fmChart = null;
 let shownPrompts = new Set();
 let pendingImport = [];
@@ -1268,16 +1373,18 @@ const DEMO = [
    Boot
 ═══════════════════════════════════════════════ */
 function boot() {
-  const raw  = localStorage.getItem(KEY_ITEMS);
-  const name = localStorage.getItem(KEY_STORE);
-  const fran = localStorage.getItem(KEY_FRAN);
+  const raw   = localStorage.getItem(KEY_ITEMS);
+  const name  = localStorage.getItem(KEY_STORE);
+  const fran  = localStorage.getItem(KEY_FRAN);
+  const phone = localStorage.getItem(KEY_PHONE);
 
   if (raw) {
     try { S.items = JSON.parse(raw); } catch(e) {}
     S.isDemo = false;
   }
   if (name) { S.store = name; S.isDemo = false; }
-  if (fran !== null) S.franchise = fran;
+  if (fran  !== null) S.franchise = fran;
+  if (phone)        { S.phone = phone; fetchCloudStore(phone); } // background — silent on offline
 
   if (S.isDemo) {
     S.items     = DEMO;
@@ -1319,7 +1426,10 @@ function progBadge(program) {
 }
 
 function persist() {
-  if (!S.isDemo) localStorage.setItem(KEY_ITEMS, JSON.stringify(S.items));
+  if (!S.isDemo) {
+    localStorage.setItem(KEY_ITEMS, JSON.stringify(S.items));
+    scheduleSync();
+  }
 }
 
 /* ═══════════════════════════════════════════════
@@ -1825,8 +1935,23 @@ function onProgramChange(sel) {
    Store Modal
 ═══════════════════════════════════════════════ */
 function openStoreModal() {
-  document.getElementById('storeInput').value    = S.store === 'My Store' ? '' : S.store;
+  document.getElementById('storeInput').value     = S.store === 'My Store' ? '' : S.store;
   document.getElementById('franchiseInput').value = S.franchise || '';
+  // Sync section
+  const sc = document.getElementById('syncSectionContent');
+  if (sc) {
+    if (S.phone) {
+      sc.innerHTML = `<div style="font-size:12px;color:var(--purple-medium);line-height:1.6;margin-bottom:8px">
+        ☁ Synced — <strong>${S.phone}</strong><br>Your store is accessible on any device with this number.
+      </div>
+      <button class="btn-ghost" onclick="closeStoreModal();setTimeout(openRestoreModal,200)" style="margin-top:0;font-size:12px;padding:9px">Access on another device →</button>`;
+    } else {
+      sc.innerHTML = `<div style="font-size:12px;color:var(--purple-medium);line-height:1.6;margin-bottom:8px">
+        Link your phone number to open your store on any device — no account needed.
+      </div>
+      <button class="btn-ghost" onclick="closeStoreModal();setTimeout(openPhoneModal,200)" style="margin-top:0;font-size:12px;padding:9px">Link phone number →</button>`;
+    }
+  }
   document.getElementById('storeModal').classList.add('open');
   setTimeout(() => document.getElementById('storeInput').focus(), 350);
 }
@@ -1858,6 +1983,13 @@ function saveStore() {
     setTimeout(() => toast(brand.emoji,
       `${brand.label} on Lula delivery typically generates <strong>$${brand.aov} avg order value</strong>. Your kitchen program is a real delivery advantage.`,
       GUIDE_URL, 6000), 1500);
+  }
+
+  // Prompt phone link if not yet connected; otherwise push update
+  if (!S.phone) {
+    setTimeout(openPhoneModal, 900);
+  } else {
+    scheduleSync();
   }
 }
 
@@ -2093,11 +2225,235 @@ function toast(ico, msg, ctaUrl, ms = 4000) {
 }
 
 /* ═══════════════════════════════════════════════
+   Cloud Sync
+═══════════════════════════════════════════════ */
+let syncTimer = null;
+
+function scheduleSync() {
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(pushToCloud, 1500);
+}
+
+async function pushToCloud() {
+  if (!S.phone || S.isDemo) return;
+  setSyncStatus('syncing');
+  try {
+    const payload = {
+      items:        S.items,
+      store:        S.store,
+      franchise:    S.franchise,
+      lastModified: Date.now(),
+    };
+    S.lastModified = payload.lastModified;
+    const res = await fetch(`${WORKER_URL}/store/${encodeURIComponent(S.phone)}`, {
+      method:  'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(payload),
+    });
+    setSyncStatus(res.ok ? 'synced' : 'error');
+  } catch(e) {
+    setSyncStatus('error');
+  }
+}
+
+async function fetchCloudStore(phone) {
+  try {
+    const res = await fetch(`${WORKER_URL}/store/${encodeURIComponent(phone)}`);
+    if (!res.ok) return;
+    const cloud = await res.json();
+    if (cloud && cloud.lastModified && cloud.lastModified > (S.lastModified || 0)) {
+      if (cloud.items)                 S.items        = cloud.items;
+      if (cloud.store)               { S.store        = cloud.store;     localStorage.setItem(KEY_STORE, cloud.store); }
+      if (cloud.franchise !== undefined) { S.franchise = cloud.franchise; localStorage.setItem(KEY_FRAN, cloud.franchise); }
+      S.lastModified = cloud.lastModified;
+      renderAll();
+      setSyncStatus('synced');
+    }
+  } catch(e) {} // silent — app works fully offline
+}
+
+function setSyncStatus(status) {
+  const el = document.getElementById('syncIndicator');
+  if (!el) return;
+  if (!S.phone) { el.style.display = 'none'; return; }
+  if (status === 'syncing') {
+    el.textContent = '↻'; el.className = 'sync-indicator syncing'; el.title = 'Syncing…';
+  } else if (status === 'synced') {
+    el.textContent = '☁'; el.className = 'sync-indicator synced'; el.title = 'Saved to cloud';
+  } else {
+    el.textContent = '⚠'; el.className = 'sync-indicator sync-error'; el.title = 'Last sync failed — saved locally';
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   Phone Capture Modal
+═══════════════════════════════════════════════ */
+function openPhoneModal() {
+  document.getElementById('phoneInput').value        = '';
+  document.getElementById('phoneSendError').style.display = 'none';
+  document.getElementById('phoneModal').classList.add('open');
+  setTimeout(() => document.getElementById('phoneInput').focus(), 350);
+}
+function closePhoneModal(e) {
+  if (e && e.target !== document.getElementById('phoneModal')) return;
+  document.getElementById('phoneModal').classList.remove('open');
+}
+async function submitPhone() {
+  const phone = document.getElementById('phoneInput').value.trim();
+  if (!phone) { document.getElementById('phoneInput').focus(); return; }
+  const btn = document.getElementById('phoneSendBtn');
+  const errEl = document.getElementById('phoneSendError');
+  btn.disabled = true; btn.textContent = 'Sending…'; errEl.style.display = 'none';
+  try {
+    const res = await fetch(`${WORKER_URL}/otp/send`, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ phone }),
+    });
+    if (!res.ok) throw new Error('sms_failed');
+    otpPhone = phone; otpContext = 'setup';
+    closePhoneModal();
+    openOtpModal();
+  } catch(e) {
+    errEl.textContent = "Couldn't send code — check your number and try again.";
+    errEl.style.display = 'block';
+  } finally {
+    btn.disabled = false; btn.textContent = 'Send Code →';
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   OTP Verify Modal
+═══════════════════════════════════════════════ */
+let otpContext = 'setup'; // 'setup' | 'restore'
+let otpPhone   = '';
+
+function openOtpModal() {
+  document.getElementById('otpInput').value         = '';
+  document.getElementById('otpError').style.display = 'none';
+  document.getElementById('otpHint').textContent    = `We sent a 6-digit code to ${otpPhone}.`;
+  document.getElementById('otpModal').classList.add('open');
+  setTimeout(() => document.getElementById('otpInput').focus(), 350);
+}
+function closeOtpModal(e) {
+  if (e && e.target !== document.getElementById('otpModal')) return;
+  document.getElementById('otpModal').classList.remove('open');
+}
+async function submitOtp() {
+  const code = document.getElementById('otpInput').value.trim();
+  if (code.length < 6) { document.getElementById('otpInput').focus(); return; }
+  const btn   = document.getElementById('otpVerifyBtn');
+  const errEl = document.getElementById('otpError');
+  btn.disabled = true; btn.textContent = 'Verifying…'; errEl.style.display = 'none';
+  try {
+    const res  = await fetch(`${WORKER_URL}/otp/verify`, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ phone: otpPhone, code }),
+    });
+    const data = await res.json();
+    if (!res.ok || !data.ok) {
+      errEl.textContent = 'Code incorrect or expired — try again.';
+      errEl.style.display = 'block';
+      return;
+    }
+    closeOtpModal();
+    if (otpContext === 'restore' && data.store) {
+      // Restore flow — load cloud store onto this device
+      S.phone = otpPhone;
+      localStorage.setItem(KEY_PHONE, otpPhone);
+      if (data.store.items)                 S.items        = data.store.items;
+      if (data.store.store)               { S.store        = data.store.store;     localStorage.setItem(KEY_STORE, data.store.store); }
+      if (data.store.franchise !== undefined) { S.franchise = data.store.franchise; localStorage.setItem(KEY_FRAN, data.store.franchise); }
+      if (data.store.lastModified)          S.lastModified  = data.store.lastModified;
+      S.isDemo = false;
+      document.getElementById('demoBanner').classList.remove('visible');
+      localStorage.setItem(KEY_ITEMS, JSON.stringify(S.items));
+      renderAll();
+      setSyncStatus('synced');
+      toast('☁', 'Store restored on this device.', null, 4000);
+    } else {
+      // Setup flow — link phone + push current store
+      S.phone = otpPhone;
+      localStorage.setItem(KEY_PHONE, otpPhone);
+      if (data.store && data.store.lastModified && data.store.lastModified > (S.lastModified || 0)) {
+        if (data.store.items) { S.items = data.store.items; localStorage.setItem(KEY_ITEMS, JSON.stringify(S.items)); }
+        renderAll();
+      }
+      await pushToCloud();
+      toast('☁', 'Store saved — accessible from any device with your phone number.', null, 4500);
+    }
+  } catch(e) {
+    errEl.textContent = 'Something went wrong — try again.';
+    errEl.style.display = 'block';
+  } finally {
+    btn.disabled = false; btn.textContent = 'Verify →';
+  }
+}
+async function resendOtp() {
+  try {
+    const res = await fetch(`${WORKER_URL}/otp/send`, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ phone: otpPhone }),
+    });
+    if (res.ok) toast('📱', 'New code sent!', null, 2500);
+    else throw new Error();
+  } catch(e) {
+    toast('⚠️', "Couldn't resend — check your connection.", null, 3000);
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   Restore Modal
+═══════════════════════════════════════════════ */
+function openRestoreModal() {
+  otpContext = 'restore';
+  document.getElementById('restorePhoneInput').value      = '';
+  document.getElementById('restoreSendError').style.display = 'none';
+  document.getElementById('restoreModal').classList.add('open');
+  setTimeout(() => document.getElementById('restorePhoneInput').focus(), 350);
+}
+function closeRestoreModal(e) {
+  if (e && e.target !== document.getElementById('restoreModal')) return;
+  document.getElementById('restoreModal').classList.remove('open');
+}
+async function submitRestorePhone() {
+  const phone = document.getElementById('restorePhoneInput').value.trim();
+  if (!phone) { document.getElementById('restorePhoneInput').focus(); return; }
+  const btn   = document.getElementById('restoreSendBtn');
+  const errEl = document.getElementById('restoreSendError');
+  btn.disabled = true; btn.textContent = 'Sending…'; errEl.style.display = 'none';
+  try {
+    const res = await fetch(`${WORKER_URL}/otp/send`, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ phone }),
+    });
+    if (!res.ok) throw new Error('sms_failed');
+    otpPhone = phone;
+    closeRestoreModal();
+    openOtpModal();
+  } catch(e) {
+    errEl.textContent = "Couldn't send code — check your number and try again.";
+    errEl.style.display = 'block';
+  } finally {
+    btn.disabled = false; btn.textContent = 'Send Code →';
+  }
+}
+
+/* ═══════════════════════════════════════════════
    Keyboard
 ═══════════════════════════════════════════════ */
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeItemModal(); closeStoreModal(); closeCsvModal(); }
-  if (e.key === 'Enter' && document.getElementById('storeModal').classList.contains('open')) saveStore();
+  if (e.key === 'Escape') {
+    closeItemModal(); closeStoreModal(); closeCsvModal();
+    closePhoneModal(); closeOtpModal(); closeRestoreModal();
+  }
+  if (e.key === 'Enter' && document.getElementById('storeModal').classList.contains('open'))   saveStore();
+  if (e.key === 'Enter' && document.getElementById('phoneModal').classList.contains('open'))   submitPhone();
+  if (e.key === 'Enter' && document.getElementById('otpModal').classList.contains('open'))     submitOtp();
+  if (e.key === 'Enter' && document.getElementById('restoreModal').classList.contains('open')) submitRestorePhone();
 });
 
 document.addEventListener('DOMContentLoaded', boot);

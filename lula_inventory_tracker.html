@@ -1237,10 +1237,13 @@
         <div class="field">
           <label>Mobile Number</label>
           <input type="tel" id="phoneInput" placeholder="+1 (555) 000-0000" inputmode="tel" autocomplete="tel">
-          <div class="field-hint">We'll send a one-time code to verify. No account needed.</div>
+          <div class="field-hint">We'll send a one-time verification code to this number.</div>
+        </div>
+        <div style="font-size:11px;color:var(--purple-medium);line-height:1.6;margin-bottom:14px;padding:10px 12px;background:var(--purple-pale);border-radius:10px;border:1px solid var(--border)">
+          🔒 <strong>Your data:</strong> Your phone number and store inventory are stored securely on Cloudflare's US servers solely to sync your store across devices. We never share it or use it for marketing. Data auto-deletes after 90 days of inactivity. You can delete it anytime in Store Settings.
         </div>
         <div id="phoneSendError" class="modal-error"></div>
-        <button class="btn-primary" id="phoneSendBtn" onclick="submitPhone()">Send Code →</button>
+        <button class="btn-primary" id="phoneSendBtn" onclick="submitPhone()">I agree — Send Code →</button>
         <button class="btn-ghost" onclick="closePhoneModal()">Skip for now</button>
       </div>
     </div>
@@ -1944,7 +1947,8 @@ function openStoreModal() {
       sc.innerHTML = `<div style="font-size:12px;color:var(--purple-medium);line-height:1.6;margin-bottom:8px">
         ☁ Synced — <strong>${S.phone}</strong><br>Your store is accessible on any device with this number.
       </div>
-      <button class="btn-ghost" onclick="closeStoreModal();setTimeout(openRestoreModal,200)" style="margin-top:0;font-size:12px;padding:9px">Access on another device →</button>`;
+      <button class="btn-ghost" onclick="closeStoreModal();setTimeout(openRestoreModal,200)" style="margin-top:0;font-size:12px;padding:9px">Access on another device →</button>
+      <button onclick="deleteCloudData()" style="width:100%;margin-top:8px;background:none;border:none;font-size:11px;color:var(--red);cursor:pointer;padding:6px;text-decoration:underline">Delete my stored data</button>`;
     } else {
       sc.innerHTML = `<div style="font-size:12px;color:var(--purple-medium);line-height:1.6;margin-bottom:8px">
         Link your phone number to open your store on any device — no account needed.
@@ -2283,6 +2287,20 @@ function setSyncStatus(status) {
   } else {
     el.textContent = '⚠'; el.className = 'sync-indicator sync-error'; el.title = 'Last sync failed — saved locally';
   }
+}
+
+async function deleteCloudData() {
+  if (!S.phone) return;
+  if (!confirm('Delete your stored data from the cloud? Your items will remain on this device only.')) return;
+  try {
+    await fetch(`${WORKER_URL}/store/${encodeURIComponent(S.phone)}`, { method: 'DELETE' });
+  } catch(e) {}
+  // Clear phone link locally
+  S.phone = null; S.lastModified = 0;
+  localStorage.removeItem(KEY_PHONE);
+  setSyncStatus('');
+  closeStoreModal();
+  toast('🗑', 'Cloud data deleted. Your items are still saved on this device.', null, 4000);
 }
 
 /* ═══════════════════════════════════════════════

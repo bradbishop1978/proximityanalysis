@@ -406,6 +406,48 @@
     .toast-body { flex:1; font-size:13px; line-height:1.45; }
     .toast-link { display:inline-block; margin-top:7px; font-size:12px; font-weight:700; color:var(--purple-light); text-decoration:underline; cursor:pointer; }
     .toast-x    { background:none; border:none; color:rgba(255,255,255,.45); font-size:17px; cursor:pointer; line-height:1; flex-shrink:0; padding:0; }
+    .toast-undo { background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.28); color:#fff; border-radius:7px; padding:4px 9px; font-size:11px; font-weight:700; cursor:pointer; flex-shrink:0; white-space:nowrap; }
+    .toast-undo:hover { background:rgba(255,255,255,.28); }
+
+    /* ── Tooltip (hover desktop / tap mobile) ── */
+    [data-tip] { position:relative; cursor:help; }
+    [data-tip]::after {
+      content:attr(data-tip);
+      position:absolute; bottom:calc(100% + 7px); left:50%;
+      transform:translateX(-50%);
+      background:#1a1a2e; color:#fff;
+      font-size:11px; font-weight:400; line-height:1.45;
+      border-radius:7px; padding:6px 10px;
+      pointer-events:none; opacity:0;
+      transition:opacity .15s ease;
+      z-index:300; max-width:200px; width:max-content;
+      text-align:center; white-space:normal;
+      font-family:'Inter',sans-serif; font-style:normal;
+      box-shadow:0 3px 10px rgba(0,0,0,.28);
+    }
+    [data-tip]::before {
+      content:'';
+      position:absolute; bottom:calc(100% + 3px); left:50%;
+      transform:translateX(-50%);
+      border:4px solid transparent; border-top-color:#1a1a2e;
+      pointer-events:none; opacity:0;
+      transition:opacity .15s ease; z-index:300;
+    }
+    [data-tip]:hover::after,[data-tip]:hover::before,
+    [data-tip]:active::after,[data-tip]:active::before { opacity:1; }
+
+    /* ── Dashboard empty-state nudge ── */
+    .dash-empty-card {
+      display:flex; flex-direction:column; align-items:center;
+      background:#fff; border:1.5px dashed var(--border); border-radius:16px;
+      padding:28px 20px; text-align:center; margin-bottom:12px;
+    }
+    .dash-empty-ico   { font-size:36px; margin-bottom:10px; }
+    .dash-empty-title { font-family:'Gabarito',sans-serif; font-size:17px; font-weight:800; color:var(--purple-deep); margin-bottom:6px; }
+    .dash-empty-sub   { font-size:13px; color:var(--purple-medium); line-height:1.55; max-width:260px; }
+
+    /* ── CSV toolbar label ── */
+    .csv-section-lbl { font-size:10px; font-weight:700; color:var(--purple-medium); text-transform:uppercase; letter-spacing:.06em; margin-bottom:5px; }
 
     /* ── Modal ── */
     .modal-bg {
@@ -775,7 +817,7 @@
     <span>Viewing <strong>Sunrise Corner</strong> — demo store</span>
     <span style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0">
       <span class="demo-cta" onclick="startMyStore()">Set up mine →</span>
-      <span style="font-size:10px;color:var(--purple-medium);cursor:pointer;white-space:nowrap" onclick="openRestoreModal()">Restore existing →</span>
+      <span style="font-size:10px;color:var(--purple-medium);cursor:pointer;white-space:nowrap" onclick="openRestoreModal()">Open my store on this device →</span>
     </span>
     <button class="demo-x" onclick="hideDemoBanner()">×</button>
   </div>
@@ -816,25 +858,34 @@
 
       <!-- Stats -->
       <div class="stats-grid">
-        <div class="stat">
+        <div class="stat" data-tip="Total number of products you're currently tracking in Stock Pulse">
           <div class="stat-lbl">Tracked</div>
           <div class="stat-val" id="sTotal">0</div>
-          <div class="stat-sub">of 50 items</div>
+          <div class="stat-sub">items in your store</div>
         </div>
-        <div class="stat s-crit">
+        <div class="stat s-crit" data-tip="These items have less than 25% of stock remaining — they need to be reordered right now">
           <div class="stat-lbl">Critical</div>
           <div class="stat-val" id="sCrit">0</div>
-          <div class="stat-sub">&lt; 25% par</div>
+          <div class="stat-sub">under 25% left — reorder now</div>
         </div>
-        <div class="stat s-low">
+        <div class="stat s-low" data-tip="These items are running low — stock is below your reorder level but not critically empty yet">
           <div class="stat-lbl">Low Stock</div>
           <div class="stat-val" id="sLow">0</div>
-          <div class="stat-sub">below par level</div>
+          <div class="stat-sub">below reorder level</div>
         </div>
-        <div class="stat s-good">
+        <div class="stat s-good" data-tip="These items are stocked up — no action needed right now">
           <div class="stat-lbl">Healthy</div>
           <div class="stat-val" id="sGood">0</div>
-          <div class="stat-sub">at or above par</div>
+          <div class="stat-sub">fully stocked</div>
+        </div>
+      </div>
+
+      <!-- Empty-state nudge — shown only when no items and not in demo mode -->
+      <div id="dashEmptyState" style="display:none">
+        <div class="dash-empty-card">
+          <div class="dash-empty-ico">📦</div>
+          <div class="dash-empty-title">No items tracked yet</div>
+          <div class="dash-empty-sub">Tap <strong>+ Add Item</strong> at the top to add your first product — takes about 30 seconds.</div>
         </div>
       </div>
 
@@ -874,24 +925,25 @@
       </div>
 
       <!-- CSV Toolbar -->
+      <div class="csv-section-lbl">Bulk tools — for adding many items at once</div>
       <div class="csv-toolbar">
-        <button class="csv-btn" onclick="downloadTemplate()" title="Download blank CSV template to fill in and import">
+        <button class="csv-btn" onclick="downloadTemplate()" title="Download a blank spreadsheet — fill it in with your items, then import it back here">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
             <polyline points="7 10 12 15 17 10"/>
             <line x1="12" y1="15" x2="12" y2="3"/>
           </svg>
-          Template
+          Get Template
         </button>
-        <button class="csv-btn" onclick="openImportModal()" title="Import items from CSV file">
+        <button class="csv-btn" onclick="openImportModal()" title="Upload a filled-in spreadsheet to add all your items at once">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
             <polyline points="17 8 12 3 7 8"/>
             <line x1="12" y1="3" x2="12" y2="15"/>
           </svg>
-          Import CSV
+          Import
         </button>
-        <button class="csv-btn primary" onclick="exportCSV()" title="Export your items as CSV">
+        <button class="csv-btn primary" onclick="exportCSV()" title="Download all your items as a spreadsheet — useful for backup or editing in bulk">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
             <polyline points="7 10 12 15 17 10"/>
@@ -1092,33 +1144,33 @@
               <option value="Tobacco">🚬 Tobacco</option>
               <option value="Other">Other</option>
             </select>
-            <div class="field-hint">Which Lula menu this belongs to</div>
+            <div class="field-hint">Which Lula delivery menu this item belongs to</div>
           </div>
         </div>
 
         <div class="field-row">
           <div class="field">
-            <label>Current Stock</label>
+            <label data-tip="How many you have on the shelf right now — the app counts down from here each day based on your sales rate">Current Stock</label>
             <input type="number" id="fStock" placeholder="24" min="0" inputmode="numeric">
             <div id="stockCountHint" class="field-hint" style="display:none;color:var(--purple-primary);font-weight:600"></div>
           </div>
           <div class="field">
-            <label>Par Level</label>
+            <label data-tip="When your stock drops to this number, you'll get a low-stock alert — set it high enough to give yourself time to reorder">Reorder Level</label>
             <input type="number" id="fPar" placeholder="12" min="1" inputmode="numeric">
-            <div class="field-hint">Restock trigger</div>
+            <div class="field-hint">Alert fires when stock hits this number</div>
           </div>
         </div>
 
         <div class="field-row">
           <div class="field">
-            <label>Daily Sales</label>
+            <label data-tip="How many of this item you sell each day on average — used to automatically count down your stock and predict when you'll run out">Daily Sales</label>
             <input type="number" id="fSales" placeholder="8" min="0" step="0.5" inputmode="decimal">
-            <div class="field-hint">Units/day avg</div>
+            <div class="field-hint">Units sold per day on average (optional)</div>
           </div>
           <div class="field">
-            <label>Price ($)</label>
+            <label data-tip="What you sell this item for — used to estimate how much delivery revenue you could be earning">Price ($)</label>
             <input type="number" id="fPrice" placeholder="3.99" min="0" step="0.01" inputmode="decimal">
-            <div class="field-hint">Sell price</div>
+            <div class="field-hint">Your selling price — optional, used for estimates</div>
           </div>
         </div>
 
@@ -1560,6 +1612,10 @@ function renderDash() {
   const sBadge = document.getElementById('sAlertBadge');
   if (sBadge) { sBadge.textContent = alertCount; sBadge.style.display = alertCount > 0 ? 'flex' : 'none'; }
 
+  // Empty-state nudge — only when the owner has 0 items and is not in demo mode
+  const emptyEl = document.getElementById('dashEmptyState');
+  if (emptyEl) emptyEl.style.display = (!S.isDemo && items.length === 0) ? 'block' : 'none';
+
   renderDeliveryCard();
   renderFMChart();
   renderRestockList();
@@ -1656,7 +1712,7 @@ function renderRestockList() {
     const st   = status(item);
     const eff  = effectiveStock(item);
     const days = daysLeft(item);
-    const sub  = days !== null ? `~${days}d left · par ${item.par}` : `${eff} ${item.unit} · par ${item.par}`;
+    const sub  = days !== null ? `~${days}d left · reorder at ${item.par}` : `${eff} ${item.unit} · reorder at ${item.par}`;
     return `<div class="restock-row">
       <div class="restock-badge ${st === 'crit' ? 'rb-crit' : 'rb-low'}">${st === 'crit' ? '!' : '↓'}</div>
       <div class="restock-info">
@@ -1732,8 +1788,8 @@ function renderItems() {
         </div>
       </div>
       <div class="item-right">
-        <div class="item-stock ${valMap[st]}" title="${isProjected ? `Projected from last count of ${item.stock}` : ''}">${isProjected ? '~' : ''}${eff}</div>
-        <div class="item-par">par ${item.par}</div>
+        <div class="item-stock ${valMap[st]}" title="${isProjected ? `Projected from last count of ${item.stock} — tap to update` : 'Tap to edit this item'}">${isProjected ? '~' : ''}${eff}</div>
+        <div class="item-par" title="Reorder level — low-stock alert fires when stock reaches this number">reorder: ${item.par}</div>
       </div>
     </div>`;
   }).join('')}</div>`;
@@ -1747,8 +1803,15 @@ function renderAlerts() {
   const low  = S.items.filter(i => status(i) === 'low').sort((a,b) => pct(a)-pct(b));
   const el   = document.getElementById('alertsList');
 
+  // No items at all — point them to add items first
+  if (S.items.length === 0) {
+    el.innerHTML = `<div class="empty"><div class="empty-ico">📦</div><div class="empty-title">No items yet</div><div class="empty-sub">Add items using the <strong>My Items</strong> tab, then come back here to see low-stock alerts.</div></div>`;
+    return;
+  }
+
+  // All items are stocked up
   if (crit.length === 0 && low.length === 0) {
-    el.innerHTML = `<div class="empty"><div class="empty-ico">✅</div><div class="empty-title">All clear</div><div class="empty-sub">No items below par level.</div></div>`;
+    el.innerHTML = `<div class="empty"><div class="empty-ico">✅</div><div class="empty-title">All stocked up</div><div class="empty-sub">Everything is above its reorder level right now. Check back after your next busy day.</div></div>`;
     return;
   }
 
@@ -1756,20 +1819,20 @@ function renderAlerts() {
     const eff    = effectiveStock(item);
     const days   = daysLeft(item);
     const detail = days !== null
-      ? `Est. <strong>${days} day${days !== 1 ? 's' : ''}</strong> until stockout`
+      ? `About <strong>${days} day${days !== 1 ? 's' : ''}</strong> of stock left`
       : `${eff} ${item.unit} remaining`;
     return `<div class="restock-row">
       <div class="restock-info">
         <div class="restock-name">${item.name}</div>
-        <div class="restock-meta" style="margin-top:3px">${detail} · par ${item.par} ${item.unit}</div>
+        <div class="restock-meta" style="margin-top:3px">${detail} · reorder level: ${item.par} ${item.unit}</div>
       </div>
-      <button class="btn-restock" onclick="quickRestock('${item.id}')">Restock</button>
+      <button class="btn-restock" title="Mark this item as restocked — sets stock back to your reorder level. You can undo this." onclick="quickRestock('${item.id}')">Restock</button>
     </div>`;
   };
 
   let html = '';
-  if (crit.length > 0) { html += `<div class="alert-group-lbl">🔴 Critical — Below 25% Par</div>`; html += crit.map(alertCard).join(''); }
-  if (low.length  > 0) { html += `<div class="alert-group-lbl">🟡 Low — Below Par Level</div>`;    html += low.map(alertCard).join(''); }
+  if (crit.length > 0) { html += `<div class="alert-group-lbl">🔴 Critical — Almost out (under 25% left)</div>`; html += crit.map(alertCard).join(''); }
+  if (low.length  > 0) { html += `<div class="alert-group-lbl">🟡 Running Low — Below reorder level</div>`;      html += low.map(alertCard).join(''); }
   el.innerHTML = html;
 }
 
@@ -1779,8 +1842,8 @@ function renderAlerts() {
 function renderInsights() {
   const items = S.items;
   if (items.length === 0) {
-    document.getElementById('insightGlance').textContent = 'Add items to see your store insights.';
-    document.getElementById('insightTop3').innerHTML = '<div style="font-size:13px;color:var(--purple-medium)">No items yet.</div>';
+    document.getElementById('insightGlance').textContent = 'Add your items first — once you have stock data, you\'ll see a breakdown of your categories, programs, and delivery potential here.';
+    document.getElementById('insightTop3').innerHTML = '<div style="font-size:13px;color:var(--purple-medium)">Go to <strong>My Items</strong> and add a few products to get started.</div>';
     return;
   }
 
@@ -1923,15 +1986,28 @@ function deleteItem() {
 function quickRestock(id) {
   const item = S.items.find(i => i.id === id);
   if (!item) return;
-  item.stock = item.par;
+
+  // Snapshot for undo
+  const prevStock       = item.stock;
+  const prevLastCounted = item.last_counted;
+
+  // Apply immediately so the UI reflects the change
+  item.stock        = item.par;
   item.last_counted = Date.now();
   persist(); renderAll();
-  if (!shownPrompts.has('restock')) {
-    shownPrompts.add('restock');
-    setTimeout(() => toast('💡',
-      `<strong>${item.name}</strong> restocked! Fast movers like this could trigger online demand. Enable delivery to capture it.`,
-      GUIDE_URL, 5500), 400);
-  }
+
+  // Undo toast — 5.5 s to tap Undo before it's permanent
+  toastUndo('✅',
+    `Restocked <strong>${item.name}</strong> to ${item.par} ${item.unit || 'units'}.`,
+    () => {
+      // Revert if undo tapped
+      const i2 = S.items.find(i => i.id === id);
+      if (!i2) return;
+      i2.stock        = prevStock;
+      i2.last_counted = prevLastCounted;
+      persist(); renderAll();
+    }
+  );
 }
 
 function onProgramChange(sel) {
@@ -2241,6 +2317,22 @@ function toast(ico, msg, ctaUrl, ms = 4000) {
   el.className = 'toast'; el.id = id;
   el.innerHTML = `<div class="toast-ico">${ico}</div><div class="toast-body">${msg}${cta}</div><button class="toast-x" onclick="document.getElementById('${id}')?.remove()">×</button>`;
   wrap.appendChild(el);
+  setTimeout(() => document.getElementById(id)?.remove(), ms);
+}
+
+/** Toast with an Undo button. undoFn() is called if the user taps Undo within ms. */
+function toastUndo(ico, msg, undoFn, ms = 5500) {
+  const wrap   = document.getElementById('toasts');
+  const id     = 't_' + Date.now();
+  const undoId = 'u_' + id;
+  const el     = document.createElement('div');
+  el.className = 'toast'; el.id = id;
+  el.innerHTML = `<div class="toast-ico">${ico}</div><div class="toast-body">${msg}</div><button class="toast-undo" id="${undoId}">Undo ↩</button><button class="toast-x" onclick="document.getElementById('${id}')?.remove()">×</button>`;
+  wrap.appendChild(el);
+  document.getElementById(undoId)?.addEventListener('click', () => {
+    undoFn();
+    document.getElementById(id)?.remove();
+  });
   setTimeout(() => document.getElementById(id)?.remove(), ms);
 }
 

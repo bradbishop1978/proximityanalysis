@@ -835,7 +835,17 @@ async function fetchAllRecords(key,baseId,tableName){
   var all=[],offset=null;
   do{
     var url='https://api.airtable.com/v0/'+baseId+'/'+encodeURIComponent(tableName)+'?pageSize=100'+(offset?'&offset='+offset:'');
-    var res=await fetch(url,{headers:{Authorization:'Bearer '+key}});
+    // Retry up to 3× on 429 rate-limit with back-off (1.2s, 2.4s, 3.6s)
+    var attempts=0,res;
+    while(true){
+      res=await fetch(url,{headers:{Authorization:'Bearer '+key}});
+      if(res.status===429&&attempts<3){
+        attempts++;
+        await new Promise(function(r){setTimeout(r,1200*attempts);});
+        continue;
+      }
+      break;
+    }
     if(!res.ok){
       var err;try{err=await res.json();}catch(e){err={};}
       throw new Error((err.error&&err.error.message)||res.statusText||('HTTP '+res.status));
@@ -849,14 +859,17 @@ async function fetchAllRecords(key,baseId,tableName){
 
 async function fetchData(){
   hideErr();
+  var hadData=allRecords.length>0;
   el('spinner-wrap').style.display='flex';
-  el('content').style.display='none';
+  // Don't hide content during background refresh — only hide on first load (no cached data)
+  if(!hadData) el('content').style.display='none';
   el('refresh-btn').disabled=true;
   try{
     allRecords=await fetchAllRecords(API_KEY,BASE_ID,TABLE_NAME);
     fetchedAt=new Date().toISOString();
     hsStoreCount=null; // reset so leadership tab re-fetches HubSpot count with fresh data
-    saveCache();
+    // saveCache is isolated — a mobile storage-quota error must NOT abort the data display
+    try{saveCache();}catch(se){/* localStorage quota exceeded — skip cache, data still loads */}
     updateFetchInfo();
     buildFilters();
     // Do NOT reset the date filter here — preserve whatever the user has set
@@ -865,8 +878,17 @@ async function fetchData(){
     el('refresh-btn').style.display='inline-flex';
     el('fetch-info').style.display='block';
   }catch(e){
-    showErr('Airtable error: '+e.message);
-    if(allRecords.length){el('content').style.display='block';}
+    // Distinguish storage quota from real Airtable errors
+    var isQuota=e.name==='QuotaExceededError'||(e.message&&(e.message.indexOf('quota')>-1||e.message.indexOf('QuotaExceeded')>-1));
+    if(isQuota){
+      showErr('Device storage full — data loaded but not cached locally. Dashboard still works; tap × to dismiss.');
+    } else {
+      showErr('Airtable error: '+e.message+(hadData?' Showing last cached data.':' Check connection and refresh.'));
+    }
+    // Always restore content visibility — empty charts are better than a blank screen
+    el('content').style.display='block';
+    el('refresh-btn').style.display='inline-flex';
+    el('fetch-info').style.display='block';
   }finally{
     el('spinner-wrap').style.display='none';
     el('refresh-btn').disabled=false;

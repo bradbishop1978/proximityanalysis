@@ -141,6 +141,38 @@
     .sec-title { font-family: 'Gabarito', sans-serif; font-size: 18px; font-weight: 800; }
     .sec-link  { font-size: 12px; font-weight: 600; color: var(--purple-primary); cursor: pointer; }
 
+    /* ── Order Day Card ── */
+    .od-card { background:#fff; border:1.5px solid var(--border); border-radius:14px; padding:14px 16px; margin-bottom:14px; }
+    .od-card-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+    .od-card-title { font-family:'Gabarito',sans-serif; font-size:15px; font-weight:800; color:var(--purple-deep); display:flex; align-items:center; gap:6px; }
+    .od-card-copy { font-size:12px; font-weight:600; color:var(--pink); background:var(--pink-light); border:1.5px solid #f9c8df; border-radius:20px; padding:5px 13px; cursor:pointer; white-space:nowrap; -webkit-tap-highlight-color:transparent; }
+    .od-card-copy:active { opacity:.7; }
+    .od-row { display:flex; align-items:center; gap:10px; padding:7px 0; border-bottom:1px solid var(--border); }
+    .od-row:last-child { border-bottom:none; }
+    .od-row-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+    .od-row-dot.warn { background:var(--amber); }
+    .od-row-dot.crit { background:var(--red); }
+    .od-row-dot.ok   { background:var(--green); }
+    .od-row-name { flex:1; font-size:13px; font-weight:600; color:var(--purple-deep); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .od-row-qty { font-size:12px; font-weight:700; white-space:nowrap; color:var(--purple-medium); }
+    .od-row-qty.warn { color:var(--amber); }
+    .od-row-qty.crit { color:var(--red); }
+    .od-row-qty.ok   { color:var(--green); }
+    .od-all-ok { text-align:center; font-size:13px; font-weight:600; color:var(--green); padding:8px 0; }
+    .od-setup-hint { text-align:center; font-size:12px; color:var(--purple-medium); padding:6px 0; }
+
+    /* ── Stockouts Avoided Card ── */
+    .savings-card { display:flex; align-items:center; gap:12px; background:var(--green-light); border:1.5px solid var(--green-border); border-radius:14px; padding:13px 16px; margin-bottom:14px; }
+    .savings-ico { font-size:24px; flex-shrink:0; }
+    .savings-count { font-family:'Gabarito',sans-serif; font-weight:900; font-size:17px; color:#16a34a; line-height:1.2; }
+    .savings-amt { font-size:11px; color:#166534; margin-top:3px; }
+
+    /* ── Day toggle pills (Store Modal) ── */
+    .day-toggle-grid { display:flex; gap:6px; flex-wrap:wrap; margin-top:6px; }
+    .day-btn { min-width:42px; padding:7px 8px; border-radius:20px; border:1.5px solid var(--border); background:#fff; font-size:12px; font-weight:600; color:var(--purple-medium); cursor:pointer; transition:background .12s, border-color .12s, color .12s; -webkit-tap-highlight-color:transparent; }
+    .day-btn.active { background:var(--purple-primary); border-color:var(--purple-primary); color:#fff; }
+    .day-btn:active { transform:scale(.93); }
+
     /* ── Delivery Opportunity Card ── */
     /* ── App Purpose Header ── */
     .app-purpose {
@@ -875,6 +907,12 @@
         </div>
       </div>
 
+      <!-- Order Day Calculator — shown when order days are configured -->
+      <div id="orderDayCard" style="display:none"></div>
+
+      <!-- Stockouts Avoided — shown when at least 1 stockout avoided this month -->
+      <div id="stockoutsSavedCard" style="display:none"></div>
+
       <!-- Empty-state nudge — shown only when no items and not in demo mode -->
       <div id="dashEmptyState" style="display:none">
         <div class="dash-empty-card">
@@ -1253,6 +1291,19 @@
           </select>
           <div class="field-hint">Adds a franchise label to your dashboard and unlocks kitchen-optimized revenue estimates</div>
         </div>
+        <div class="field">
+          <label>Supplier Order Days <span style="font-weight:400;color:var(--purple-medium);font-size:11px">(up to 2)</span></label>
+          <div class="day-toggle-grid" id="dayToggleGrid">
+            <button type="button" class="day-btn" data-day="0" onclick="toggleOrderDay(0)">Sun</button>
+            <button type="button" class="day-btn" data-day="1" onclick="toggleOrderDay(1)">Mon</button>
+            <button type="button" class="day-btn" data-day="2" onclick="toggleOrderDay(2)">Tue</button>
+            <button type="button" class="day-btn" data-day="3" onclick="toggleOrderDay(3)">Wed</button>
+            <button type="button" class="day-btn" data-day="4" onclick="toggleOrderDay(4)">Thu</button>
+            <button type="button" class="day-btn" data-day="5" onclick="toggleOrderDay(5)">Fri</button>
+            <button type="button" class="day-btn" data-day="6" onclick="toggleOrderDay(6)">Sat</button>
+          </div>
+          <div class="field-hint">When does your supplier deliver — or when do you call in orders? We'll show exactly what to order before each delivery day.</div>
+        </div>
         <button class="btn-primary" onclick="saveStore()">Save Store</button>
         <button class="btn-ghost" onclick="closeStoreModal()">Cancel</button>
         <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border)">
@@ -1391,10 +1442,12 @@
 ═══════════════════════════════════════════════ */
 const GUIDE_URL  = 'https://www.lulacommerce.com/program-guide';
 const MAX        = 50;
-const KEY_ITEMS  = 'lsp_items_v2';
-const KEY_STORE  = 'lsp_store';
-const KEY_FRAN   = 'lsp_franchise';
-const KEY_PHONE  = 'lsp_phone';
+const KEY_ITEMS      = 'lsp_items_v2';
+const KEY_STORE      = 'lsp_store';
+const KEY_FRAN       = 'lsp_franchise';
+const KEY_PHONE      = 'lsp_phone';
+const KEY_ORDER_DAYS = 'lsp_order_days';
+const KEY_STOCKOUTS  = 'lsp_stockouts';
 const WORKER_URL = 'https://stock-pulse-sync.bernard-penoliar.workers.dev'; // ← update after deploy
 
 const DISCLAIMERS = {
@@ -1432,7 +1485,7 @@ const CSV_HEADERS = ['name','category','menu_program','current_stock','par_level
 /* ═══════════════════════════════════════════════
    State
 ═══════════════════════════════════════════════ */
-let S = { items:[], store:'My Store', franchise:'kkc', isDemo:true, phone:null, lastModified:0 };
+let S = { items:[], store:'My Store', franchise:'kkc', isDemo:true, phone:null, lastModified:0, orderDays:[], stockoutsAvoided:{count:0,savedValue:0,month:''} };
 let fmChart = null;
 let shownPrompts = new Set();
 let pendingImport = [];
@@ -1459,10 +1512,14 @@ const DEMO = [
    Boot
 ═══════════════════════════════════════════════ */
 function boot() {
-  const raw   = localStorage.getItem(KEY_ITEMS);
-  const name  = localStorage.getItem(KEY_STORE);
-  const fran  = localStorage.getItem(KEY_FRAN);
-  const phone = localStorage.getItem(KEY_PHONE);
+  const raw    = localStorage.getItem(KEY_ITEMS);
+  const name   = localStorage.getItem(KEY_STORE);
+  const fran   = localStorage.getItem(KEY_FRAN);
+  const phone  = localStorage.getItem(KEY_PHONE);
+  const odRaw  = localStorage.getItem(KEY_ORDER_DAYS);
+  const stRaw  = localStorage.getItem(KEY_STOCKOUTS);
+  if (odRaw) try { S.orderDays          = JSON.parse(odRaw); } catch(e) {}
+  if (stRaw) try { S.stockoutsAvoided   = JSON.parse(stRaw); } catch(e) {}
 
   if (raw) {
     try { S.items = JSON.parse(raw); } catch(e) {}
@@ -1639,6 +1696,8 @@ function renderDash() {
   renderDeliveryCard();
   renderFMChart();
   renderRestockList();
+  renderOrderDayCard();
+  renderStockoutsSaved();
 }
 
 function renderDeliveryCard() {
@@ -2053,6 +2112,15 @@ function quickRestock(id) {
   const prevStock       = item.stock;
   const prevLastCounted = item.last_counted;
 
+  // Track avoided stockout before restocking
+  if (status(item) !== 'good' && (item.price || 0) > 0 && (item.sales || 0) > 0) {
+    const m = new Date().toISOString().slice(0, 7);
+    if (S.stockoutsAvoided.month !== m) S.stockoutsAvoided = { count:0, savedValue:0, month:m };
+    S.stockoutsAvoided.count++;
+    S.stockoutsAvoided.savedValue += (item.price || 0) * (item.sales || 0) * Math.max(1, daysLeft(item) || 1);
+    localStorage.setItem(KEY_STOCKOUTS, JSON.stringify(S.stockoutsAvoided));
+  }
+
   // Apply immediately so the UI reflects the change
   item.stock        = item.par;
   item.last_counted = Date.now();
@@ -2110,6 +2178,10 @@ function openStoreModal() {
       <button class="btn-ghost" onclick="closeStoreModal();setTimeout(openPhoneModal,200)" style="margin-top:0;font-size:12px;padding:9px">Link phone number →</button>`;
     }
   }
+  // Sync order day button active states
+  document.querySelectorAll('.day-btn').forEach(btn => {
+    btn.classList.toggle('active', S.orderDays.includes(parseInt(btn.dataset.day)));
+  });
   document.getElementById('storeModal').classList.add('open');
   setTimeout(() => document.getElementById('storeInput').focus(), 350);
 }
@@ -2628,6 +2700,153 @@ async function submitRestorePhone() {
   } finally {
     btn.disabled = false; btn.textContent = 'Send Code →';
   }
+}
+
+/* ═══════════════════════════════════════════════
+   Order Day Calculator
+═══════════════════════════════════════════════ */
+const DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+function daysUntilNextOrder(orderDays) {
+  if (!orderDays || orderDays.length === 0) return null;
+  const today = new Date().getDay();
+  let min = 8;
+  for (const d of orderDays) {
+    let diff = d - today;
+    if (diff <= 0) diff += 7;
+    if (diff < min) min = diff;
+  }
+  return min;
+}
+
+function nextOrderDayName(orderDays) {
+  if (!orderDays || orderDays.length === 0) return '';
+  const today = new Date().getDay();
+  let minDiff = 8, minDay = 0;
+  for (const d of orderDays) {
+    let diff = d - today;
+    if (diff <= 0) diff += 7;
+    if (diff < minDiff) { minDiff = diff; minDay = d; }
+  }
+  if (minDiff === 1) return 'tomorrow (' + DAY_NAMES[minDay] + ')';
+  if (minDiff === 7) return DAY_NAMES[minDay];
+  return DAY_NAMES[minDay];
+}
+
+function renderOrderDayCard() {
+  const el = document.getElementById('orderDayCard');
+  if (!el) return;
+
+  const daysUntil = daysUntilNextOrder(S.orderDays);
+  if (daysUntil === null || S.items.length === 0) { el.style.display = 'none'; return; }
+
+  const trackable = S.items.filter(i => (i.sales || 0) > 0);
+  if (trackable.length === 0) { el.style.display = 'none'; return; }
+
+  const dayLabel = nextOrderDayName(S.orderDays);
+
+  const needs = trackable
+    .map(i => ({ item: i, needed: Math.max(0, Math.ceil(daysUntil * i.sales) - effectiveStock(i)) }))
+    .sort((a, b) => b.needed - a.needed);
+
+  const toOrder  = needs.filter(n => n.needed > 0);
+  const stocked  = needs.filter(n => n.needed === 0);
+
+  let rowsHTML = '';
+  toOrder.forEach(({ item, needed }) => {
+    const st  = status(item);
+    const cls = st === 'crit' ? 'crit' : 'warn';
+    rowsHTML += `<div class="od-row">
+      <div class="od-row-dot ${cls}"></div>
+      <div class="od-row-name">${item.name}</div>
+      <div class="od-row-qty ${cls}">order ${needed} ${item.unit || 'units'}</div>
+    </div>`;
+  });
+
+  if (toOrder.length === 0) {
+    rowsHTML = `<div class="od-all-ok">✅ All items are stocked through ${dayLabel}</div>`;
+  } else if (stocked.length > 0) {
+    rowsHTML += `<div class="od-row" style="opacity:.5">
+      <div class="od-row-dot ok"></div>
+      <div class="od-row-name">${stocked.length} other item${stocked.length > 1 ? 's' : ''}</div>
+      <div class="od-row-qty ok">well stocked ✓</div>
+    </div>`;
+  }
+
+  el.innerHTML = `<div class="od-card">
+    <div class="od-card-head">
+      <div class="od-card-title">📦 Order by ${dayLabel}</div>
+      ${toOrder.length > 0 ? `<button class="od-card-copy" onclick="copyOrderList()">Copy list</button>` : ''}
+    </div>
+    ${rowsHTML}
+  </div>`;
+  el.style.display = 'block';
+}
+
+function copyOrderList() {
+  const daysUntil = daysUntilNextOrder(S.orderDays);
+  if (daysUntil === null) return;
+  const dayLabel = nextOrderDayName(S.orderDays);
+  const toOrder = S.items
+    .filter(i => (i.sales || 0) > 0)
+    .map(i => ({ item: i, needed: Math.max(0, Math.ceil(daysUntil * i.sales) - effectiveStock(i)) }))
+    .filter(n => n.needed > 0)
+    .sort((a, b) => b.needed - a.needed);
+
+  if (toOrder.length === 0) {
+    toast('✅', 'All items are well stocked — nothing to order right now.', null, 3000);
+    return;
+  }
+  const lines = toOrder.map(({ item, needed }) =>
+    `• ${item.name}: ${needed} ${item.unit || 'units'}`
+  ).join('\n');
+  const text = `📦 Order by ${dayLabel} — ${S.store}\n\n${lines}\n\nPowered by Stock Pulse`;
+  navigator.clipboard.writeText(text)
+    .then(() => toast('📋', 'Order list copied — paste into WhatsApp or your notes.', null, 3500))
+    .catch(() => toast('⚠️', 'Copy not supported here. Try long-pressing the list instead.', null, 3000));
+}
+
+function toggleOrderDay(day) {
+  const idx = S.orderDays.indexOf(day);
+  if (idx > -1) {
+    S.orderDays.splice(idx, 1);
+  } else {
+    if (S.orderDays.length >= 2) {
+      toast('ℹ️', 'You can select up to 2 order days. Tap an active day to remove it first.', null, 3000);
+      return;
+    }
+    S.orderDays.push(day);
+  }
+  localStorage.setItem(KEY_ORDER_DAYS, JSON.stringify(S.orderDays));
+  document.querySelectorAll('.day-btn').forEach(btn => {
+    btn.classList.toggle('active', S.orderDays.includes(parseInt(btn.dataset.day)));
+  });
+  renderOrderDayCard();
+}
+
+/* ═══════════════════════════════════════════════
+   Stockouts Avoided
+═══════════════════════════════════════════════ */
+function renderStockoutsSaved() {
+  const el = document.getElementById('stockoutsSavedCard');
+  if (!el) return;
+  // Reset counter when month changes
+  const m = new Date().toISOString().slice(0, 7);
+  if (S.stockoutsAvoided.month && S.stockoutsAvoided.month !== m) {
+    S.stockoutsAvoided = { count:0, savedValue:0, month:m };
+    localStorage.setItem(KEY_STOCKOUTS, JSON.stringify(S.stockoutsAvoided));
+  }
+  if (!S.stockoutsAvoided.count) { el.style.display = 'none'; return; }
+  const n   = S.stockoutsAvoided.count;
+  const amt = Math.round(S.stockoutsAvoided.savedValue);
+  el.innerHTML = `<div class="savings-card">
+    <div class="savings-ico">✅</div>
+    <div>
+      <div class="savings-count">${n} stockout${n > 1 ? 's' : ''} avoided this month</div>
+      <div class="savings-amt">Est. <strong>$${amt.toLocaleString()}</strong> in sales protected by your alerts</div>
+    </div>
+  </div>`;
+  el.style.display = 'block';
 }
 
 /* ═══════════════════════════════════════════════

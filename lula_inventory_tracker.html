@@ -1090,6 +1090,7 @@
           <div class="field">
             <label>Current Stock</label>
             <input type="number" id="fStock" placeholder="24" min="0" inputmode="numeric">
+            <div id="stockCountHint" class="field-hint" style="display:none;color:var(--purple-primary);font-weight:600"></div>
           </div>
           <div class="field">
             <label>Par Level</label>
@@ -1402,18 +1403,43 @@ function boot() {
 
   updateTopbar();
   renderAll();
+  checkDepletionOnBoot();
   if (!S.isDemo && !name) setTimeout(openStoreModal, 600);
+}
+
+/**
+ * On first load, if any items have auto-depleted since last count, show a single
+ * summary toast so the owner knows the numbers are live.
+ */
+function checkDepletionOnBoot() {
+  if (S.isDemo) return;
+  const depleting = S.items.filter(i => i.last_counted && i.sales > 0 && effectiveStock(i) < i.stock);
+  if (depleting.length === 0) return;
+  setTimeout(() => toast('📉',
+    `<strong>${depleting.length} item${depleting.length > 1 ? 's have' : ' has'}</strong> auto-updated stock based on daily sales since your last count. Tap Alerts to review.`,
+    null, 6500), 3000);
 }
 
 /* ═══════════════════════════════════════════════
    Helpers
 ═══════════════════════════════════════════════ */
 function uid()    { return Date.now().toString(36) + Math.random().toString(36).slice(2,5); }
-function pct(i)   { return i.par ? i.stock / i.par : 1; }
+
+/**
+ * Returns the projected current stock level based on time elapsed since last count.
+ * Falls back to i.stock when no last_counted or no sales rate is set.
+ */
+function effectiveStock(i) {
+  if (!i.last_counted || !i.sales || i.sales <= 0) return i.stock;
+  const daysSince = (Date.now() - i.last_counted) / 86400000;
+  return Math.max(0, i.stock - Math.floor(daysSince * i.sales));
+}
+
+function pct(i)   { return i.par ? effectiveStock(i) / i.par : 1; }
 function status(i){ const r = pct(i); return r < 0.25 ? 'crit' : r < 1 ? 'low' : 'good'; }
 function daysLeft(i) {
   if (!i.sales || i.sales <= 0) return null;
-  return Math.max(0, Math.floor(i.stock / i.sales));
+  return Math.max(0, Math.floor(effectiveStock(i) / i.sales));
 }
 
 function progBadge(program) {
@@ -1659,9 +1685,10 @@ function renderRestockList() {
     return;
   }
   el.innerHTML = needs.map(item => {
-    const st  = status(item);
+    const st   = status(item);
+    const eff  = effectiveStock(item);
     const days = daysLeft(item);
-    const sub  = days !== null ? `~${days}d left · par ${item.par}` : `${item.stock} ${item.unit} · par ${item.par}`;
+    const sub  = days !== null ? `~${days}d left · par ${item.par}` : `${eff} ${item.unit} · par ${item.par}`;
     return `<div class="restock-row">
       <div class="restock-badge ${st === 'crit' ? 'rb-crit' : 'rb-low'}">${st === 'crit' ? '!' : '↓'}</div>
       <div class="restock-info">
@@ -1718,10 +1745,12 @@ function renderItems() {
   const valMap = { good:'stock-good', low:'stock-low', crit:'stock-crit' };
 
   el.innerHTML = `<div class="item-list">${items.map(item => {
-    const st   = status(item);
-    const fill = Math.min(100, Math.round(pct(item) * 100));
-    const days = daysLeft(item);
-    const priceStr = item.price ? `$${parseFloat(item.price).toFixed(2)}` : '';
+    const st          = status(item);
+    const eff         = effectiveStock(item);
+    const isProjected = item.last_counted && item.sales > 0 && eff !== item.stock;
+    const fill        = Math.min(100, Math.round(pct(item) * 100));
+    const days        = daysLeft(item);
+    const priceStr    = item.price ? `$${parseFloat(item.price).toFixed(2)}` : '';
     return `<div class="item-card" onclick="openEdit('${item.id}')">
       <div class="status-pip ${pipMap[st]}"></div>
       <div class="item-body">
@@ -1735,7 +1764,7 @@ function renderItems() {
         </div>
       </div>
       <div class="item-right">
-        <div class="item-stock ${valMap[st]}">${item.stock}</div>
+        <div class="item-stock ${valMap[st]}" title="${isProjected ? `Projected from last count of ${item.stock}` : ''}">${isProjected ? '~' : ''}${eff}</div>
         <div class="item-par">par ${item.par}</div>
       </div>
     </div>`;
@@ -1756,10 +1785,11 @@ function renderAlerts() {
   }
 
   const alertCard = item => {
+    const eff    = effectiveStock(item);
     const days   = daysLeft(item);
     const detail = days !== null
       ? `Est. <strong>${days} day${days !== 1 ? 's' : ''}</strong> until stockout`
-      : `${item.stock} ${item.unit} remaining`;
+      : `${eff} ${item.unit} remaining`;
     return `<div class="restock-row">
       <div class="restock-info">
         <div class="restock-name">${item.name}</div>
@@ -1859,6 +1889,22 @@ function openEdit(id) {
   document.getElementById('fPrice').value   = item.price || '';
   document.getElementById('fUnit').value    = item.unit;
   document.getElementById('deleteBtn').style.display = 'block';
+
+  // Show projected stock hint when daily sales is set
+  const hint = document.getElementById('stockCountHint');
+  if (hint) {
+    if (item.last_counted && item.sales > 0) {
+      const daysAgo = Math.floor((Date.now() - item.last_counted) / 86400000);
+      const eff     = effectiveStock(item);
+      hint.textContent = daysAgo === 0
+        ? `Counted today · projected: ~${eff} ${item.unit}`
+        : `Last counted ${daysAgo}d ago · projected: ~${eff} ${item.unit}`;
+      hint.style.display = 'block';
+    } else {
+      hint.style.display = 'none';
+    }
+  }
+
   document.getElementById('itemModal').classList.add('open');
 }
 
@@ -1885,9 +1931,10 @@ function saveItem() {
 
   if (id) {
     const idx = S.items.findIndex(i => i.id === id);
-    if (idx !== -1) S.items[idx] = { ...S.items[idx], name, cat, program, stock, par, sales, price, unit };
+    // Always reset last_counted when owner explicitly saves — stock value entered is current count
+    if (idx !== -1) S.items[idx] = { ...S.items[idx], name, cat, program, stock, par, sales, price, unit, last_counted: Date.now() };
   } else {
-    S.items.push({ id: uid(), name, cat, program, stock, par, sales, price, unit });
+    S.items.push({ id: uid(), name, cat, program, stock, par, sales, price, unit, last_counted: Date.now() });
     triggerMilestonePrompt(program);
   }
 
@@ -1909,6 +1956,7 @@ function quickRestock(id) {
   const item = S.items.find(i => i.id === id);
   if (!item) return;
   item.stock = item.par;
+  item.last_counted = Date.now();
   persist(); renderAll();
   if (!shownPrompts.has('restock')) {
     shownPrompts.add('restock');
@@ -2113,7 +2161,7 @@ function parseCsvForImport(text) {
     const resolvedCat  = CATEGORIES.find(c => c.toLowerCase() === cat.toLowerCase())   || 'Other';
     const resolvedProg = PROGRAMS.find(p => p.toLowerCase() === prog.toLowerCase())    || 'Convenience';
 
-    parsed.push({ id: uid(), name, cat: resolvedCat, program: resolvedProg, stock, par, sales, price, unit });
+    parsed.push({ id: uid(), name, cat: resolvedCat, program: resolvedProg, stock, par, sales, price, unit, last_counted: Date.now() });
   }
 
   if (parsed.length === 0) {

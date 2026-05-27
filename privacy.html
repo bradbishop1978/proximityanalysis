@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy &amp; Terms — Stock Pulse by Lula Commerce</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --purple-deep:    #2C023B;
+      --purple-primary: #A576FF;
+      --purple-medium:  #7C5D8A;
+      --purple-light:   #D9C5FF;
+      --purple-pale:    #F8F4FB;
+      --pink:           #DE4990;
+      --border:         #E8DDF0;
+      --text:           #1a1a2e;
+      --muted:          #6B6B80;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--purple-pale);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      background: var(--purple-deep);
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .site-header-mark {
+      width: 34px; height: 34px; flex-shrink: 0;
+    }
+    .site-header-title {
+      font-family: 'Gabarito', sans-serif;
+      font-size: 16px; font-weight: 800;
+      color: #fff; line-height: 1.2;
+    }
+    .site-header-sub {
+      font-size: 11px; color: var(--purple-light); opacity: .75;
+      font-weight: 500;
+    }
+    .site-header-divider { flex: 1; }
+    .site-header-back {
+      font-size: 12px; color: var(--purple-light); text-decoration: none;
+      font-weight: 600; opacity: .80;
+    }
+    .site-header-back:hover { opacity: 1; }
+
+    /* ── Wrapper ── */
+    .wrapper {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 32px 20px 64px;
+    }
+
+    /* ── Page Title ── */
+    .page-title {
+      font-family: 'Gabarito', sans-serif;
+      font-size: 26px; font-weight: 800;
+      color: var(--purple-deep);
+      margin-bottom: 6px;
+    }
+    .page-meta {
+      font-size: 12px; color: var(--muted);
+      margin-bottom: 28px;
+      display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+    }
+    .meta-chip {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 20px; padding: 2px 10px;
+      font-size: 11px; font-weight: 600; color: var(--purple-medium);
+    }
+
+    /* ── TOC ── */
+    .toc {
+      background: #fff; border: 1.5px solid var(--border); border-radius: 14px;
+      padding: 18px 20px; margin-bottom: 36px;
+    }
+    .toc-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .07em; color: var(--purple-medium); margin-bottom: 10px;
+    }
+    .toc ol { padding-left: 18px; }
+    .toc li { margin-bottom: 4px; }
+    .toc a {
+      color: var(--purple-primary); font-size: 13px; font-weight: 600;
+      text-decoration: none;
+    }
+    .toc a:hover { text-decoration: underline; }
+
+    /* ── Section ── */
+    .doc-section {
+      background: #fff; border: 1.5px solid var(--border); border-radius: 16px;
+      padding: 28px 24px; margin-bottom: 20px;
+    }
+    .section-number {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--purple-primary);
+      margin-bottom: 4px;
+    }
+    .section-title {
+      font-family: 'Gabarito', sans-serif;
+      font-size: 20px; font-weight: 800;
+      color: var(--purple-deep); margin-bottom: 20px;
+      padding-bottom: 14px; border-bottom: 1.5px solid var(--border);
+    }
+
+    /* ── Content ── */
+    h3 {
+      font-size: 13px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .05em; color: var(--purple-medium);
+      margin: 22px 0 8px;
+    }
+    h3:first-of-type { margin-top: 0; }
+    p { margin-bottom: 12px; color: #333; }
+    p:last-child { margin-bottom: 0; }
+    ul, ol { padding-left: 20px; margin-bottom: 12px; }
+    li { margin-bottom: 5px; color: #333; }
+    strong { color: var(--purple-deep); font-weight: 600; }
+    a { color: var(--purple-primary); }
+
+    /* ── Highlight box ── */
+    .highlight {
+      background: var(--purple-pale); border-left: 3px solid var(--purple-primary);
+      border-radius: 0 8px 8px 0; padding: 12px 14px; margin: 14px 0;
+      font-size: 13px; color: var(--purple-deep);
+    }
+
+    /* ── Brand table ── */
+    .brand-table {
+      width: 100%; border-collapse: collapse; font-size: 13px;
+      margin: 12px 0;
+    }
+    .brand-table th {
+      text-align: left; font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .06em;
+      color: var(--purple-medium); padding: 6px 10px;
+      border-bottom: 1.5px solid var(--border); background: var(--purple-pale);
+    }
+    .brand-table td {
+      padding: 9px 10px; border-bottom: 1px solid var(--border);
+      color: #333; vertical-align: top;
+    }
+    .brand-table tr:last-child td { border-bottom: none; }
+
+    /* ── Contact card ── */
+    .contact-card {
+      background: var(--purple-deep); color: #fff;
+      border-radius: 14px; padding: 20px 22px; margin-top: 28px;
+    }
+    .contact-card h3 { color: rgba(255,255,255,.55); margin-top: 0; }
+    .contact-card p { color: rgba(255,255,255,.85); margin-bottom: 4px; }
+    .contact-card a { color: var(--purple-light); }
+
+    /* ── Footer ── */
+    .page-footer {
+      text-align: center; font-size: 11px; color: var(--muted);
+      margin-top: 36px; line-height: 1.6;
+    }
+    .page-footer a { color: var(--purple-medium); }
+
+    @media (max-width: 480px) {
+      .wrapper { padding: 20px 14px 48px; }
+      .doc-section { padding: 20px 16px; }
+      .page-title { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <!-- Lula brand mark (simplified inline SVG) -->
+    <svg class="site-header-mark" viewBox="0 0 175 195" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="plg0" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#C084FC"/><stop offset="100%" stop-color="#A576FF"/></linearGradient>
+      </defs>
+      <path d="M87.5 10 L165 55 L165 140 L87.5 185 L10 140 L10 55 Z" fill="url(#plg0)" opacity=".25"/>
+      <path d="M87.5 30 L148 65 L148 130 L87.5 165 L27 130 L27 65 Z" fill="url(#plg0)" opacity=".4"/>
+      <circle cx="87.5" cy="97.5" r="28" fill="#DE4990"/>
+      <circle cx="87.5" cy="97.5" r="16" fill="#fff" opacity=".9"/>
+    </svg>
+    <div>
+      <div class="site-header-title">Stock Pulse</div>
+      <div class="site-header-sub">by Lula Commerce</div>
+    </div>
+    <div class="site-header-divider"></div>
+    <a class="site-header-back" href="lula_inventory_tracker.html">← Back to app</a>
+  </header>
+
+  <div class="wrapper">
+
+    <div class="page-title">Privacy Policy &amp; Terms of Use</div>
+    <div class="page-meta">
+      <span class="meta-chip">Effective: May 27, 2026</span>
+      <span class="meta-chip">Last updated: May 27, 2026</span>
+      <span>Applies to: Stock Pulse inventory tracker</span>
+    </div>
+
+    <!-- TOC -->
+    <div class="toc">
+      <div class="toc-title">On this page</div>
+      <ol>
+        <li><a href="#privacy">Privacy Policy</a> — what we collect, how we store it, your rights</li>
+        <li><a href="#terms">Terms of Use</a> — what Stock Pulse is, estimates disclaimer, your data</li>
+        <li><a href="#brands">Brand Disclaimer</a> — franchise brand names used in the app</li>
+        <li><a href="#contact">Contact &amp; Requests</a> — how to reach us or delete your data</li>
+      </ol>
+    </div>
+
+    <!-- ══ Section 1: Privacy Policy ══ -->
+    <div class="doc-section" id="privacy">
+      <div class="section-number">Section 1</div>
+      <div class="section-title">Privacy Policy</div>
+
+      <h3>What Stock Pulse is</h3>
+      <p>Stock Pulse is a free inventory tracking tool for convenience store and QSR owners. It runs in your web browser, stores data on your device, and — if you choose to link your phone number — syncs your store data across your devices using secure cloud storage.</p>
+      <p>The sync feature is <strong>completely optional.</strong> The app works fully offline without it. We only collect the information described below when you actively choose to use the sync feature.</p>
+
+      <h3>What we collect</h3>
+      <ul>
+        <li><strong>Your phone number</strong> — only when you choose to link a phone for cross-device sync. Used as your account identifier and to send a one-time verification code (OTP) via SMS. We do not use it for marketing.</li>
+        <li><strong>Your inventory data</strong> — item names, stock levels, reorder levels, daily sales rates, prices, and your store name. Only collected if you enable sync. This is your business data; we store it to give it back to you on your other devices.</li>
+        <li><strong>Your franchise/brand selection</strong> — the food brand you select from the dropdown (e.g., Krispy Krunchy Chicken). Used only to display the correct branding in the app.</li>
+      </ul>
+
+      <div class="highlight">
+        We do <strong>not</strong> collect your name, email address, location, payment information, or any personal identifiers beyond your phone number. We do not use cookies or analytics trackers.
+      </div>
+
+      <h3>How we use your information</h3>
+      <ul>
+        <li>To send a one-time SMS verification code when you set up or restore sync on a device</li>
+        <li>To store your inventory data securely so you can access it from any of your devices</li>
+        <li>We do not sell your data, share it with advertisers, or use it for any purpose other than making the app work for you</li>
+      </ul>
+
+      <h3>Who stores your data (sub-processors)</h3>
+      <p>We use two third-party services to make sync work:</p>
+      <ul>
+        <li><strong>Cloudflare, Inc.</strong> (United States) — your encrypted inventory data and phone number are stored in Cloudflare's Key-Value (KV) storage. Cloudflare's privacy policy: <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">cloudflare.com/privacypolicy</a></li>
+        <li><strong>Aircall (a Dialpad company)</strong> — used to send the one-time SMS verification code to your phone number. Aircall receives your phone number only to deliver that single message. Aircall's privacy policy: <a href="https://aircall.io/privacy-policy/" target="_blank" rel="noopener">aircall.io/privacy-policy</a></li>
+      </ul>
+      <p>No other third parties have access to your data.</p>
+
+      <h3>How long we keep your data</h3>
+      <p>Your synced data is automatically deleted <strong>90 days after your last sync.</strong> If you stop using the app, your data disappears on its own — no action needed. Every time you sync, the 90-day clock resets.</p>
+      <p>You can delete your data at any time before the 90 days are up — see the <a href="#contact">Contact section</a> below.</p>
+
+      <h3>Your rights (California residents — CCPA)</h3>
+      <p>If you are a California resident, you have the right to:</p>
+      <ul>
+        <li><strong>Know</strong> what personal information we collect and how we use it (this policy covers that)</li>
+        <li><strong>Delete</strong> your personal information — tap "Delete my stored data" in Store Settings (⚙ icon → scroll down), or email us</li>
+        <li><strong>Opt out of sale</strong> — we do not sell your personal information to anyone</li>
+        <li><strong>Non-discrimination</strong> — exercising any of these rights will not affect your ability to use the app</li>
+      </ul>
+
+      <h3>Children</h3>
+      <p>Stock Pulse is designed for adult business owners. We do not knowingly collect information from anyone under 13. If you believe a minor has submitted information, contact us and we will delete it promptly.</p>
+
+      <h3>Changes to this policy</h3>
+      <p>If we make material changes to how we handle your data, we will update the "Last updated" date at the top of this page. Continued use of the sync feature after a change constitutes acceptance of the revised policy.</p>
+    </div>
+
+    <!-- ══ Section 2: Terms of Use ══ -->
+    <div class="doc-section" id="terms">
+      <div class="section-number">Section 2</div>
+      <div class="section-title">Terms of Use</div>
+
+      <h3>What Stock Pulse is</h3>
+      <p>Stock Pulse is a free inventory management tool provided by Lula Commerce to help independently owned convenience stores and QSR locations track their stock levels, set reorder points, and get low-stock alerts. It is provided at no charge, with no subscription required.</p>
+
+      <h3>No warranty — provided as-is</h3>
+      <p>Stock Pulse is provided <strong>"as is"</strong> without any warranty, express or implied. We make no guarantees about uptime, accuracy of calculations, availability of sync, or that the app will meet your specific business needs. Use it as a helpful tool, not as the sole basis for critical business decisions.</p>
+
+      <h3>Delivery revenue estimates are projections — not guarantees</h3>
+      <div class="highlight">
+        The delivery revenue estimates shown in the app (the "Delivery Opportunity" section) are <strong>projections based on industry averages</strong> derived from third-party data sources including DoorDash category benchmarks. They are not promises, forecasts, or guarantees of actual results.
+      </div>
+      <p>Actual delivery revenue varies significantly by location, local market conditions, neighborhood demographics, platform fees, operational execution, and many other factors outside our control. The estimates are intended to illustrate the general opportunity — not to predict your specific outcome.</p>
+
+      <h3>Your data belongs to you</h3>
+      <p>All inventory data you enter into Stock Pulse is yours. We store it to make the sync feature work. We do not claim ownership of your store data, item names, prices, or any business information you enter.</p>
+
+      <h3>Fair use</h3>
+      <p>You agree to use Stock Pulse only for its intended purpose — managing inventory for your own store or stores you are authorized to manage. You agree not to:</p>
+      <ul>
+        <li>Resell, redistribute, or commercialize the app or its output</li>
+        <li>Attempt to reverse-engineer, copy, or create derivative works from the app</li>
+        <li>Use the app to misrepresent your store's inventory to any third party</li>
+        <li>Use the sync feature to send unsolicited messages (the SMS OTP system is for verification only)</li>
+      </ul>
+
+      <h3>Item limit</h3>
+      <p>The free version of Stock Pulse supports up to <strong>50 items</strong> per store. This limit exists to keep the tool fast and free for everyone.</p>
+
+      <h3>Service changes and discontinuation</h3>
+      <p>Lula Commerce reserves the right to modify, suspend, or discontinue Stock Pulse at any time, with or without notice. Because your data is also stored in your browser's local storage, you will not lose your inventory data if the sync service becomes unavailable — your items remain on your device.</p>
+
+      <h3>Limitation of liability</h3>
+      <p>To the fullest extent permitted by law, Lula Commerce shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of Stock Pulse, including but not limited to lost profits, lost business, or stock-out events.</p>
+
+      <h3>Governing law</h3>
+      <p>These terms are governed by the laws of the United States. Any disputes arising from use of this tool will be resolved through good-faith negotiation before any formal legal process.</p>
+    </div>
+
+    <!-- ══ Section 3: Brand Disclaimer ══ -->
+    <div class="doc-section" id="brands">
+      <div class="section-number">Section 3</div>
+      <div class="section-title">Brand &amp; Trademark Disclaimer</div>
+
+      <p>Stock Pulse allows store owners to select their food program brand from a list of franchise options. This enables the app to display the correct branding and calculate program-specific estimates relevant to that franchise's product mix.</p>
+
+      <h3>Trademark ownership</h3>
+      <p>All brand names, trademarks, registered marks, logos, and trade dress listed below are the exclusive property of their respective owners and parent companies. Lula Commerce makes no claim to ownership of any of these marks.</p>
+
+      <table class="brand-table">
+        <thead>
+          <tr>
+            <th>Brand name in app</th>
+            <th>Registered trademark</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>KKC</td><td>Krispy Krunchy Chicken®</td><td>Chicken Program</td></tr>
+          <tr><td>Chester's</td><td>Chester's Chicken®</td><td>Chicken Program</td></tr>
+          <tr><td>Champs</td><td>Champs Chicken®</td><td>Chicken Program</td></tr>
+          <tr><td>Broasters</td><td>Genuine Broasters®</td><td>Chicken Program</td></tr>
+          <tr><td>Simple Simon's</td><td>Simple Simon's Pizza®</td><td>Pizza Program</td></tr>
+          <tr><td>Godfather's</td><td>Godfather's Pizza Express®</td><td>Pizza Program</td></tr>
+          <tr><td>Circle K</td><td>Circle K®</td><td>C-Store Network</td></tr>
+          <tr><td>AM/PM</td><td>AM/PM Vista®</td><td>C-Store Network</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Nominative fair use</h3>
+      <p>The brand names listed above are used in this application <strong>solely to identify the food programs or store formats operated at each owner's individual location.</strong> This is a recognized form of nominative fair use — referring to a brand by its actual name to describe a product or service.</p>
+
+      <p>For example: if a store owner selects "Krispy Krunchy Chicken" in the app, that selection is used to display KKC-specific estimates based on typical KKC menu items — not to imply any affiliation with or endorsement from Krispy Krunchy Chicken, LLC.</p>
+
+      <h3>No affiliation or endorsement</h3>
+      <div class="highlight">
+        Lula Commerce is <strong>not affiliated with, endorsed by, sponsored by, licensed by, or in partnership with</strong> any of the brands listed above or their parent companies. Stock Pulse is an independently developed tool. The presence of a brand name in this app does not constitute any commercial or legal relationship between Lula Commerce and that brand's owner.
+      </div>
+
+      <p>All independently owned and operated store locations remain solely responsible for their franchise agreements, brand standards, and any obligations to their respective franchise parent companies. Stock Pulse does not interfere with, modify, or override any franchise agreement.</p>
+
+      <h3>Requesting removal</h3>
+      <p>If you are a representative of one of the brands listed above and have concerns about how your trademark is used in this application, please contact us at the address below. We will respond promptly and work in good faith to address your concern.</p>
+    </div>
+
+    <!-- ══ Section 4: Contact ══ -->
+    <div class="contact-card" id="contact">
+      <h3>Contact &amp; Data Requests</h3>
+      <p>For privacy questions, data deletion requests, or trademark concerns:</p>
+      <p><strong>Email:</strong> <a href="mailto:bernard.penoliar@luladelivery.com">bernard.penoliar@luladelivery.com</a></p>
+      <p style="margin-top:12px;font-size:12px;opacity:.65;">You can also delete your synced data directly in the app — tap the <strong>⚙ Settings</strong> icon, scroll to the sync section, and tap "Delete my stored data." This removes your data from our servers immediately.</p>
+    </div>
+
+    <div class="page-footer">
+      <p>Stock Pulse is a free tool by <a href="https://www.lulacommerce.com" target="_blank" rel="noopener">Lula Commerce</a>.</p>
+      <p style="margin-top:4px">This document was last updated May 27, 2026. <a href="lula_inventory_tracker.html">← Back to app</a></p>
+    </div>
+
+  </div>
+</body>
+</html>

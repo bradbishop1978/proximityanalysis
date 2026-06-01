@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-06-01T13:43:12.662633Z",
+  "fetchedAt": "2026-06-01T20:21:38.097036Z",
   "deals": [
     {
       "id": "4014966213",
@@ -5333,7 +5333,7 @@
       "stores": 1,
       "dealname": "Bolla Oil",
       "owner": "Steve Siegel",
-      "stage": "2. Qualified",
+      "stage": "1. Active Pipe Lead",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -13105,7 +13105,7 @@
     {
       "id": "10564857743",
       "date": "2026-04-20",
-      "close_date": "2026-07-09",
+      "close_date": "2026-08-03",
       "brand": "Referral - Core-Mark (Non Show)",
       "stores": 17,
       "dealname": "Volta Oil  - PRIMARY",
@@ -21684,13 +21684,13 @@
     },
     {
       "id": "17119238762",
-      "date": "2026-02-09",
-      "close_date": "2026-08-28",
+      "date": "2026-05-26",
+      "close_date": "2026-09-24",
       "brand": "Referral - Industry",
       "stores": 1041,
       "dealname": "Quik Trip - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "2. Qualified",
+      "stage": "3. Discovery & Demo",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -24787,7 +24787,7 @@
     {
       "id": "20330705762",
       "date": "2026-02-16",
-      "close_date": "2026-06-30",
+      "close_date": "2026-07-31",
       "brand": "Unknown",
       "stores": 12,
       "dealname": "Graham Enterprise - PRIMARY",
@@ -25381,7 +25381,7 @@
     {
       "id": "21816719389",
       "date": "2025-02-24",
-      "close_date": "2026-07-31",
+      "close_date": "2026-08-28",
       "brand": "Referral - Core-Mark (Non Show)",
       "stores": 22,
       "dealname": "Delta Sonic - PRIMARY",
@@ -25625,7 +25625,7 @@
       "date": "2026-03-30",
       "close_date": "2026-06-30",
       "brand": "Top 200 Target",
-      "stores": 183,
+      "stores": 300,
       "dealname": "Nouria Energy Corp. - PRIMARY",
       "owner": "Steve Siegel",
       "stage": "3. Discovery & Demo",
@@ -25925,7 +25925,7 @@
       "stores": 300,
       "dealname": "Global Partners LP - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "2. Qualified",
+      "stage": "1. Active Pipe Lead",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -27471,7 +27471,7 @@
     {
       "id": "48476680712",
       "date": "2026-02-16",
-      "close_date": "2026-06-25",
+      "close_date": "2026-06-29",
       "brand": "Event/Show - (Any)",
       "stores": 171,
       "dealname": "Tri Star Energy/Twice Daily - PRIMARY",
@@ -27801,7 +27801,7 @@
     {
       "id": "52276073219",
       "date": "2026-03-09",
-      "close_date": "2026-08-28",
+      "close_date": "2026-09-24",
       "brand": "Unknown",
       "stores": 10,
       "dealname": "Kayrouz petroleum - PRIMARY",
@@ -27894,7 +27894,7 @@
       "stores": 1,
       "dealname": "GHRA-80 store test",
       "owner": "Steve Siegel",
-      "stage": "2. Qualified",
+      "stage": "1. Active Pipe Lead",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -27922,23 +27922,23 @@
     {
       "id": "53887086361",
       "date": "2026-01-05",
-      "close_date": "2026-06-30",
+      "close_date": "2026-08-28",
       "brand": "Unknown",
-      "stores": 1,
-      "dealname": "URC-100 store test",
+      "stores": 250,
+      "dealname": "URC",
       "owner": "Steve Siegel",
-      "stage": "1. Active Pipe Lead",
+      "stage": "3. Discovery & Demo",
       "pipeline": "Sales Pipeline"
     },
     {
       "id": "54009002604",
       "date": "2026-02-23",
-      "close_date": "2026-07-15",
+      "close_date": "2026-06-30",
       "brand": "Referral - Core-Mark (Non Show)",
       "stores": 1,
       "dealname": "Beck Suppliers -Primary (26 stores)",
       "owner": "Steve Siegel",
-      "stage": "3. Discovery & Demo",
+      "stage": "5. Negotiation",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -27970,7 +27970,7 @@
       "brand": "CK Franchisee",
       "stores": 1,
       "dealname": "Colton Super Center INC SSR",
-      "owner": "Bernard Penoliar",
+      "owner": "Safiya O'Brian",
       "stage": "7. Closed Won",
       "pipeline": "SS Pipeline"
     },
@@ -28076,7 +28076,7 @@
     {
       "id": "55688231594",
       "date": "2026-02-23",
-      "close_date": "2026-06-30",
+      "close_date": "2026-07-10",
       "brand": "Unknown",
       "stores": 50,
       "dealname": "Refuel Pantry - PRIMARY",
@@ -28142,12 +28142,12 @@
     {
       "id": "56279901444",
       "date": "2026-03-02",
-      "close_date": "2026-06-12",
+      "close_date": "2026-07-10",
       "brand": "Unknown",
       "stores": 1,
       "dealname": "Cousins Petro - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "3. Discovery & Demo",
+      "stage": "2. Qualified",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -28329,12 +28329,12 @@
     {
       "id": "57668810062",
       "date": "2026-03-23",
-      "close_date": "2026-06-26",
+      "close_date": "2026-06-01",
       "brand": "Unknown",
       "stores": 1,
       "dealname": "Road runner stores-CT and RI - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "2. Qualified",
+      "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -28373,7 +28373,7 @@
     {
       "id": "57979924549",
       "date": "2026-01-19",
-      "close_date": "2026-05-22",
+      "close_date": "2026-06-18",
       "brand": "Cold Call List",
       "stores": 1,
       "dealname": "Delta Sonic - 5 store test",
@@ -28450,12 +28450,12 @@
     {
       "id": "58136142104",
       "date": "2026-04-17",
-      "close_date": "2026-05-28",
+      "close_date": "2026-07-30",
       "brand": "Unknown",
       "stores": 6,
       "dealname": "Quick on the way",
       "owner": "Steve Siegel",
-      "stage": "3. Discovery & Demo",
+      "stage": "2. Qualified",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -28652,7 +28652,7 @@
       "brand": "CK Franchisee",
       "stores": 3,
       "dealname": "Egypt and Dale Retail Inc SSR",
-      "owner": "Bernard Penoliar",
+      "owner": "Safiya O'Brian",
       "stage": "7. Closed Won",
       "pipeline": "SS Pipeline"
     },
@@ -28725,7 +28725,7 @@
     {
       "id": "58686328175",
       "date": "2026-03-31",
-      "close_date": "2026-06-25",
+      "close_date": "2026-07-02",
       "brand": "Unknown",
       "stores": 7,
       "dealname": "Rams Petroleum - PRIMARY",
@@ -28835,7 +28835,7 @@
     {
       "id": "59086932552",
       "date": "2026-03-23",
-      "close_date": "2026-06-22",
+      "close_date": "2026-07-03",
       "brand": "Event/Show - (Any)",
       "stores": 80,
       "dealname": "Majors Management - PRIMARY (post pilot) 80 stores",
@@ -28879,7 +28879,7 @@
     {
       "id": "59273549444",
       "date": "2026-04-17",
-      "close_date": "2026-06-30",
+      "close_date": "2026-07-30",
       "brand": "Unknown",
       "stores": 8,
       "dealname": "Buell Fuels - PRIMARY",
@@ -28890,7 +28890,7 @@
     {
       "id": "59275158583",
       "date": "2026-04-17",
-      "close_date": "2026-06-25",
+      "close_date": "2026-07-24",
       "brand": "Unknown",
       "stores": 15,
       "dealname": "Teddys Stores - PRIMARY",
@@ -28956,12 +28956,12 @@
     {
       "id": "59812461643",
       "date": "2026-04-27",
-      "close_date": "2026-05-22",
+      "close_date": "2026-07-24",
       "brand": "Unknown",
       "stores": 9,
       "dealname": "Temp-Stop - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "5. Negotiation",
+      "stage": "3. Discovery & Demo",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -28978,7 +28978,7 @@
     {
       "id": "59815088227",
       "date": "2026-04-27",
-      "close_date": "2026-06-18",
+      "close_date": "2026-06-26",
       "brand": "Unknown",
       "stores": 10,
       "dealname": "Tiger Fuel - PRIMARY",
@@ -29028,6 +29028,17 @@
       "dealname": "Panjwani Energy LLC",
       "owner": "Adit Gupta",
       "stage": "8. Closed Won",
+      "pipeline": "Sales Pipeline"
+    },
+    {
+      "id": "60786289071",
+      "date": "2026-03-30",
+      "close_date": "2026-06-30",
+      "brand": "Top 200 Target",
+      "stores": 1,
+      "dealname": "Nouria Energy Corp. - enmarket test (10 stores)",
+      "owner": "Steve Siegel",
+      "stage": "5. Negotiation",
       "pipeline": "Sales Pipeline"
     }
   ]

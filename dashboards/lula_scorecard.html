@@ -421,12 +421,17 @@ var CTA_TYPEFORM_URL = 'https://form.typeform.com/to/XXXXXXXXX'; // replace with
 var WORKER_SCORECARD_ENDPOINT = 'https://programguide.lulacommerce.workers.dev/scorecard-complete';
 var SCORECARD_REF = new URLSearchParams(window.location.search).get('ref');
 
-function fireCompletionWebhook() {
+function fireCompletionWebhook(band, isIcp, revenue) {
   if (!SCORECARD_REF) return;
   fetch(WORKER_SCORECARD_ENDPOINT, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ ref: SCORECARD_REF }),
+    body: JSON.stringify({
+      ref:     SCORECARD_REF,
+      band:    band    || 'unknown',
+      icp:     isIcp   || false,
+      revenue: revenue || 0,
+    }),
   }).catch(function() {}); // fire and forget — never block the UI
 }
 
@@ -699,7 +704,11 @@ function showResult() {
   }
 
   window.scrollTo(0, 0);
-  fireCompletionWebhook();
+
+  var band    = icp.icp ? getBand(calcScore()) : 'non-icp';
+  var rev     = icp.icp ? calcRevenue() : null;
+  var revenue = rev ? (rev.netLo || 0) : 0;
+  fireCompletionWebhook(band, icp.icp, revenue);
 }
 
 function renderICP(el, ruralCaveat) {

@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-06-03T12:46:57.122030Z",
+  "fetchedAt": "2026-06-03T19:53:58.741115Z",
   "deals": [
     {
       "id": "4014966213",
@@ -28928,7 +28928,7 @@
       "stores": 40,
       "dealname": "Dodges",
       "owner": "Steve Siegel",
-      "stage": "3. Discovery & Demo",
+      "stage": "2. Qualified",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -29066,12 +29066,12 @@
     {
       "id": "60785752225",
       "date": "2026-05-11",
-      "close_date": "2026-07-31",
+      "close_date": "2026-07-17",
       "brand": "Event/Show - (Any)",
       "stores": 13,
       "dealname": "Graft Oil - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "3. Discovery & Demo",
+      "stage": "5. Negotiation",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -29136,6 +29136,17 @@
       "brand": "Event/Show - (Any)",
       "stores": 1,
       "dealname": "Pride Stores - 5 store test",
+      "owner": "Steve Siegel",
+      "stage": "3. Discovery & Demo",
+      "pipeline": "Sales Pipeline"
+    },
+    {
+      "id": "60844048147",
+      "date": "2026-06-02",
+      "close_date": "2026-08-05",
+      "brand": "Event/Show - (Any)",
+      "stores": 40,
+      "dealname": "Maplefields -R.L. Vallee Inc. - PRIMARY",
       "owner": "Steve Siegel",
       "stage": "3. Discovery & Demo",
       "pipeline": "Sales Pipeline"

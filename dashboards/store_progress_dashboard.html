@@ -168,7 +168,7 @@
       </div>
       <div style="display:flex;gap:16px;font-size:11px;color:var(--muted)">
         <span id="prog-req">Required: 15 stores/week</span>
-        <span>Jun 10 &mdash; Goal Date</span>
+        <span>Jun 30 &mdash; Goal Date</span>
       </div>
     </div>
   </div>
@@ -193,7 +193,7 @@
     <div class="card">
       <div class="stat-label">Weeks Left</div>
       <div id="s-weeks" class="stat-val">—</div>
-      <div class="stat-sub">until Jun 10, 2026</div>
+      <div class="stat-sub">until Jun 30, 2026</div>
     </div>
   </div>
 
@@ -316,7 +316,7 @@ var ALL_WIN_STAGES = (function() {
 var HS_CLOSED_STAGE   = PIPELINES['SS Pipeline'].closedStage;
 var HS_SIGNED_STAGE   = PIPELINES['SS Pipeline'].signedStage || '';
 var HS_PENDING_STAGES = PIPELINES['SS Pipeline'].pendingStages || [];
-var WEEKS = 10, Q2_START = '2026-04-01', Q2_END = '2026-06-10';
+var WEEKS = 13, Q2_START = '2026-04-01', Q2_END = '2026-06-30';
 var COLORS = ['#DE4990','#2C023B','#EB92BD','#B799FF','#F59E0B','#10B981'];
 var HS_CACHE_KEY = 'lula_hs_deals_cache';
 
@@ -631,7 +631,7 @@ function renderProj(m) {
   if (!entries.length) {
     txt = 'No data yet. Click “Refresh Data” to load Closed Won and Signed deals from HubSpot.';
   } else if (!q2Entries().length) {
-    txt = 'No '+activePipeline+' deals found in the Q2 window (Apr 1–Jun 10). Try a different pipeline tab or import the HubSpot CSV.';
+    txt = 'No '+activePipeline+' deals found in the Q2 window (Apr 1–Jun 30). Try a different pipeline tab or import the HubSpot CSV.';
   } else if (m.status === 'on_track') {
     txt = 'At your current pace of '+m.pace+' stores/week you are on track — projected to end Q2 with '+projEnd+' stores, '+Math.abs(short > 0 ? short : GOAL - projEnd)+' '+(short > 0 ? 'short of' : 'past')+' the '+GOAL+' goal.';
   } else {

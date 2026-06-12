@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-06-12T11:48:36.375214Z",
+  "fetchedAt": "2026-06-12T15:30:03.877345Z",
   "deals": [
     {
       "id": "4014966213",
@@ -28989,12 +28989,12 @@
     {
       "id": "60078459416",
       "date": "2026-05-07",
-      "close_date": "2026-08-05",
+      "close_date": "2026-06-12",
       "brand": "CK Franchisee",
       "stores": 1,
       "dealname": "Longgate service inc SSR",
       "owner": "Brad Penoliar",
-      "stage": "4. Signed Agreement",
+      "stage": "7. Closed Won",
       "pipeline": "SS Pipeline"
     },
     {

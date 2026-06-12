@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-06-12T18:12:12.856311Z",
+  "fetchedAt": "2026-06-12T21:54:34.053794Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29187,12 +29187,12 @@
     {
       "id": "61048593504",
       "date": "2026-06-12",
-      "close_date": "2026-09-10",
+      "close_date": "2026-06-12",
       "brand": "Unknown",
       "stores": 1,
       "dealname": "Randhawa Group Store SSR",
       "owner": "Brad Penoliar",
-      "stage": "4. Signed Agreement",
+      "stage": "7. Closed Won",
       "pipeline": "SS Pipeline"
     }
   ]

@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-06-12T04:43:46.784540Z",
+  "fetchedAt": "2026-06-12T11:48:36.375214Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29161,6 +29161,28 @@
       "owner": "Unassigned",
       "stage": "2. Qualified",
       "pipeline": "Sales Pipeline"
+    },
+    {
+      "id": "61045296801",
+      "date": "2026-06-12",
+      "close_date": "2026-09-10",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Olive Dog, LLC SSR",
+      "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SS Pipeline"
+    },
+    {
+      "id": "61045545574",
+      "date": "2026-06-12",
+      "close_date": "2026-09-10",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Nanakg corp. SSR",
+      "owner": "Brad Penoliar",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SS Pipeline"
     }
   ]
 }

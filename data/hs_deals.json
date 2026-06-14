@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-06-14T14:18:27.599050Z",
+  "fetchedAt": "2026-06-14T17:25:29.176866Z",
   "deals": [
     {
       "id": "4014966213",
@@ -13110,7 +13110,7 @@
       "stores": 17,
       "dealname": "Volta Oil  - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "2. Qualified",
+      "stage": "3. Discovery & Demo",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -18808,7 +18808,7 @@
       "stores": 100,
       "dealname": "Loop Neighborhood - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "3. Discovery & Demo",
+      "stage": "4. ROI & Outstanding Questions",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -27476,7 +27476,7 @@
       "stores": 171,
       "dealname": "Tri Star Energy/Twice Daily - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "5. Negotiation",
+      "stage": "4. ROI & Outstanding Questions",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -27889,12 +27889,12 @@
     {
       "id": "53821952370",
       "date": "2026-04-27",
-      "close_date": "2026-08-21",
+      "close_date": "2026-06-14",
       "brand": "Unknown",
       "stores": 1,
       "dealname": "GHRA-80 store test",
       "owner": "Steve Siegel",
-      "stage": "1. Active Pipe Lead",
+      "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -28142,12 +28142,12 @@
     {
       "id": "56279901444",
       "date": "2026-03-02",
-      "close_date": "2026-07-10",
+      "close_date": "2026-06-14",
       "brand": "Unknown",
       "stores": 1,
       "dealname": "Cousins Petro - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "2. Qualified",
+      "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -28241,9 +28241,9 @@
     {
       "id": "56828822325",
       "date": "2026-04-13",
-      "close_date": "2026-07-01",
+      "close_date": "2026-09-14",
       "brand": "Event/Show - Core-Mark",
-      "stores": 20,
+      "stores": 22,
       "dealname": "Gilligan Company - PRIMARY",
       "owner": "Steve Siegel",
       "stage": "5. Negotiation",
@@ -28972,7 +28972,7 @@
       "stores": 40,
       "dealname": "Triumph Energy - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "3. Discovery & Demo",
+      "stage": "4. ROI & Outstanding Questions",
       "pipeline": "Sales Pipeline"
     },
     {

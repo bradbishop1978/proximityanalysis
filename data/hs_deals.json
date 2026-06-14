@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-06-13T21:21:40.340078Z",
+  "fetchedAt": "2026-06-14T04:49:58.540074Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29044,12 +29044,12 @@
     {
       "id": "60785628800",
       "date": "2026-04-13",
-      "close_date": "2026-07-17",
+      "close_date": "2026-06-13",
       "brand": "Event/Show - Core-Mark",
-      "stores": 5,
-      "dealname": "Gilligan Company - 5 store test",
+      "stores": 8,
+      "dealname": "Gilligan Company - 8 store pilot",
       "owner": "Steve Siegel",
-      "stage": "5. Negotiation",
+      "stage": "8. Closed Won",
       "pipeline": "Sales Pipeline"
     },
     {

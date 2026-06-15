@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-06-15T05:06:05.779273Z",
+  "fetchedAt": "2026-06-15T14:30:27.271658Z",
   "deals": [
     {
       "id": "4014966213",
@@ -27816,7 +27816,7 @@
       "brand": "CK Franchisee",
       "stores": 1,
       "dealname": "PARADISE LIQUOR SSR",
-      "owner": "Safiya O'Brian",
+      "owner": "Unassigned",
       "stage": "Closed Lost",
       "pipeline": "SS Pipeline"
     },
@@ -27970,7 +27970,7 @@
       "brand": "CK Franchisee",
       "stores": 1,
       "dealname": "Colton Super Center INC SSR",
-      "owner": "Safiya O'Brian",
+      "owner": "Brad Penoliar",
       "stage": "7. Closed Won",
       "pipeline": "SS Pipeline"
     },
@@ -28102,7 +28102,7 @@
       "brand": "Unknown",
       "stores": 1,
       "dealname": "Busch food mart LLC  SSR",
-      "owner": "Safiya O'Brian",
+      "owner": "Brad Penoliar",
       "stage": "7. Closed Won",
       "pipeline": "SS Pipeline"
     },
@@ -28488,7 +28488,7 @@
       "stores": 1,
       "dealname": "Juancaso Liquor Store Inc SSR",
       "owner": "Unassigned",
-      "stage": "4. Signed Agreement",
+      "stage": "1. Inbound Received",
       "pipeline": "SS Pipeline"
     },
     {
@@ -28521,7 +28521,7 @@
       "stores": 1,
       "dealname": "Golden Throne Alchemy SSR",
       "owner": "Unassigned",
-      "stage": "4. Signed Agreement",
+      "stage": "1. Inbound Received",
       "pipeline": "SS Pipeline"
     },
     {
@@ -28565,7 +28565,7 @@
       "stores": 1,
       "dealname": "Athens Convenience SSR",
       "owner": "Unassigned",
-      "stage": "4. Signed Agreement",
+      "stage": "1. Inbound Received",
       "pipeline": "SS Pipeline"
     },
     {
@@ -28609,7 +28609,7 @@
       "stores": 1,
       "dealname": "Technology SSR",
       "owner": "Unassigned",
-      "stage": "4. Signed Agreement",
+      "stage": "1. Inbound Received",
       "pipeline": "SS Pipeline"
     },
     {
@@ -28652,7 +28652,7 @@
       "brand": "CK Franchisee",
       "stores": 3,
       "dealname": "Egypt and Dale Retail Inc SSR",
-      "owner": "Safiya O'Brian",
+      "owner": "Brad Penoliar",
       "stage": "7. Closed Won",
       "pipeline": "SS Pipeline"
     },
@@ -28817,7 +28817,7 @@
       "brand": "CK Franchisee",
       "stores": 1,
       "dealname": "DHS Energy Sales LLC SSR",
-      "owner": "Stephanie Beamer",
+      "owner": "Brad Penoliar",
       "stage": "7. Closed Won",
       "pipeline": "SS Pipeline"
     },
@@ -28916,7 +28916,7 @@
       "brand": "CK Franchisee",
       "stores": 1,
       "dealname": "YHS GAS AND CONVENIENCE //CIRCLE K SSR",
-      "owner": "Safiya O'Brian",
+      "owner": "Brad Penoliar",
       "stage": "7. Closed Won",
       "pipeline": "SS Pipeline"
     },
@@ -29015,7 +29015,7 @@
       "brand": "CK Franchisee",
       "stores": 3,
       "dealname": "APEC, Automated Petroleum Energy Company SSR",
-      "owner": "Safiya O'Brian",
+      "owner": "Brad Penoliar",
       "stage": "7. Closed Won",
       "pipeline": "SS Pipeline"
     },
@@ -29170,14 +29170,14 @@
       "stores": 1,
       "dealname": "Olive Dog, LLC SSR",
       "owner": "Unassigned",
-      "stage": "4. Signed Agreement",
+      "stage": "1. Inbound Received",
       "pipeline": "SS Pipeline"
     },
     {
       "id": "61045545574",
       "date": "2026-06-12",
       "close_date": "2026-09-10",
-      "brand": "Unknown",
+      "brand": "CK Franchisee",
       "stores": 1,
       "dealname": "Nanakg corp. SSR",
       "owner": "Brad Penoliar",
@@ -29188,11 +29188,22 @@
       "id": "61048593504",
       "date": "2026-06-12",
       "close_date": "2026-06-12",
-      "brand": "Unknown",
+      "brand": "CK Franchisee",
       "stores": 1,
       "dealname": "Randhawa Group Store SSR",
       "owner": "Brad Penoliar",
       "stage": "7. Closed Won",
+      "pipeline": "SS Pipeline"
+    },
+    {
+      "id": "61109616170",
+      "date": "2026-06-15",
+      "close_date": "2026-09-13",
+      "brand": "CK Franchisee",
+      "stores": 1,
+      "dealname": "Haver\u2019s Nice-N-Easy SSR",
+      "owner": "Brad Penoliar",
+      "stage": "4. Signed Agreement",
       "pipeline": "SS Pipeline"
     }
   ]

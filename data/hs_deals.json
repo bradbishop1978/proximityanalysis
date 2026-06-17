@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-06-17T12:22:05.691184Z",
+  "fetchedAt": "2026-06-17T18:29:27.738324Z",
   "deals": [
     {
       "id": "4014966213",
@@ -18808,7 +18808,7 @@
       "stores": 100,
       "dealname": "Loop Neighborhood - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "5. Negotiation",
+      "stage": "6. Sent Final Agmnt",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -28334,7 +28334,7 @@
       "stores": 1,
       "dealname": "Road runner stores-CT and RI - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "3. Discovery & Demo",
+      "stage": "4. ROI & Outstanding Questions",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -29104,7 +29104,7 @@
       "stores": 15,
       "dealname": "Pride Stores - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "3. Discovery & Demo",
+      "stage": "4. ROI & Outstanding Questions",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -29137,7 +29137,7 @@
       "stores": 1,
       "dealname": "Pride Stores - 5 store test",
       "owner": "Steve Siegel",
-      "stage": "3. Discovery & Demo",
+      "stage": "4. ROI & Outstanding Questions",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -29202,6 +29202,17 @@
       "brand": "CK Franchisee",
       "stores": 1,
       "dealname": "Haver\u2019s Nice-N-Easy SSR",
+      "owner": "Brad Penoliar",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SS Pipeline"
+    },
+    {
+      "id": "61166800727",
+      "date": "2026-06-17",
+      "close_date": "2026-09-15",
+      "brand": "CK Franchisee",
+      "stores": 1,
+      "dealname": "JALAPREHAAN 113 INC  SSR",
       "owner": "Brad Penoliar",
       "stage": "4. Signed Agreement",
       "pipeline": "SS Pipeline"

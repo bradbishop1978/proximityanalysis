@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-06-17T22:06:47.095699Z",
+  "fetchedAt": "2026-06-18T04:43:13.754642Z",
   "deals": [
     {
       "id": "4014966213",
@@ -28351,12 +28351,12 @@
     {
       "id": "57952132145",
       "date": "2026-03-12",
-      "close_date": "2026-06-10",
+      "close_date": "2026-06-18",
       "brand": "CK Franchisee",
       "stores": 1,
       "dealname": "Florida Food And Gas LLC SSR",
       "owner": "Brad Penoliar",
-      "stage": "4. Signed Agreement",
+      "stage": "7. Closed Won",
       "pipeline": "SS Pipeline"
     },
     {
@@ -29231,12 +29231,12 @@
     {
       "id": "61191247258",
       "date": "2026-06-16",
-      "close_date": "2026-09-14",
+      "close_date": "2026-06-18",
       "brand": "CK Franchisee",
       "stores": 1,
       "dealname": "Mehar thind inc SSR",
       "owner": "Brad Penoliar",
-      "stage": "4. Signed Agreement",
+      "stage": "7. Closed Won",
       "pipeline": "SS Pipeline"
     }
   ]

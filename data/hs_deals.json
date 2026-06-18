@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-06-18T18:29:44.847289Z",
+  "fetchedAt": "2026-06-18T22:19:43.520527Z",
   "deals": [
     {
       "id": "4014966213",
@@ -28714,12 +28714,12 @@
     {
       "id": "58686205043",
       "date": "2026-03-12",
-      "close_date": "2026-05-15",
+      "close_date": "2026-06-18",
       "brand": "Unknown",
-      "stores": 19,
+      "stores": 7,
       "dealname": "Fleetway Market - PRIMARY",
       "owner": "Adit Gupta",
-      "stage": "6. Sent Final Agmnt",
+      "stage": "8. Closed Won",
       "pipeline": "Sales Pipeline"
     },
     {

@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-06-23T11:23:12.657855Z",
+  "fetchedAt": "2026-06-23T15:15:07.957571Z",
   "deals": [
     {
       "id": "4014966213",
@@ -28978,12 +28978,12 @@
     {
       "id": "59815088227",
       "date": "2026-04-27",
-      "close_date": "2026-06-26",
+      "close_date": "2026-06-23",
       "brand": "Unknown",
       "stores": 10,
       "dealname": "Tiger Fuel - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "5. Negotiation",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {

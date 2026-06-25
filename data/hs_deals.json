@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-06-25T10:48:18.796976Z",
+  "fetchedAt": "2026-06-25T14:44:27.473897Z",
   "deals": [
     {
       "id": "4014966213",
@@ -25912,7 +25912,7 @@
       "close_date": "2026-09-25",
       "brand": "Top 200 Target",
       "stores": 1400,
-      "dealname": "HF Sinclair - PRIMARY",
+      "dealname": "HF Sinclair - PRIMARY-250 stores",
       "owner": "Steve Siegel",
       "stage": "2. Qualified",
       "pipeline": "Sales Pipeline"
@@ -27366,7 +27366,7 @@
       "stores": 53,
       "dealname": "Petroleum Marketing Group - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "2. Qualified",
+      "stage": "1. Active Pipe Lead",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -29114,7 +29114,7 @@
       "brand": "Event/Show - (Any)",
       "stores": 187,
       "dealname": "OXXO - PRIMARY",
-      "owner": "Adit Gupta",
+      "owner": "Steve Siegel",
       "stage": "4. ROI & Outstanding Questions",
       "pipeline": "Sales Pipeline"
     },
@@ -29238,6 +29238,50 @@
       "owner": "Brad Penoliar",
       "stage": "7. Closed Won",
       "pipeline": "SS Pipeline"
+    },
+    {
+      "id": "61465653874",
+      "date": "2026-06-23",
+      "close_date": "2026-08-31",
+      "brand": "Referral - Industry",
+      "stores": 25,
+      "dealname": "Golden Gate Petroleum - PRIMARY",
+      "owner": "Steve Siegel",
+      "stage": "3. Discovery & Demo",
+      "pipeline": "Sales Pipeline"
+    },
+    {
+      "id": "61507508481",
+      "date": "2026-06-11",
+      "close_date": "2026-09-30",
+      "brand": "Event/Show - (Any)",
+      "stores": 250,
+      "dealname": "Phillips 66 - PRIMARY-250 stores",
+      "owner": "Steve Siegel",
+      "stage": "2. Qualified",
+      "pipeline": "Sales Pipeline"
+    },
+    {
+      "id": "61507508545",
+      "date": "2026-06-24",
+      "close_date": "2026-12-16",
+      "brand": "Event/Show - (Any)",
+      "stores": 100,
+      "dealname": "Applegreen PLC - PRIMARY",
+      "owner": "Steve Siegel",
+      "stage": "2. Qualified",
+      "pipeline": "Sales Pipeline"
+    },
+    {
+      "id": "61621440695",
+      "date": "2026-06-24",
+      "close_date": "2026-09-24",
+      "brand": "Event/Show - (Any)",
+      "stores": 150,
+      "dealname": "True North Energy - PRIMARY",
+      "owner": "Steve Siegel",
+      "stage": "3. Discovery & Demo",
+      "pipeline": "Sales Pipeline"
     }
   ]
 }

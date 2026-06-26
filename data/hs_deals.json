@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-06-26T10:56:09.875373Z",
+  "fetchedAt": "2026-06-26T14:37:16.055025Z",
   "deals": [
     {
       "id": "4014966213",
@@ -13105,7 +13105,7 @@
     {
       "id": "10564857743",
       "date": "2026-04-20",
-      "close_date": "2026-08-03",
+      "close_date": "2026-07-30",
       "brand": "Referral - Core-Mark (Non Show)",
       "stores": 15,
       "dealname": "Volta Oil  - PRIMARY",
@@ -18805,7 +18805,7 @@
       "date": "2026-04-13",
       "close_date": "2026-07-08",
       "brand": "Top 200 Target",
-      "stores": 100,
+      "stores": 80,
       "dealname": "Loop Neighborhood - PRIMARY",
       "owner": "Steve Siegel",
       "stage": "6. Sent Final Agmnt",
@@ -25623,7 +25623,7 @@
     {
       "id": "23221932941",
       "date": "2026-03-30",
-      "close_date": "2026-07-31",
+      "close_date": "2026-08-20",
       "brand": "Top 200 Target",
       "stores": 300,
       "dealname": "Nouria Energy Corp. - PRIMARY",
@@ -27427,7 +27427,7 @@
     {
       "id": "48473796706",
       "date": "2026-03-16",
-      "close_date": "2026-06-30",
+      "close_date": "2026-07-23",
       "brand": "Unknown",
       "stores": 62,
       "dealname": "Gate Petroleum Co. - PRIMARY",
@@ -27471,7 +27471,7 @@
     {
       "id": "48476680712",
       "date": "2026-02-16",
-      "close_date": "2026-06-29",
+      "close_date": "2026-07-17",
       "brand": "Event/Show - (Any)",
       "stores": 171,
       "dealname": "Tri Star Energy/Twice Daily - PRIMARY",
@@ -27537,7 +27537,7 @@
     {
       "id": "48536158788",
       "date": "2026-01-05",
-      "close_date": "2026-06-19",
+      "close_date": "2026-07-01",
       "brand": "Event/Show - (Any)",
       "stores": 318,
       "dealname": "Royal Farms 2025 - PRIMARY",
@@ -27933,7 +27933,7 @@
     {
       "id": "54009002604",
       "date": "2026-02-23",
-      "close_date": "2026-06-30",
+      "close_date": "2026-07-10",
       "brand": "Referral - Core-Mark (Non Show)",
       "stores": 1,
       "dealname": "Beck Suppliers -Primary (26 stores)",
@@ -28076,7 +28076,7 @@
     {
       "id": "55688231594",
       "date": "2026-02-23",
-      "close_date": "2026-07-10",
+      "close_date": "2026-07-31",
       "brand": "Unknown",
       "stores": 50,
       "dealname": "Refuel Pantry - PRIMARY",
@@ -28153,7 +28153,7 @@
     {
       "id": "56279901465",
       "date": "2026-03-09",
-      "close_date": "2026-06-30",
+      "close_date": "2026-08-07",
       "brand": "Unknown",
       "stores": 28,
       "dealname": "Minnoco - PRIMARY",
@@ -28329,12 +28329,12 @@
     {
       "id": "57668810062",
       "date": "2026-03-23",
-      "close_date": "2026-06-30",
+      "close_date": "2026-07-09",
       "brand": "Unknown",
       "stores": 1,
       "dealname": "Road runner stores-CT and RI - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "4. ROI & Outstanding Questions",
+      "stage": "5. Negotiation",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -28373,7 +28373,7 @@
     {
       "id": "57979924549",
       "date": "2026-01-19",
-      "close_date": "2026-06-18",
+      "close_date": "2026-07-10",
       "brand": "Cold Call List",
       "stores": 1,
       "dealname": "Delta Sonic - 5 store test",
@@ -28450,7 +28450,7 @@
     {
       "id": "58136142104",
       "date": "2026-04-17",
-      "close_date": "2026-07-30",
+      "close_date": "2026-09-25",
       "brand": "Unknown",
       "stores": 6,
       "dealname": "Quick on the way",
@@ -28703,7 +28703,7 @@
     {
       "id": "58686081624",
       "date": "2026-03-30",
-      "close_date": "2026-07-16",
+      "close_date": "2026-08-06",
       "brand": "Unknown",
       "stores": 16,
       "dealname": "Wilcox + Flegel - PRIMARY",
@@ -28725,7 +28725,7 @@
     {
       "id": "58686328175",
       "date": "2026-03-31",
-      "close_date": "2026-07-02",
+      "close_date": "2026-07-23",
       "brand": "Unknown",
       "stores": 7,
       "dealname": "Rams Petroleum - PRIMARY",
@@ -28835,7 +28835,7 @@
     {
       "id": "59086932552",
       "date": "2026-03-23",
-      "close_date": "2026-07-03",
+      "close_date": "2026-07-31",
       "brand": "Event/Show - (Any)",
       "stores": 80,
       "dealname": "Majors Management - PRIMARY (post pilot) 80 stores",
@@ -28923,7 +28923,7 @@
     {
       "id": "59610189384",
       "date": "2026-04-18",
-      "close_date": "2026-07-02",
+      "close_date": "2026-09-11",
       "brand": "Event/Show - (Any)",
       "stores": 40,
       "dealname": "Dodges",
@@ -28956,7 +28956,7 @@
     {
       "id": "59812461643",
       "date": "2026-04-27",
-      "close_date": "2026-07-24",
+      "close_date": "2026-08-17",
       "brand": "Unknown",
       "stores": 9,
       "dealname": "Temp-Stop - PRIMARY",
@@ -29033,7 +29033,7 @@
     {
       "id": "60785628312",
       "date": "2026-04-20",
-      "close_date": "2026-07-31",
+      "close_date": "2026-09-25",
       "brand": "Event/Show - Core-Mark",
       "stores": 15,
       "dealname": "Sunlight food mart - PRIMARY",
@@ -29055,7 +29055,7 @@
     {
       "id": "60785690685",
       "date": "2026-05-18",
-      "close_date": "2026-07-31",
+      "close_date": "2026-08-28",
       "brand": "Referral - Industry",
       "stores": 100,
       "dealname": "HELE-Par pacific - PRIMARY (through velocity logic)",
@@ -29088,7 +29088,7 @@
     {
       "id": "60785813640",
       "date": "2026-05-18",
-      "close_date": "2026-07-31",
+      "close_date": "2026-08-19",
       "brand": "Event/Show - (Any)",
       "stores": 50,
       "dealname": "U.S. Market - PRIMARY",
@@ -29121,7 +29121,7 @@
     {
       "id": "60786289071",
       "date": "2026-03-30",
-      "close_date": "2026-06-30",
+      "close_date": "2026-07-10",
       "brand": "Top 200 Target",
       "stores": 1,
       "dealname": "Nouria Energy Corp. - enmarket test (10 stores)",

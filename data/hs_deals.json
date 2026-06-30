@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-06-30T11:15:02.747899Z",
+  "fetchedAt": "2026-06-30T14:32:20.166397Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29282,6 +29282,28 @@
       "owner": "Steve Siegel",
       "stage": "3. Discovery & Demo",
       "pipeline": "Sales Pipeline"
+    },
+    {
+      "id": "61851120911",
+      "date": "2026-06-30",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "test@gmail.com SSR",
+      "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SS Pipeline"
+    },
+    {
+      "id": "61852362367",
+      "date": "2026-06-30",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "bradstore#101 SSR",
+      "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SS Pipeline"
     }
   ]
 }

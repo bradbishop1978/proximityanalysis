@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-01T14:49:27.687098Z",
+  "fetchedAt": "2026-07-01T18:03:38.138526Z",
   "deals": [
     {
       "id": "4014966213",
@@ -28884,7 +28884,7 @@
       "stores": 8,
       "dealname": "Buell Fuels - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "3. Discovery & Demo",
+      "stage": "2. Qualified",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -29145,10 +29145,10 @@
       "date": "2026-06-02",
       "close_date": "2026-08-05",
       "brand": "Event/Show - (Any)",
-      "stores": 40,
+      "stores": 31,
       "dealname": "Maplefields -R.L. Vallee Inc. - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "3. Discovery & Demo",
+      "stage": "4. ROI & Outstanding Questions",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -29313,6 +29313,39 @@
       "stores": 1,
       "dealname": "Lula SSO \u2014 quick stop test",
       "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SS Pipeline"
+    },
+    {
+      "id": "62018505632",
+      "date": "2026-07-01",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 7-Eleven",
+      "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "62029426950",
+      "date": "2026-07-01",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 Andrews",
+      "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "62038834185",
+      "date": "2026-07-01",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 Andrews",
+      "owner": "Brad Penoliar",
       "stage": "4. Signed Agreement",
       "pipeline": "SS Pipeline"
     }

@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-02T14:18:13.914112Z",
+  "fetchedAt": "2026-07-02T17:56:26.433029Z",
   "deals": [
     {
       "id": "4014966213",
@@ -27537,12 +27537,12 @@
     {
       "id": "48536158788",
       "date": "2026-01-05",
-      "close_date": "2026-07-01",
-      "brand": "Event/Show - (Any)",
-      "stores": 318,
+      "close_date": "2026-07-02",
+      "brand": "Unknown",
+      "stores": 320,
       "dealname": "Royal Farms 2025 - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "6. Sent Final Agmnt",
+      "stage": "8. Closed Won",
       "pipeline": "Sales Pipeline"
     },
     {

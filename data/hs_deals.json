@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-06T12:09:50.207458Z",
+  "fetchedAt": "2026-07-06T18:15:23.040950Z",
   "deals": [
     {
       "id": "4014966213",
@@ -27427,7 +27427,7 @@
     {
       "id": "48473796706",
       "date": "2026-03-16",
-      "close_date": "2026-07-23",
+      "close_date": "2026-07-31",
       "brand": "Unknown",
       "stores": 62,
       "dealname": "Gate Petroleum Co. - PRIMARY",
@@ -27933,7 +27933,7 @@
     {
       "id": "54009002604",
       "date": "2026-02-23",
-      "close_date": "2026-07-10",
+      "close_date": "2026-07-24",
       "brand": "Referral - Core-Mark (Non Show)",
       "stores": 1,
       "dealname": "Beck Suppliers -Primary (26 stores)",
@@ -28329,7 +28329,7 @@
     {
       "id": "57668810062",
       "date": "2026-03-23",
-      "close_date": "2026-07-09",
+      "close_date": "2026-07-17",
       "brand": "Unknown",
       "stores": 1,
       "dealname": "Road runner stores-CT and RI - PRIMARY",
@@ -28373,7 +28373,7 @@
     {
       "id": "57979924549",
       "date": "2026-01-19",
-      "close_date": "2026-07-10",
+      "close_date": "2026-07-17",
       "brand": "Cold Call List",
       "stores": 1,
       "dealname": "Delta Sonic - 5 store test",
@@ -29066,7 +29066,7 @@
     {
       "id": "60785752225",
       "date": "2026-05-11",
-      "close_date": "2026-07-17",
+      "close_date": "2026-07-31",
       "brand": "Event/Show - (Any)",
       "stores": 13,
       "dealname": "Graft Oil - PRIMARY",

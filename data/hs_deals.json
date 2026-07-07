@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-07T07:50:03.928983Z",
+  "fetchedAt": "2026-07-07T11:14:29.489859Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29348,6 +29348,17 @@
       "owner": "Brad Penoliar",
       "stage": "4. Signed Agreement",
       "pipeline": "SS Pipeline"
+    },
+    {
+      "id": "62340826119",
+      "date": "2026-07-07",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 Texas de Brazil - Fairfax",
+      "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SSO Pipeline"
     }
   ]
 }

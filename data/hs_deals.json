@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-07T11:14:29.489859Z",
+  "fetchedAt": "2026-07-07T14:51:14.698287Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29356,6 +29356,17 @@
       "brand": "Unknown",
       "stores": 1,
       "dealname": "Lula SSO \u2014 Texas de Brazil - Fairfax",
+      "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "62346241209",
+      "date": "2026-07-07",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 ADIT SOLUTION LLC",
       "owner": "Unassigned",
       "stage": "4. Signed Agreement",
       "pipeline": "SSO Pipeline"

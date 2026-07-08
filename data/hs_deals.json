@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-08T10:25:10.832378Z",
+  "fetchedAt": "2026-07-08T14:28:58.107897Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29367,6 +29367,17 @@
       "brand": "Unknown",
       "stores": 1,
       "dealname": "Lula SSO \u2014 ADIT SOLUTION LLC",
+      "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "62406020991",
+      "date": "2026-07-08",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 Andrews",
       "owner": "Unassigned",
       "stage": "4. Signed Agreement",
       "pipeline": "SSO Pipeline"

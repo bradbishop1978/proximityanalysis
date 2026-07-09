@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-08T21:14:55.688302Z",
+  "fetchedAt": "2026-07-09T03:53:48.741737Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29389,6 +29389,17 @@
       "brand": "Unknown",
       "stores": 1,
       "dealname": "Lula SSO \u2014 Andrews",
+      "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "62420769570",
+      "date": "2026-07-08",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 11906 Campo Rd",
       "owner": "Unassigned",
       "stage": "4. Signed Agreement",
       "pipeline": "SSO Pipeline"

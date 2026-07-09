@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-09T11:16:18.903640Z",
+  "fetchedAt": "2026-07-09T15:23:57.771316Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29401,6 +29401,17 @@
       "stores": 1,
       "dealname": "Lula SSO \u2014 11906 Campo Rd",
       "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "62441321085",
+      "date": "2026-07-09",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 20400 US-98",
+      "owner": "Brad Penoliar",
       "stage": "4. Signed Agreement",
       "pipeline": "SSO Pipeline"
     }

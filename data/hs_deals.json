@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-10T11:11:09.027627Z",
+  "fetchedAt": "2026-07-10T14:41:32.131659Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29374,12 +29374,12 @@
     {
       "id": "62404542086",
       "date": "2026-07-08",
-      "close_date": "",
-      "brand": "Unknown",
+      "close_date": "2026-07-10",
+      "brand": "CK Franchisee",
       "stores": 1,
       "dealname": "Lula SSO \u2014 639 Morosgo Dr NE",
       "owner": "Brad Penoliar",
-      "stage": "4. Signed Agreement",
+      "stage": "7. Closed Won",
       "pipeline": "SSO Pipeline"
     },
     {
@@ -29396,12 +29396,12 @@
     {
       "id": "62420769570",
       "date": "2026-07-08",
-      "close_date": "",
-      "brand": "Unknown",
+      "close_date": "2026-07-10",
+      "brand": "CK Franchisee",
       "stores": 1,
       "dealname": "Lula SSO \u2014 11906 Campo Rd",
-      "owner": "Unassigned",
-      "stage": "4. Signed Agreement",
+      "owner": "Brad Penoliar",
+      "stage": "7. Closed Won",
       "pipeline": "SSO Pipeline"
     },
     {

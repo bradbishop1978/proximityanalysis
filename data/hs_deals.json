@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-10T21:11:35.774094Z",
+  "fetchedAt": "2026-07-11T03:20:53.486695Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29433,6 +29433,17 @@
       "brand": "Unknown",
       "stores": 1,
       "dealname": "Lula SSO \u2014 337 E 9th St",
+      "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "62495162987",
+      "date": "2026-07-10",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 LA PLAZA 24",
       "owner": "Unassigned",
       "stage": "4. Signed Agreement",
       "pipeline": "SSO Pipeline"

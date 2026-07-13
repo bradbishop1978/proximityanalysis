@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-13T17:59:21.813553Z",
+  "fetchedAt": "2026-07-13T21:02:57.395345Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29455,6 +29455,17 @@
       "brand": "Unknown",
       "stores": 1,
       "dealname": "Lula SSO \u2014 123 Waterfront St",
+      "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "62616129793",
+      "date": "2026-07-13",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 224 Conicville Rd",
       "owner": "Unassigned",
       "stage": "4. Signed Agreement",
       "pipeline": "SSO Pipeline"

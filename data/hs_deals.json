@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-14T17:20:42.652619Z",
+  "fetchedAt": "2026-07-14T21:05:10.848990Z",
   "deals": [
     {
       "id": "4014966213",
@@ -28967,7 +28967,7 @@
     {
       "id": "59814951956",
       "date": "2026-04-30",
-      "close_date": "2026-07-08",
+      "close_date": "2026-12-17",
       "brand": "Cold Call List",
       "stores": 40,
       "dealname": "Triumph Energy - PRIMARY",
@@ -29469,6 +29469,17 @@
       "owner": "Unassigned",
       "stage": "4. Signed Agreement",
       "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "62639566913",
+      "date": "2026-07-13",
+      "close_date": "2026-08-31",
+      "brand": "Inbound Form",
+      "stores": 18,
+      "dealname": "Chisholm Corner - PRIMARY",
+      "owner": "Unassigned",
+      "stage": "2. Qualified",
+      "pipeline": "Sales Pipeline"
     }
   ]
 }

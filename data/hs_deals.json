@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-15T17:23:02.248012Z",
+  "fetchedAt": "2026-07-15T21:06:19.525234Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29491,6 +29491,17 @@
       "owner": "Steve Siegel",
       "stage": "2. Qualified",
       "pipeline": "Sales Pipeline"
+    },
+    {
+      "id": "62673562977",
+      "date": "2026-07-15",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 Circle K",
+      "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SSO Pipeline"
     }
   ]
 }

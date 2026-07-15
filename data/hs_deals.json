@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-14T21:05:10.848990Z",
+  "fetchedAt": "2026-07-15T02:55:03.693351Z",
   "deals": [
     {
       "id": "4014966213",
@@ -27691,12 +27691,12 @@
     {
       "id": "50443411056",
       "date": "",
-      "close_date": "2026-06-12",
+      "close_date": "2026-07-14",
       "brand": "Inbound Form",
       "stores": 1,
       "dealname": "Speedy\u2019s Corp",
       "owner": "Adit Gupta",
-      "stage": "1. Active Pipe Lead",
+      "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -27935,7 +27935,7 @@
       "date": "2026-02-23",
       "close_date": "2026-07-24",
       "brand": "Referral - Core-Mark (Non Show)",
-      "stores": 1,
+      "stores": 26,
       "dealname": "Beck Suppliers -Primary (26 stores)",
       "owner": "Steve Siegel",
       "stage": "5. Negotiation",
@@ -28131,12 +28131,12 @@
     {
       "id": "56279844159",
       "date": "2026-02-16",
-      "close_date": "2026-06-26",
+      "close_date": "2026-07-14",
       "brand": "Event/Show - Core-Mark",
       "stores": 10,
       "dealname": "Ricky Rockets Fuel Center - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "1. Active Pipe Lead",
+      "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -28331,7 +28331,7 @@
       "date": "2026-03-23",
       "close_date": "2026-07-17",
       "brand": "Unknown",
-      "stores": 1,
+      "stores": 10,
       "dealname": "Road runner stores-CT and RI - PRIMARY",
       "owner": "Steve Siegel",
       "stage": "5. Negotiation",
@@ -29123,7 +29123,7 @@
       "date": "2026-03-30",
       "close_date": "2026-07-10",
       "brand": "Top 200 Target",
-      "stores": 1,
+      "stores": 10,
       "dealname": "Nouria Energy Corp. - enmarket test (10 stores)",
       "owner": "Steve Siegel",
       "stage": "5. Negotiation",
@@ -29477,7 +29477,18 @@
       "brand": "Inbound Form",
       "stores": 18,
       "dealname": "Chisholm Corner - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
+      "stage": "2. Qualified",
+      "pipeline": "Sales Pipeline"
+    },
+    {
+      "id": "62639585301",
+      "date": "2026-07-14",
+      "close_date": "2026-09-30",
+      "brand": "Cold Call List",
+      "stores": 12,
+      "dealname": "Country Stores Of Iowa - PRIMARY",
+      "owner": "Steve Siegel",
       "stage": "2. Qualified",
       "pipeline": "Sales Pipeline"
     }

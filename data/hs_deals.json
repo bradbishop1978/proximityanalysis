@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-16T14:07:38.761438Z",
+  "fetchedAt": "2026-07-16T17:24:37.040747Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29513,6 +29513,17 @@
       "owner": "Unassigned",
       "stage": "4. Signed Agreement",
       "pipeline": "SS Pipeline"
+    },
+    {
+      "id": "62716895568",
+      "date": "2026-07-16",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 Chestertown",
+      "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SSO Pipeline"
     }
   ]
 }

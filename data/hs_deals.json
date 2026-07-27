@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-27T17:47:32.426126Z",
+  "fetchedAt": "2026-07-27T21:16:56.693166Z",
   "deals": [
     {
       "id": "4014966213",
@@ -27933,12 +27933,12 @@
     {
       "id": "54009002604",
       "date": "2026-02-23",
-      "close_date": "2026-07-24",
+      "close_date": "2026-07-27",
       "brand": "Referral - Core-Mark (Non Show)",
       "stores": 26,
       "dealname": "Beck Suppliers -Primary (26 stores)",
       "owner": "Steve Siegel",
-      "stage": "5. Negotiation",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {

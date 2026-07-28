@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-27T21:16:56.693166Z",
+  "fetchedAt": "2026-07-28T03:14:03.464694Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29554,6 +29554,17 @@
       "brand": "Unknown",
       "stores": 1,
       "dealname": "Lula SSO \u2014 Circle/Carlsbad",
+      "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "63200077606",
+      "date": "2026-07-27",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 925 S 14th St",
       "owner": "Unassigned",
       "stage": "4. Signed Agreement",
       "pipeline": "SSO Pipeline"

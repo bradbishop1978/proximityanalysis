@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-04T14:29:53.132542Z",
+  "fetchedAt": "2026-08-04T17:54:24.781824Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29579,6 +29579,17 @@
       "owner": "Steve Siegel",
       "stage": "2. Qualified",
       "pipeline": "Sales Pipeline"
+    },
+    {
+      "id": "63458873414",
+      "date": "2026-08-04",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 Georgia Institute of Technology",
+      "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SSO Pipeline"
     }
   ]
 }

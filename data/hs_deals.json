@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-06T10:45:30.564866Z",
+  "fetchedAt": "2026-08-06T14:25:54.243967Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29587,6 +29587,28 @@
       "brand": "Unknown",
       "stores": 1,
       "dealname": "Lula SSO \u2014 Georgia Institute of Technology",
+      "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "63539404576",
+      "date": "2026-08-06",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 Chestertown",
+      "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "63541040789",
+      "date": "2026-08-06",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 Chestertown",
       "owner": "Unassigned",
       "stage": "4. Signed Agreement",
       "pipeline": "SSO Pipeline"

@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-07T16:58:22.969207Z",
+  "fetchedAt": "2026-08-07T20:48:36.966838Z",
   "deals": [
     {
       "id": "4014966213",
@@ -28450,12 +28450,12 @@
     {
       "id": "58136142104",
       "date": "2026-04-17",
-      "close_date": "2026-09-25",
+      "close_date": "2026-08-07",
       "brand": "Unknown",
       "stores": 6,
       "dealname": "Quick on the way",
-      "owner": "Safiya O'Brian",
-      "stage": "2. Qualified",
+      "owner": "Steve Siegel",
+      "stage": "5. Negotiation",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -29610,6 +29610,17 @@
       "stores": 1,
       "dealname": "Lula SSO \u2014 Chestertown",
       "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "63574303648",
+      "date": "2026-08-07",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 15 Antelope Blvd",
+      "owner": "Brad Penoliar",
       "stage": "4. Signed Agreement",
       "pipeline": "SSO Pipeline"
     }

@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-07T20:48:36.966838Z",
+  "fetchedAt": "2026-08-08T02:01:16.423124Z",
   "deals": [
     {
       "id": "4014966213",
@@ -28452,10 +28452,10 @@
       "date": "2026-04-17",
       "close_date": "2026-08-07",
       "brand": "Unknown",
-      "stores": 6,
+      "stores": 7,
       "dealname": "Quick on the way",
       "owner": "Steve Siegel",
-      "stage": "5. Negotiation",
+      "stage": "8. Closed Won",
       "pipeline": "Sales Pipeline"
     },
     {

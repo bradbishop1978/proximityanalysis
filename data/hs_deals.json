@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-10T09:39:14.874188Z",
+  "fetchedAt": "2026-08-10T13:21:42.273257Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29621,6 +29621,17 @@
       "stores": 1,
       "dealname": "Lula SSO \u2014 15 Antelope Blvd",
       "owner": "Brad Penoliar",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "63659883954",
+      "date": "2026-08-10",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 Chestertown",
+      "owner": "Unassigned",
       "stage": "4. Signed Agreement",
       "pipeline": "SSO Pipeline"
     }

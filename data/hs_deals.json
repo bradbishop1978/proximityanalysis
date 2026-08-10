@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-10T16:58:48.625837Z",
+  "fetchedAt": "2026-08-10T20:50:30.767397Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29618,7 +29618,7 @@
       "date": "2026-08-07",
       "close_date": "",
       "brand": "Unknown",
-      "stores": 1,
+      "stores": 2,
       "dealname": "Lula SSO \u2014 15 Antelope Blvd",
       "owner": "Brad Penoliar",
       "stage": "4. Signed Agreement",
@@ -29638,12 +29638,12 @@
     {
       "id": "63667254787",
       "date": "2026-08-10",
-      "close_date": "",
+      "close_date": "2026-08-10",
       "brand": "Unknown",
       "stores": 1,
       "dealname": "Lula SSO \u2014 903 Exeter Rd",
-      "owner": "Unassigned",
-      "stage": "4. Signed Agreement",
+      "owner": "Brad Penoliar",
+      "stage": "7. Closed Won",
       "pipeline": "SSO Pipeline"
     }
   ]

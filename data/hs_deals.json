@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-14T20:35:54.858878Z",
+  "fetchedAt": "2026-08-15T01:36:42.779164Z",
   "deals": [
     {
       "id": "4014966213",
@@ -18803,12 +18803,12 @@
     {
       "id": "14045211500",
       "date": "2026-04-13",
-      "close_date": "2026-07-08",
+      "close_date": "2026-08-14",
       "brand": "Top 200 Target",
-      "stores": 80,
-      "dealname": "Loop Neighborhood - PRIMARY",
+      "stores": 100,
+      "dealname": "Loop Neighborhood - PRIMARY 100 sites",
       "owner": "Steve Siegel",
-      "stage": "6. Sent Final Agmnt",
+      "stage": "8. Closed Won",
       "pipeline": "Sales Pipeline"
     },
     {

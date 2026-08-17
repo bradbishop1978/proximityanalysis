@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-17T16:34:08.398128Z",
+  "fetchedAt": "2026-08-17T20:33:02.928137Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29616,12 +29616,12 @@
     {
       "id": "63574303648",
       "date": "2026-08-07",
-      "close_date": "",
+      "close_date": "2026-08-17",
       "brand": "Unknown",
       "stores": 2,
       "dealname": "Lula SSO \u2014 15 Antelope Blvd",
       "owner": "Brad Penoliar",
-      "stage": "4. Signed Agreement",
+      "stage": "7. Closed Won",
       "pipeline": "SSO Pipeline"
     },
     {

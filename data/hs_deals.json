@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-20T16:40:29.330055Z",
+  "fetchedAt": "2026-08-20T20:34:58.717113Z",
   "deals": [
     {
       "id": "4014966213",
@@ -13105,7 +13105,7 @@
     {
       "id": "10564857743",
       "date": "2026-04-20",
-      "close_date": "2026-07-30",
+      "close_date": "2026-09-18",
       "brand": "Referral - Core-Mark (Non Show)",
       "stores": 15,
       "dealname": "Volta Oil  - PRIMARY",
@@ -21685,7 +21685,7 @@
     {
       "id": "17119238762",
       "date": "2026-05-26",
-      "close_date": "2026-09-24",
+      "close_date": "2026-10-08",
       "brand": "Referral - Industry",
       "stores": 1041,
       "dealname": "Quik Trip - PRIMARY",
@@ -24787,7 +24787,7 @@
     {
       "id": "20330705762",
       "date": "2026-02-16",
-      "close_date": "2026-07-31",
+      "close_date": "2026-10-08",
       "brand": "Unknown",
       "stores": 12,
       "dealname": "Graham Enterprise - PRIMARY",
@@ -25381,9 +25381,9 @@
     {
       "id": "21816719389",
       "date": "2025-02-24",
-      "close_date": "2026-08-28",
+      "close_date": "2026-09-18",
       "brand": "Referral - Core-Mark (Non Show)",
-      "stores": 22,
+      "stores": 27,
       "dealname": "Delta Sonic - PRIMARY",
       "owner": "Steve Siegel",
       "stage": "5. Negotiation",
@@ -25480,7 +25480,7 @@
     {
       "id": "22568910488",
       "date": "2026-03-02",
-      "close_date": "2026-08-20",
+      "close_date": "2026-12-17",
       "brand": "Top 200 Target",
       "stores": 50,
       "dealname": "Circle K Corp - Pilot of 50 stores (NCR only)",
@@ -25623,7 +25623,7 @@
     {
       "id": "23221932941",
       "date": "2026-03-30",
-      "close_date": "2026-08-20",
+      "close_date": "2026-12-17",
       "brand": "Top 200 Target",
       "stores": 300,
       "dealname": "Nouria Energy Corp. - PRIMARY",
@@ -25656,7 +25656,7 @@
     {
       "id": "28632228258",
       "date": "2026-03-02",
-      "close_date": "2026-09-01",
+      "close_date": "2026-10-07",
       "brand": "Event/Show - (Any)",
       "stores": 50,
       "dealname": "TXB - PRIMARY",
@@ -25909,10 +25909,10 @@
     {
       "id": "34130758485",
       "date": "2025-04-07",
-      "close_date": "2026-09-25",
+      "close_date": "2027-02-18",
       "brand": "Top 200 Target",
       "stores": 1400,
-      "dealname": "HF Sinclair - PRIMARY-250 stores",
+      "dealname": "HF Sinclair - PRIMARY-100 stores",
       "owner": "Steve Siegel",
       "stage": "2. Qualified",
       "pipeline": "Sales Pipeline"
@@ -27471,12 +27471,12 @@
     {
       "id": "48476680712",
       "date": "2026-02-16",
-      "close_date": "2026-08-27",
+      "close_date": "2026-09-11",
       "brand": "Event/Show - (Any)",
       "stores": 171,
       "dealname": "Tri Star Energy/Twice Daily - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "4. ROI & Outstanding Questions",
+      "stage": "5. Negotiation",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -27498,7 +27498,7 @@
       "stores": 180,
       "dealname": "G&M Oil - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "3. Discovery & Demo",
+      "stage": "2. Qualified",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -27801,7 +27801,7 @@
     {
       "id": "52276073219",
       "date": "2026-03-09",
-      "close_date": "2026-09-24",
+      "close_date": "2026-10-07",
       "brand": "Unknown",
       "stores": 10,
       "dealname": "Kayrouz petroleum - PRIMARY",
@@ -27922,7 +27922,7 @@
     {
       "id": "53887086361",
       "date": "2026-01-05",
-      "close_date": "2026-08-28",
+      "close_date": "2026-10-16",
       "brand": "Unknown",
       "stores": 250,
       "dealname": "URC",
@@ -28076,7 +28076,7 @@
     {
       "id": "55688231594",
       "date": "2026-02-23",
-      "close_date": "2026-09-10",
+      "close_date": "2026-10-23",
       "brand": "Unknown",
       "stores": 50,
       "dealname": "Refuel Pantry - PRIMARY",
@@ -28329,12 +28329,12 @@
     {
       "id": "57668810062",
       "date": "2026-03-23",
-      "close_date": "2026-08-14",
+      "close_date": "2026-09-04",
       "brand": "Unknown",
       "stores": 10,
       "dealname": "Road runner stores-CT and RI - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "5. Negotiation",
+      "stage": "4. ROI & Outstanding Questions",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -28373,12 +28373,12 @@
     {
       "id": "57979924549",
       "date": "2026-01-19",
-      "close_date": "2026-08-28",
+      "close_date": "2026-08-20",
       "brand": "Cold Call List",
       "stores": 1,
       "dealname": "Delta Sonic - 5 store test",
       "owner": "Steve Siegel",
-      "stage": "5. Negotiation",
+      "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -28619,7 +28619,7 @@
       "brand": "CK Franchisee",
       "stores": 1,
       "dealname": "Ohm Shree Ganesha LLC SSR",
-      "owner": "Brad Penoliar",
+      "owner": "Safiya O'Brian",
       "stage": "7. Closed Won",
       "pipeline": "SS Pipeline"
     },
@@ -28703,7 +28703,7 @@
     {
       "id": "58686081624",
       "date": "2026-03-30",
-      "close_date": "2026-08-28",
+      "close_date": "2026-09-25",
       "brand": "Unknown",
       "stores": 16,
       "dealname": "Wilcox + Flegel - PRIMARY",
@@ -28725,7 +28725,7 @@
     {
       "id": "58686328175",
       "date": "2026-03-31",
-      "close_date": "2026-08-31",
+      "close_date": "2026-09-18",
       "brand": "Unknown",
       "stores": 7,
       "dealname": "Rams Petroleum - PRIMARY",
@@ -28835,7 +28835,7 @@
     {
       "id": "59086932552",
       "date": "2026-03-23",
-      "close_date": "2026-08-27",
+      "close_date": "2026-10-15",
       "brand": "Event/Show - (Any)",
       "stores": 80,
       "dealname": "Majors Management - PRIMARY (post pilot) 80 stores",
@@ -28956,7 +28956,7 @@
     {
       "id": "59812461643",
       "date": "2026-04-27",
-      "close_date": "2026-08-31",
+      "close_date": "2026-10-08",
       "brand": "Unknown",
       "stores": 9,
       "dealname": "Temp-Stop - PRIMARY",
@@ -29033,7 +29033,7 @@
     {
       "id": "60785628312",
       "date": "2026-04-20",
-      "close_date": "2026-09-25",
+      "close_date": "2026-11-19",
       "brand": "Event/Show - Core-Mark",
       "stores": 15,
       "dealname": "Sunlight food mart - PRIMARY",
@@ -29088,12 +29088,12 @@
     {
       "id": "60785813640",
       "date": "2026-05-18",
-      "close_date": "2026-08-19",
+      "close_date": "2026-09-10",
       "brand": "Event/Show - (Any)",
       "stores": 50,
       "dealname": "U.S. Market - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "3. Discovery & Demo",
+      "stage": "4. ROI & Outstanding Questions",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -29110,7 +29110,7 @@
     {
       "id": "60786244490",
       "date": "2026-05-18",
-      "close_date": "2026-08-31",
+      "close_date": "2026-09-11",
       "brand": "Event/Show - (Any)",
       "stores": 187,
       "dealname": "OXXO - PRIMARY",
@@ -29121,7 +29121,7 @@
     {
       "id": "60786289071",
       "date": "2026-03-30",
-      "close_date": "2026-08-21",
+      "close_date": "2026-08-28",
       "brand": "Top 200 Target",
       "stores": 10,
       "dealname": "Nouria Energy Corp. - enmarket test (10 stores)",
@@ -29132,7 +29132,7 @@
     {
       "id": "60786307123",
       "date": "2026-05-11",
-      "close_date": "2026-08-20",
+      "close_date": "2026-09-11",
       "brand": "Event/Show - (Any)",
       "stores": 1,
       "dealname": "Pride Stores - 5 store test",
@@ -29143,7 +29143,7 @@
     {
       "id": "60844048147",
       "date": "2026-06-02",
-      "close_date": "2026-08-27",
+      "close_date": "2026-09-18",
       "brand": "Event/Show - (Any)",
       "stores": 31,
       "dealname": "Maplefields -R.L. Vallee Inc. - PRIMARY",
@@ -29154,7 +29154,7 @@
     {
       "id": "61024618116",
       "date": "2026-06-09",
-      "close_date": "2026-08-27",
+      "close_date": "2026-10-01",
       "brand": "Referral - Industry",
       "stores": 75,
       "dealname": "Southwest Ga Oil Co. - PRIMARY",
@@ -29242,7 +29242,7 @@
     {
       "id": "61465653874",
       "date": "2026-06-23",
-      "close_date": "2026-08-31",
+      "close_date": "2026-09-25",
       "brand": "Referral - Industry",
       "stores": 20,
       "dealname": "Golden Gate Petroleum - PRIMARY",
@@ -29253,12 +29253,12 @@
     {
       "id": "61507508481",
       "date": "2026-06-11",
-      "close_date": "2026-09-30",
+      "close_date": "2026-11-26",
       "brand": "Event/Show - (Any)",
-      "stores": 250,
-      "dealname": "Phillips 66 - PRIMARY-250 stores",
+      "stores": 100,
+      "dealname": "Phillips 66 - PRIMARY-100 stores",
       "owner": "Steve Siegel",
-      "stage": "2. Qualified",
+      "stage": "3. Discovery & Demo",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -29275,7 +29275,7 @@
     {
       "id": "61621440695",
       "date": "2026-06-24",
-      "close_date": "2026-09-24",
+      "close_date": "2026-10-23",
       "brand": "Event/Show - (Any)",
       "stores": 150,
       "dealname": "True North Energy - PRIMARY",

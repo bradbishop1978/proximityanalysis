@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-20T20:34:58.717113Z",
+  "fetchedAt": "2026-08-21T01:42:45.499508Z",
   "deals": [
     {
       "id": "4014966213",
@@ -12833,9 +12833,9 @@
       "close_date": "2023-02-10",
       "brand": "Unknown",
       "stores": 105,
-      "dealname": "Stinker Stores - 100",
-      "owner": "Unassigned",
-      "stage": "9. Closed lost",
+      "dealname": "Stinker Store",
+      "owner": "Steve Siegel",
+      "stage": "2. Qualified",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -29574,8 +29574,8 @@
       "date": "2025-07-31",
       "close_date": "2026-11-30",
       "brand": "Top 200 Target",
-      "stores": 250,
-      "dealname": "Coremark-250 stores",
+      "stores": 100,
+      "dealname": "Coremark-100 stores",
       "owner": "Steve Siegel",
       "stage": "2. Qualified",
       "pipeline": "Sales Pipeline"
@@ -29656,6 +29656,61 @@
       "owner": "Unassigned",
       "stage": "4. Signed Agreement",
       "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "64175184650",
+      "date": "2026-08-05",
+      "close_date": "2026-08-27",
+      "brand": "Unknown",
+      "stores": 10,
+      "dealname": "Major Oil Co - PRIMARY (1P only--up to 10 stores)",
+      "owner": "Steve Siegel",
+      "stage": "4. ROI & Outstanding Questions",
+      "pipeline": "Sales Pipeline"
+    },
+    {
+      "id": "64175185667",
+      "date": "2026-08-13",
+      "close_date": "2026-09-09",
+      "brand": "CK Franchisee",
+      "stores": 15,
+      "dealname": "On the run - PRIMARY",
+      "owner": "Steve Siegel",
+      "stage": "3. Discovery & Demo",
+      "pipeline": "Sales Pipeline"
+    },
+    {
+      "id": "64175429141",
+      "date": "2026-08-20",
+      "close_date": "2026-10-30",
+      "brand": "Unknown",
+      "stores": 14,
+      "dealname": "WOW! Kitchen & Gas - PRIMARY",
+      "owner": "Steve Siegel",
+      "stage": "2. Qualified",
+      "pipeline": "Sales Pipeline"
+    },
+    {
+      "id": "64175487321",
+      "date": "2025-07-24",
+      "close_date": "2026-11-30",
+      "brand": "Top 200 Target",
+      "stores": 250,
+      "dealname": "Coremark foodservice-100 stores (clone)",
+      "owner": "Steve Siegel",
+      "stage": "2. Qualified",
+      "pipeline": "Sales Pipeline"
+    },
+    {
+      "id": "64178152311",
+      "date": "2026-08-13",
+      "close_date": "2026-10-29",
+      "brand": "Unknown",
+      "stores": 220,
+      "dealname": "CrossAmerica Partners LP - PRIMARY",
+      "owner": "Steve Siegel",
+      "stage": "2. Qualified",
+      "pipeline": "Sales Pipeline"
     }
   ]
 }

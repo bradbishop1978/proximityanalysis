@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-24T13:01:12.295916Z",
+  "fetchedAt": "2026-08-24T16:45:01.787751Z",
   "deals": [
     {
       "id": "4014966213",
@@ -26441,7 +26441,7 @@
       "brand": "CK Franchisee",
       "stores": 1,
       "dealname": "Circle K (Kahlon) + CKF - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Vince Meyer",
       "stage": "4. Signed Agreement",
       "pipeline": "SS Pipeline"
     },
@@ -29440,12 +29440,12 @@
     {
       "id": "62495162987",
       "date": "2026-07-10",
-      "close_date": "",
+      "close_date": "2026-08-24",
       "brand": "Unknown",
       "stores": 1,
       "dealname": "Lula SSO \u2014 LA PLAZA 24",
       "owner": "Brad Penoliar",
-      "stage": "4. Signed Agreement",
+      "stage": "7. Closed Won",
       "pipeline": "SSO Pipeline"
     },
     {
@@ -29722,6 +29722,50 @@
       "owner": "Unassigned",
       "stage": "4. Signed Agreement",
       "pipeline": "SS Pipeline"
+    },
+    {
+      "id": "64265526323",
+      "date": "2026-08-24",
+      "close_date": "2026-08-24",
+      "brand": "CK Franchisee",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 Mount Jackson -Krispy Krunchy Chicken",
+      "owner": "Vince Meyer",
+      "stage": "7. Closed Won",
+      "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "64275612572",
+      "date": "2026-08-24",
+      "close_date": "2026-08-24",
+      "brand": "CK Franchisee",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 MONUT JACKSON CIRCLEK EXXON",
+      "owner": "Vince Meyer",
+      "stage": "7. Closed Won",
+      "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "64284683696",
+      "date": "2026-08-24",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 3,
+      "dealname": "Lula SSO \u2014 2120 Black Rock Tpke",
+      "owner": "Vince Meyer",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "64286202036",
+      "date": "2026-08-24",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 Chestertown",
+      "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SSO Pipeline"
     }
   ]
 }

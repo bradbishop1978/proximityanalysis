@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-25T08:50:23.518756Z",
+  "fetchedAt": "2026-08-25T12:57:11.000683Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29748,12 +29748,12 @@
     {
       "id": "64284683696",
       "date": "2026-08-24",
-      "close_date": "",
+      "close_date": "2026-08-25",
       "brand": "Unknown",
       "stores": 3,
       "dealname": "Lula SSO \u2014 2120 Black Rock Tpke",
-      "owner": "Vince Meyer",
-      "stage": "4. Signed Agreement",
+      "owner": "Brad Penoliar",
+      "stage": "7. Closed Won",
       "pipeline": "SSO Pipeline"
     },
     {
@@ -29770,12 +29770,12 @@
     {
       "id": "64294213146",
       "date": "2026-08-25",
-      "close_date": "",
+      "close_date": "2026-08-25",
       "brand": "Unknown",
-      "stores": 1,
+      "stores": 2,
       "dealname": "Lula SSO \u2014 3800 Wilkinson Blvd",
-      "owner": "Unassigned",
-      "stage": "4. Signed Agreement",
+      "owner": "Adit Gupta",
+      "stage": "7. Closed Won",
       "pipeline": "SSO Pipeline"
     },
     {

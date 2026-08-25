@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-24T20:36:48.330100Z",
+  "fetchedAt": "2026-08-25T01:38:17.085735Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29763,6 +29763,17 @@
       "brand": "Unknown",
       "stores": 1,
       "dealname": "Lula SSO \u2014 Chestertown",
+      "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "64294213146",
+      "date": "2026-08-25",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 3800 Wilkinson Blvd",
       "owner": "Unassigned",
       "stage": "4. Signed Agreement",
       "pipeline": "SSO Pipeline"

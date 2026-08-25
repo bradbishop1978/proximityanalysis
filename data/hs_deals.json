@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-25T16:43:30.524008Z",
+  "fetchedAt": "2026-08-25T20:35:20.647470Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29749,7 +29749,7 @@
       "id": "64284683696",
       "date": "2026-08-24",
       "close_date": "2026-08-25",
-      "brand": "Unknown",
+      "brand": "CK Franchisee",
       "stores": 3,
       "dealname": "Lula SSO \u2014 2120 Black Rock Tpke",
       "owner": "Brad Penoliar",
@@ -29771,7 +29771,7 @@
       "id": "64294213146",
       "date": "2026-08-25",
       "close_date": "2026-08-25",
-      "brand": "Unknown",
+      "brand": "CK Franchisee",
       "stores": 2,
       "dealname": "Lula SSO \u2014 3800 Wilkinson Blvd",
       "owner": "Adit Gupta",
@@ -29798,6 +29798,17 @@
       "dealname": "Lula SSO \u2014 Generation Drive",
       "owner": "Unassigned",
       "stage": "4. Signed Agreement",
+      "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "64332237096",
+      "date": "2026-08-25",
+      "close_date": "2026-08-25",
+      "brand": "CK Franchisee",
+      "stores": 2,
+      "dealname": "Lula SSO \u2014 Circle K",
+      "owner": "Vince Meyer",
+      "stage": "7. Closed Won",
       "pipeline": "SSO Pipeline"
     }
   ]

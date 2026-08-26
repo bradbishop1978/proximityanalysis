@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-26T16:51:34.668211Z",
+  "fetchedAt": "2026-08-26T23:12:04.387045Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29812,10 +29812,21 @@
       "pipeline": "SSO Pipeline"
     },
     {
-      "id": "64386580598",
+      "id": "64371842143",
       "date": "2026-08-26",
       "close_date": "2026-08-26",
       "brand": "Unknown",
+      "stores": 3,
+      "dealname": "Lula SSO \u2014 1113 N 7th St",
+      "owner": "Vince Meyer",
+      "stage": "7. Closed Won",
+      "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "64386580598",
+      "date": "2026-08-26",
+      "close_date": "2026-08-26",
+      "brand": "CK Franchisee",
       "stores": 1,
       "dealname": "Lula SSO \u2014 811 Camino Ramon",
       "owner": "Vince Meyer",
@@ -29826,7 +29837,7 @@
       "id": "64388889962",
       "date": "2026-08-25",
       "close_date": "2026-08-25",
-      "brand": "Unknown",
+      "brand": "CK Franchisee",
       "stores": 1,
       "dealname": "Lula SSO \u2014 1675 Main St",
       "owner": "Vince Meyer",

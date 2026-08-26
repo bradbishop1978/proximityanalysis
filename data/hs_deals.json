@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-25T20:35:20.647470Z",
+  "fetchedAt": "2026-08-26T01:43:23.482036Z",
   "deals": [
     {
       "id": "4014966213",
@@ -28542,7 +28542,7 @@
       "brand": "CK Franchisee",
       "stores": 1,
       "dealname": "Epitome Enterprises Inc SSR",
-      "owner": "Brad Penoliar",
+      "owner": "Vince Meyer",
       "stage": "4. Signed Agreement",
       "pipeline": "SS Pipeline"
     },
@@ -29807,6 +29807,17 @@
       "brand": "CK Franchisee",
       "stores": 2,
       "dealname": "Lula SSO \u2014 Circle K",
+      "owner": "Vince Meyer",
+      "stage": "7. Closed Won",
+      "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "64388889962",
+      "date": "2026-08-25",
+      "close_date": "2026-08-25",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 1675 Main St",
       "owner": "Vince Meyer",
       "stage": "7. Closed Won",
       "pipeline": "SSO Pipeline"

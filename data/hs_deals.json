@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-26T01:43:23.482036Z",
+  "fetchedAt": "2026-08-26T04:46:16.072999Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29807,6 +29807,17 @@
       "brand": "CK Franchisee",
       "stores": 2,
       "dealname": "Lula SSO \u2014 Circle K",
+      "owner": "Vince Meyer",
+      "stage": "7. Closed Won",
+      "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "64386580598",
+      "date": "2026-08-26",
+      "close_date": "2026-08-26",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 811 Camino Ramon",
       "owner": "Vince Meyer",
       "stage": "7. Closed Won",
       "pipeline": "SSO Pipeline"

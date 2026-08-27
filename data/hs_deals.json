@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-26T23:12:04.387045Z",
+  "fetchedAt": "2026-08-27T08:42:41.011385Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29473,12 +29473,12 @@
     {
       "id": "62639566913",
       "date": "2026-07-13",
-      "close_date": "2026-08-31",
+      "close_date": "2026-08-27",
       "brand": "Inbound Form",
-      "stores": 18,
+      "stores": 15,
       "dealname": "Chisholm Corner - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "6. Sent Final Agmnt",
+      "stage": "8. Closed Won",
       "pipeline": "Sales Pipeline"
     },
     {

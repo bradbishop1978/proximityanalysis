@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-28T10:55:11.208749Z",
+  "fetchedAt": "2026-08-28T22:04:57.575333Z",
   "deals": [
     {
       "id": "4014966213",
@@ -21690,7 +21690,7 @@
       "stores": 1041,
       "dealname": "Quik Trip - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "2. Qualified",
+      "stage": "3. Discovery & Demo",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -25733,12 +25733,12 @@
     {
       "id": "30157945431",
       "date": "",
-      "close_date": "2026-02-23",
+      "close_date": "2026-08-28",
       "brand": "Referral - Core-Mark (Non Show)",
       "stores": 30,
       "dealname": "Velocity stores llc - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "1. Active Pipe Lead",
+      "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -28307,7 +28307,7 @@
     {
       "id": "57663560222",
       "date": "2026-03-04",
-      "close_date": "2026-09-18",
+      "close_date": "2026-10-22",
       "brand": "Referral - Industry",
       "stores": 170,
       "dealname": "Shell /Timewise Primary",
@@ -28334,7 +28334,7 @@
       "stores": 10,
       "dealname": "Road runner stores-CT and RI - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "4. ROI & Outstanding Questions",
+      "stage": "2. Qualified",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -29066,12 +29066,12 @@
     {
       "id": "60785752225",
       "date": "2026-05-11",
-      "close_date": "2026-08-31",
+      "close_date": "2026-09-25",
       "brand": "Event/Show - (Any)",
       "stores": 13,
       "dealname": "Graft Oil - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "5. Negotiation",
+      "stage": "4. ROI & Outstanding Questions",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -29159,7 +29159,7 @@
       "stores": 75,
       "dealname": "Southwest Ga Oil Co. - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "2. Qualified",
+      "stage": "1. Active Pipe Lead",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -29660,12 +29660,12 @@
     {
       "id": "64175184650",
       "date": "2026-08-05",
-      "close_date": "2026-08-27",
+      "close_date": "2026-09-10",
       "brand": "Unknown",
       "stores": 10,
       "dealname": "Major Oil Co - PRIMARY (1P only--up to 10 stores)",
       "owner": "Steve Siegel",
-      "stage": "4. ROI & Outstanding Questions",
+      "stage": "5. Negotiation",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -29682,12 +29682,12 @@
     {
       "id": "64175429141",
       "date": "2026-08-20",
-      "close_date": "2026-10-30",
+      "close_date": "2026-08-28",
       "brand": "Unknown",
       "stores": 14,
       "dealname": "WOW! Kitchen & Gas - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "2. Qualified",
+      "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -29843,6 +29843,17 @@
       "owner": "Vince Meyer",
       "stage": "7. Closed Won",
       "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "64484649572",
+      "date": "2026-08-25",
+      "close_date": "2026-12-10",
+      "brand": "Event/Show - (Any)",
+      "stores": 70,
+      "dealname": "Country Fair - PRIMARY",
+      "owner": "Steve Siegel",
+      "stage": "2. Qualified",
+      "pipeline": "Sales Pipeline"
     }
   ]
 }

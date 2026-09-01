@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-01T04:37:29.820063Z",
+  "fetchedAt": "2026-09-01T13:22:43.549542Z",
   "deals": [
     {
       "id": "4014966213",
@@ -23801,7 +23801,7 @@
       "brand": "Unknown",
       "stores": 41,
       "dealname": "R.L. Jordan Oil Company DBA Hot Spot - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -23901,7 +23901,7 @@
       "stores": 75,
       "dealname": "GATE Foundation - PRIMARY",
       "owner": "Unassigned",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -23929,12 +23929,12 @@
     {
       "id": "19162268425",
       "date": "2024-05-01",
-      "close_date": "2025-02-03",
+      "close_date": "2026-11-11",
       "brand": "Top 200 Target",
       "stores": 817,
       "dealname": "Maverik - PRIMARY",
       "owner": "Unassigned",
-      "stage": "Nurture",
+      "stage": "1. Active Pipe Lead",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -24484,7 +24484,7 @@
       "stores": 100,
       "dealname": "Par Pacific Holdings - PRIMARY",
       "owner": "Unassigned",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -24494,7 +24494,7 @@
       "brand": "Unknown",
       "stores": 39,
       "dealname": "Spades Co. / Time Mart - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -24582,8 +24582,8 @@
       "brand": "Referral - Core-Mark (Non Show)",
       "stores": 150,
       "dealname": "Rutter's - PRIMARY",
-      "owner": "Unassigned",
-      "stage": "Nurture",
+      "owner": "Steve Siegel",
+      "stage": "1. Active Pipe Lead",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -25022,7 +25022,7 @@
       "brand": "Unknown",
       "stores": 37,
       "dealname": "Friendly Express - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -25210,7 +25210,7 @@
       "stores": 58,
       "dealname": "Giant Retail Llc - PRIMARY",
       "owner": "Unassigned",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -25242,7 +25242,7 @@
       "brand": "Referral - Core-Mark (Non Show)",
       "stores": 30,
       "dealname": "Raj Kumar - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -25364,7 +25364,7 @@
       "stores": 500,
       "dealname": "Parkland CA - PRIMARY",
       "owner": "Unassigned",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -25374,7 +25374,7 @@
       "brand": "Top 200 Target",
       "stores": 242,
       "dealname": "BG Fuels/Waypoint - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -25584,7 +25584,7 @@
       "stores": 10000,
       "dealname": "Hunt Brothers Pizza - PRIMARY",
       "owner": "Unassigned",
-      "stage": "Nurture",
+      "stage": "CW - Churned",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -25594,7 +25594,7 @@
       "brand": "Event/Show - Core-Mark",
       "stores": 33,
       "dealname": "Quicklees - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -25605,7 +25605,7 @@
       "brand": "Event/Show - Core-Mark",
       "stores": 16,
       "dealname": "Lyons S&S/Velocity - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -25616,8 +25616,8 @@
       "brand": "Event/Show - Core-Mark",
       "stores": 51,
       "dealname": "Champlain Farms - PRIMARY",
-      "owner": "Unassigned",
-      "stage": "Nurture",
+      "owner": "Steve Siegel",
+      "stage": "1. Active Pipe Lead",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -25639,7 +25639,7 @@
       "stores": 1,
       "dealname": "Gawfco Enterprises - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "Nurture",
+      "stage": "1. Active Pipe Lead",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -25649,7 +25649,7 @@
       "brand": "Event/Show - Core-Mark",
       "stores": 10,
       "dealname": "Big Oil - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -25903,7 +25903,7 @@
       "stores": 115,
       "dealname": "Little General Stores Inc. - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "Nurture",
+      "stage": "CW - Churned",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -25935,7 +25935,7 @@
       "brand": "Top 200 Target",
       "stores": 550,
       "dealname": "RaceTrac - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -25947,7 +25947,7 @@
       "stores": 84,
       "dealname": "Weigels - PRIMARY",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -25980,7 +25980,7 @@
       "stores": 71,
       "dealname": "MerleBoes / MB Markets - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "Nurture",
+      "stage": "1. Active Pipe Lead",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -25991,7 +25991,7 @@
       "stores": 118,
       "dealname": "Huck's Convenience  - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -27487,7 +27487,7 @@
       "stores": 400,
       "dealname": "Loves Travel Stop - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "Nurture",
+      "stage": "1. Active Pipe Lead",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -27674,7 +27674,7 @@
       "stores": 1,
       "dealname": "KRISPY KRUNCHY Chicken - PRIMARY",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "CW - Churned",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -28378,7 +28378,7 @@
       "stores": 1,
       "dealname": "Delta Sonic - 5 store test",
       "owner": "Steve Siegel",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {

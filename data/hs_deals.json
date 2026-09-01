@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-01T19:18:56.219083Z",
+  "fetchedAt": "2026-09-01T22:30:20.399259Z",
   "deals": [
     {
       "id": "4014966213",
@@ -28168,7 +28168,7 @@
       "brand": "CK Franchisee",
       "stores": 1,
       "dealname": "Friends 3llc SSR",
-      "owner": "Brad Penoliar",
+      "owner": "Vince Meyer",
       "stage": "4. Signed Agreement",
       "pipeline": "SS Pipeline"
     },
@@ -29856,14 +29856,25 @@
       "pipeline": "Sales Pipeline"
     },
     {
+      "id": "64519019086",
+      "date": "2026-09-01",
+      "close_date": "2026-09-01",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 9745 Liberia Ave",
+      "owner": "Vince Meyer",
+      "stage": "7. Closed Won",
+      "pipeline": "SSO Pipeline"
+    },
+    {
       "id": "64535441315",
       "date": "2026-09-01",
-      "close_date": "",
+      "close_date": "2026-09-01",
       "brand": "Unknown",
       "stores": 1,
       "dealname": "Lula SSO \u2014 401 N Main St",
-      "owner": "Unassigned",
-      "stage": "4. Signed Agreement",
+      "owner": "Vince Meyer",
+      "stage": "7. Closed Won",
       "pipeline": "SSO Pipeline"
     }
   ]

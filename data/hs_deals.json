@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-01T13:22:43.549542Z",
+  "fetchedAt": "2026-09-01T19:18:56.219083Z",
   "deals": [
     {
       "id": "4014966213",
@@ -3682,7 +3682,7 @@
       "brand": "Unknown",
       "stores": 39,
       "dealname": "Cenex Zip Trip - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -5123,7 +5123,7 @@
       "brand": "Unknown",
       "stores": 33,
       "dealname": "Doublebee's C-Stores - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -5365,7 +5365,7 @@
       "brand": "Event/Show - (Any)",
       "stores": 25,
       "dealname": "Rusty Lantern Markets - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -5597,7 +5597,7 @@
       "stores": 72,
       "dealname": "Bell Stores - H124T - PRIMARY",
       "owner": "Unassigned",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -5695,7 +5695,7 @@
       "brand": "Unknown",
       "stores": 18,
       "dealname": "Mini Mart C Stores - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -5904,7 +5904,7 @@
       "brand": "Unknown",
       "stores": 450,
       "dealname": "SE Petro / Asian American Business Owners Assoc - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -9864,7 +9864,7 @@
       "brand": "Unknown",
       "stores": 15,
       "dealname": "Power Mart (Gunter Oil) - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -10667,8 +10667,8 @@
       "brand": "Unknown",
       "stores": 25,
       "dealname": "Top Star Express - PRIMARY",
-      "owner": "Unassigned",
-      "stage": "Nurture",
+      "owner": "Steve Siegel",
+      "stage": "1. Active Pipe Lead",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -10964,8 +10964,8 @@
       "brand": "Unknown",
       "stores": 26,
       "dealname": "Graham C Stores - PRIMARY",
-      "owner": "Unassigned",
-      "stage": "Nurture",
+      "owner": "Steve Siegel",
+      "stage": "1. Active Pipe Lead",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -11592,7 +11592,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 2",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -12977,7 +12977,7 @@
       "brand": "Unknown",
       "stores": 40,
       "dealname": "Dari Mart - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -12999,7 +12999,7 @@
       "brand": "Unknown",
       "stores": 12,
       "dealname": "Sunset Marts - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -14617,7 +14617,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 92",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14628,7 +14628,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 74",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14639,7 +14639,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 75",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14650,7 +14650,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 548",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14661,7 +14661,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 36",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14672,7 +14672,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 142",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14683,7 +14683,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 561",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14705,7 +14705,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 69",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14716,7 +14716,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 522",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14738,7 +14738,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 141",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14749,7 +14749,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 513",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14760,7 +14760,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 73",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14771,7 +14771,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 536",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14782,7 +14782,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 130",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14793,7 +14793,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 126",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14804,7 +14804,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 25",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14815,7 +14815,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 149",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14826,7 +14826,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 510",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14837,7 +14837,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 54",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14848,7 +14848,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 517",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14859,7 +14859,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 502",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14870,7 +14870,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 540",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14881,7 +14881,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 549",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14892,7 +14892,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site550",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14903,7 +14903,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 553",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14925,7 +14925,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 508",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14936,7 +14936,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 7",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14947,7 +14947,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 564",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14958,7 +14958,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 562",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14969,7 +14969,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 504",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14980,7 +14980,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 503",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -14991,7 +14991,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 521",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -15002,7 +15002,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 88",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -15013,7 +15013,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 541",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -15024,7 +15024,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 525",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -15046,7 +15046,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 159",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -15057,7 +15057,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 11",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -15068,7 +15068,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 511",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -15090,7 +15090,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 534",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -15101,7 +15101,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site551",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -15112,7 +15112,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 527",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -15123,7 +15123,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 109",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -15134,7 +15134,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 529",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -15145,7 +15145,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 543",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -15156,7 +15156,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 516",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -15167,7 +15167,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 524",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -15178,7 +15178,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 519",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -15189,7 +15189,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 506",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -15200,7 +15200,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 127",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -15211,7 +15211,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 507",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -15222,7 +15222,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site542",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -15233,7 +15233,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 528",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -15244,7 +15244,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 509",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -15255,7 +15255,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 129",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -15266,7 +15266,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - Site 44",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -18027,7 +18027,7 @@
       "stores": 1600,
       "dealname": "Petroleum Marketing Group Inc. - PRIMARY",
       "owner": "Unassigned",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -18609,7 +18609,7 @@
       "brand": "Unknown",
       "stores": 50,
       "dealname": "Craddock Oil / BlueSky - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -19423,7 +19423,7 @@
       "brand": "Referral - Core-Mark (Non Show)",
       "stores": 260,
       "dealname": "Delek US - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -19489,8 +19489,8 @@
       "brand": "Unknown",
       "stores": 50,
       "dealname": "Energy North / Haffner's - PRIMARY",
-      "owner": "Unassigned",
-      "stage": "Nurture",
+      "owner": "Steve Siegel",
+      "stage": "1. Active Pipe Lead",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -20358,7 +20358,7 @@
       "brand": "Referral - Core-Mark (Non Show)",
       "stores": 17,
       "dealname": "Roadster - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -20380,7 +20380,7 @@
       "brand": "Referral - Core-Mark (Non Show)",
       "stores": 50,
       "dealname": "Friendly Food Marts (PA) - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -20413,7 +20413,7 @@
       "brand": "Unknown",
       "stores": 12,
       "dealname": "Qik N EZ - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -20513,7 +20513,7 @@
       "stores": 81,
       "dealname": "Family Express - PRIMARY",
       "owner": "Unassigned",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -20755,7 +20755,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 160",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -20766,7 +20766,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 168",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -20777,7 +20777,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 103",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -20788,7 +20788,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 108",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -20799,7 +20799,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 567",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -20810,7 +20810,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 169",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -20821,7 +20821,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 566",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -20832,7 +20832,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 563",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -20843,7 +20843,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 118",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -20854,7 +20854,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 174",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -20865,7 +20865,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 123",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -20876,7 +20876,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 182",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -20887,7 +20887,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 183",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -20898,7 +20898,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 106",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -20909,7 +20909,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 167",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -20920,7 +20920,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 189",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -20931,7 +20931,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 6066",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -20942,7 +20942,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 565",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -20953,7 +20953,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 94",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -20964,7 +20964,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 170",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -20975,7 +20975,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 187",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -20986,7 +20986,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 184",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -20997,7 +20997,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 98",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -21008,7 +21008,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 181",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -21019,7 +21019,7 @@
       "stores": 1,
       "dealname": "Atlantis Management Group - Site 185",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -21030,7 +21030,7 @@
       "stores": 100,
       "dealname": "Atlantis Management Group - LOCATION",
       "owner": "Adit Gupta",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -21601,8 +21601,8 @@
       "brand": "Unknown",
       "stores": 107,
       "dealname": "Plaid Pantry - PRIMARY",
-      "owner": "Unassigned",
-      "stage": "Nurture",
+      "owner": "Steve Siegel",
+      "stage": "1. Active Pipe Lead",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -21623,7 +21623,7 @@
       "brand": "Referral - Other (notes)",
       "stores": 1200,
       "dealname": "Shell Global - Canada - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -21678,7 +21678,7 @@
       "brand": "Unknown",
       "stores": 15,
       "dealname": "Fast Stop Markets - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -21701,7 +21701,7 @@
       "stores": 240,
       "dealname": "CEFCO - H124T - PRIMARY",
       "owner": "Unassigned",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -21723,7 +21723,7 @@
       "stores": 61,
       "dealname": "Colbea/Eastside Ent - PRIMARY",
       "owner": "Unassigned",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -21756,7 +21756,7 @@
       "stores": 53,
       "dealname": "Dash In - PRIMARY",
       "owner": "Unassigned",
-      "stage": "Nurture",
+      "stage": "1. Active Pipe Lead",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -21855,7 +21855,7 @@
       "stores": 15,
       "dealname": "Thriftway Super Stops - PRIMARY",
       "owner": "Unassigned",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -22768,7 +22768,7 @@
       "stores": 85,
       "dealname": "Moto Mart - PRIMARY",
       "owner": "Unassigned",
-      "stage": "Nurture",
+      "stage": "1. Active Pipe Lead",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -23042,7 +23042,7 @@
       "brand": "Unknown",
       "stores": 102,
       "dealname": "MacEwen Petroleum - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -23075,8 +23075,8 @@
       "brand": "Referral - Core-Mark (Non Show)",
       "stores": 50,
       "dealname": "Fastrip / Jaco Oil Company - PRIMARY",
-      "owner": "Unassigned",
-      "stage": "Nurture",
+      "owner": "Steve Siegel",
+      "stage": "1. Active Pipe Lead",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -23130,7 +23130,7 @@
       "brand": "Referral - Core-Mark (Non Show)",
       "stores": 47,
       "dealname": "APEC Foods - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -23141,7 +23141,7 @@
       "brand": "Referral - Core-Mark (Non Show)",
       "stores": 10,
       "dealname": "Pump & munch - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -23196,7 +23196,7 @@
       "brand": "Event/Show - Core-Mark",
       "stores": 20,
       "dealname": "Golden Rule Liquors - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -23251,7 +23251,7 @@
       "brand": "Referral - Core-Mark (Non Show)",
       "stores": 30,
       "dealname": "Lightning Quick Gas/Go - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -23262,7 +23262,7 @@
       "brand": "Referral - Core-Mark (Non Show)",
       "stores": 50,
       "dealname": "Infinity Group - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -23273,7 +23273,7 @@
       "brand": "Referral - Core-Mark (Non Show)",
       "stores": 25,
       "dealname": "Beacon & Bridge - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -23593,7 +23593,7 @@
       "stores": 300,
       "dealname": "Raceway - PRIMARY",
       "owner": "Unassigned",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -23625,7 +23625,7 @@
       "brand": "Unknown",
       "stores": 175,
       "dealname": "Nicholby's - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -23636,7 +23636,7 @@
       "brand": "Event/Show - Core-Mark",
       "stores": 19,
       "dealname": "Your Choice - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -23812,7 +23812,7 @@
       "brand": "Event/Show - Core-Mark",
       "stores": 3600,
       "dealname": "GPM Empire - PRIMARY",
-      "owner": "Unassigned",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -23912,7 +23912,7 @@
       "stores": 19,
       "dealname": "Yatco Distribution LLC - PRIMARY",
       "owner": "Unassigned",
-      "stage": "Nurture",
+      "stage": "9. Closed lost",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -25474,7 +25474,7 @@
       "stores": 100,
       "dealname": "The Kent Companies - PRIMARY",
       "owner": "Unassigned",
-      "stage": "Nurture",
+      "stage": "1. Active Pipe Lead",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -25936,7 +25936,7 @@
       "stores": 550,
       "dealname": "RaceTrac - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "Nurture",
+      "stage": "1. Active Pipe Lead",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -27509,7 +27509,7 @@
       "stores": 110,
       "dealname": "Parker's - PRIMARY",
       "owner": "Steve Siegel",
-      "stage": "Nurture",
+      "stage": "1. Active Pipe Lead",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -27695,7 +27695,7 @@
       "brand": "Inbound Form",
       "stores": 1,
       "dealname": "Speedy\u2019s Corp",
-      "owner": "Adit Gupta",
+      "owner": "Steve Siegel",
       "stage": "Nurture",
       "pipeline": "Sales Pipeline"
     },
@@ -29854,6 +29854,17 @@
       "owner": "Steve Siegel",
       "stage": "2. Qualified",
       "pipeline": "Sales Pipeline"
+    },
+    {
+      "id": "64535441315",
+      "date": "2026-09-01",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 401 N Main St",
+      "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
+      "pipeline": "SSO Pipeline"
     }
   ]
 }

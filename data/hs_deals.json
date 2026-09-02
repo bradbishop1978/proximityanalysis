@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-02T08:43:34.758393Z",
+  "fetchedAt": "2026-09-02T16:22:35.143711Z",
   "deals": [
     {
       "id": "4014966213",
@@ -12830,7 +12830,7 @@
     {
       "id": "10431836218",
       "date": "2022-10-03",
-      "close_date": "2023-02-10",
+      "close_date": "2026-12-23",
       "brand": "Unknown",
       "stores": 105,
       "dealname": "Stinker Store",
@@ -28340,12 +28340,12 @@
     {
       "id": "57950773846",
       "date": "2026-03-12",
-      "close_date": "2026-06-10",
+      "close_date": "2026-09-02",
       "brand": "CK Franchisee",
       "stores": 1,
       "dealname": "Shi durga usa llc  SSR",
-      "owner": "Brad Penoliar",
-      "stage": "4. Signed Agreement",
+      "owner": "Vince Meyer",
+      "stage": "7. Closed Won",
       "pipeline": "SS Pipeline"
     },
     {
@@ -29665,7 +29665,7 @@
       "stores": 10,
       "dealname": "Major Oil Co - PRIMARY (1P only--up to 10 stores)",
       "owner": "Steve Siegel",
-      "stage": "5. Negotiation",
+      "stage": "6. Sent Final Agmnt",
       "pipeline": "Sales Pipeline"
     },
     {
@@ -29696,9 +29696,9 @@
       "close_date": "2026-11-30",
       "brand": "Top 200 Target",
       "stores": 250,
-      "dealname": "Coremark foodservice-100 stores (clone)",
+      "dealname": "Coremark foodservice 1P and 3P-25 stores min",
       "owner": "Steve Siegel",
-      "stage": "2. Qualified",
+      "stage": "4. ROI & Outstanding Questions",
       "pipeline": "Sales Pipeline"
     },
     {

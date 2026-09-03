@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-03T08:52:00.589351Z",
+  "fetchedAt": "2026-09-03T16:12:59.102708Z",
   "deals": [
     {
       "id": "4014966213",
@@ -29886,6 +29886,17 @@
       "dealname": "Lula SSO \u2014 2811 Evergreen Ave",
       "owner": "Vince Meyer",
       "stage": "7. Closed Won",
+      "pipeline": "SSO Pipeline"
+    },
+    {
+      "id": "64595134569",
+      "date": "2026-09-03",
+      "close_date": "",
+      "brand": "Unknown",
+      "stores": 1,
+      "dealname": "Lula SSO \u2014 245 GA-49",
+      "owner": "Unassigned",
+      "stage": "4. Signed Agreement",
       "pipeline": "SSO Pipeline"
     }
   ]
